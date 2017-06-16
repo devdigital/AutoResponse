@@ -1,0 +1,14 @@
+{
+  "name": "AutoResponse",
+  "version": "0.1.0",
+  "main": "index.js",
+  "repository": "https://github.com/devdigital/AutoResponse.git",
+  "author": "devdigital <devdigital.cloud@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "release": "standard-version"
+  },
+  "devDependencies": {
+    "standard-version": "^4.2.0"
+  }
+}
