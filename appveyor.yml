@@ -23,7 +23,7 @@ assembly_info:
 nuget:
   disable_publish_on_pr: true
 artifacts:
-- path: '**\*.nupkg'
+- path: '**\AutoResponse*.nupkg'
   name: NuGet
 deploy:
 - provider: NuGet
