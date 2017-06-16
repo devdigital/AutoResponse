@@ -4,13 +4,10 @@ init:
   - ps: >-
       if ($env:APPVEYOR_REPO_TAG -eq "true")
       {
-        Update-AppveyorBuild -Version "$env:APPVEYOR_REPO_TAG_NAME"
+        Update-AppveyorBuild -Version "$($env:APPVEYOR_REPO_TAG_NAME.TrimStart("v"))"
       }
 pull_requests:
   do_not_increment_build_number: true
-branches:
-  only:
-  - master
 image: Visual Studio 2015
 install:
   - appveyor DownloadFile https://dist.nuget.org/win-x86-commandline/v4.0.0/nuget.exe
