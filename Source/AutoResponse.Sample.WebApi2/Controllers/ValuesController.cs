@@ -2,13 +2,24 @@
 {
     using System.Web.Http;
 
+    using AutoResponse.Data.Exceptions;
+
     public class ValuesController : ApiController
     {
         [HttpGet]
-        [Route("api/values")]
-        public IHttpActionResult GetValues()
+        [Route("api/value/{valueId}")]
+        public IHttpActionResult GetValue(int valueId)
         {
-            return this.Ok(new[] { 1, 2, 3 });
+            if (valueId == 1)
+            {
+                return this.Ok(1);
+            }
+
+            throw new EntityNotFoundException<Value>(valueId.ToString());
         }
+    }
+
+    public class Value
+    {
     }
 }

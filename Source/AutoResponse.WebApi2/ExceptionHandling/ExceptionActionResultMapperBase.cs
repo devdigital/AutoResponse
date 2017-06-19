@@ -1,15 +1,22 @@
-﻿namespace AutoResponse.WebApi2.ExceptionHandling
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Web.Http;
+
+using AutoResponse.WebApi2.ExceptionHandling;
+
+namespace AutoResponse.WebApi2.ExceptionHandling
 {
     using System;
     using System.Collections.Generic;
     using System.Net.Http;
     using System.Web.Http;
 
-    public abstract class ExceptionActionResultMapper : IExceptionActionResultMapper
+    public abstract class ExceptionActionResultMapperBase : IExceptionActionResultMapper
     {
         private readonly IDictionary<Type, Func<HttpRequestMessage, Exception, IHttpActionResult>> actionResultFactories;
 
-        protected ExceptionActionResultMapper()
+        protected ExceptionActionResultMapperBase()
         {
             this.actionResultFactories = new Dictionary<Type, Func<HttpRequestMessage, Exception, IHttpActionResult>>();
         }

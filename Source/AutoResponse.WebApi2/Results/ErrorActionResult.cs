@@ -10,13 +10,13 @@
 
     using Humanizer;
 
-    public abstract class ErrorResult : IHttpActionResult
+    public abstract class ErrorActionResult : IHttpActionResult
     {
         private readonly HttpRequestMessage request;
 
         private readonly HttpStatusCode statusCode;        
 
-        protected ErrorResult(HttpRequestMessage request, HttpStatusCode statusCode)
+        protected ErrorActionResult(HttpRequestMessage request, HttpStatusCode statusCode)
         {
             if (request == null)
             {
@@ -61,7 +61,7 @@
             {
                 Resource = validationError.Resource,
                 Field = validationError.Field,
-                Code = validationError.Code.Kebaberize()
+                Code = validationError.Code.ToString().Kebaberize()
             };            
         }
     }

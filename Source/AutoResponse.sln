@@ -11,6 +11,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoResponse.Sample.WebApi2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoResponse.WebApi2.Autofac", "AutoResponse.WebApi2.Autofac\AutoResponse.WebApi2.Autofac.csproj", "{ABF7DAEC-F265-4BAF-A70C-53C11E203F6B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{C6E4DAB6-C280-4FDC-916C-D60FB7BAC498}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{ADE4AC96-F3EC-464B-BFEE-0F76CFB8F263}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{99753933-1DEB-4FD1-983E-1816366C9BDE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +42,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B0A0D479-599F-4462-8238-04C011100AE9} = {C6E4DAB6-C280-4FDC-916C-D60FB7BAC498}
+		{0A14BBB6-FFB3-4805-951F-D21D3D7E594B} = {C6E4DAB6-C280-4FDC-916C-D60FB7BAC498}
+		{C474C4E8-F2A8-4D91-9F0E-4A91DEFC4235} = {ADE4AC96-F3EC-464B-BFEE-0F76CFB8F263}
+		{ABF7DAEC-F265-4BAF-A70C-53C11E203F6B} = {C6E4DAB6-C280-4FDC-916C-D60FB7BAC498}
 	EndGlobalSection
 EndGlobal

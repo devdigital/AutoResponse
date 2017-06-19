@@ -40,11 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Errors\EntityValidationErrorCode.cs" />
+    <Compile Include="Errors\EntityValidationError{TEntity}.cs" />
+    <Compile Include="Helpers\PropertyNameHelper.cs" />
+    <Compile Include="Exceptions\EntityNotFoundException.cs" />
+    <Compile Include="Exceptions\EntityNotFoundException{TEntity}.cs" />
+    <Compile Include="Exceptions\EntityPermissionException.cs" />
+    <Compile Include="Exceptions\EntityPermissionException{TEntity}.cs" />
+    <Compile Include="Errors\EntityValidationError.cs" />
+    <Compile Include="Errors\EntityValidationErrorDetails.cs" />
+    <Compile Include="Exceptions\EntityValidationException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Exceptions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,14 +1,13 @@
 ﻿namespace AutoResponse.WebApi2.Results
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Net;
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Web.Http;
-    
+
     using Humanizer;
 
     public class ResourceValidationResult : IHttpActionResult
@@ -45,7 +44,7 @@
                         {
                             Resource = e.Resource,
                             Field = e.Field,
-                            Code = e.Code.Kebaberize(),
+                            Code = e.Code.ToString().Kebaberize(),
                             Message = e.Message
                         }).ToList()
             };
@@ -57,52 +56,5 @@
 
             return Task.FromResult(response);
         }
-    }
-
-    public class ErrorApiModel
-    {
-        public string Resource { get; set; }
-
-        public string Field { get; set; }
-
-        public string Code { get; set; }
-
-        public string Message { get; set; }
-    }
-
-    public class ErrorDetailsApiModel
-    {
-        public string Message { get; set; }
-
-        public IEnumerable<ErrorApiModel> Errors { get; set; }
-    }
-
-    public class ValidationErrorDetails
-    {
-        public ValidationErrorDetails(string message, IEnumerable<ValidationError> errors = null)
-        {
-            this.Message = message;
-            this.Errors = errors;
-        }
-
-        public string Message { get; }
-
-        public IEnumerable<ValidationError> Errors { get; set; }
-    }
-
-    public class ValidationError
-    {
-        public ValidationError(string resource, string field, ValidationErrorCode errorCode, string errorMessage = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string Message { get; set; }
-
-        public string Resource { get; }
-
-        public string Field { get; set; }
-
-        public string Code { get; set; }        
     }
 }

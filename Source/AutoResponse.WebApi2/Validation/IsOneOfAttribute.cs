@@ -1,4 +1,4 @@
-namespace sAutoResponse.WebApi2.Validation
+namespace AutoResponse.WebApi2.Validation
 {
     using System;
     using System.ComponentModel.DataAnnotations;

@@ -57,7 +57,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExceptionHandling\ExceptionActionResultMapper.cs" />
+    <Compile Include="ExceptionHandling\DefaultExceptionActionResultMapper.cs" />
+    <Compile Include="ExceptionHandling\EntityValidationErrorDetailsExtensions.cs" />
+    <Compile Include="ExceptionHandling\ExceptionActionResultMapperBase.cs" />
     <Compile Include="ExceptionHandling\IExceptionActionResultMapper.cs" />
     <Compile Include="ExceptionHandling\StandardResponseExceptionHandler.cs" />
     <Compile Include="Extensions\ApiControllerExtensions.cs" />
@@ -80,13 +82,18 @@
     <Compile Include="Logging\NullLogger.cs" />
     <Compile Include="Logging\NullLoggerFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Results\ErrorResult.cs" />
+    <Compile Include="Results\ErrorActionResult.cs" />
+    <Compile Include="Models\ErrorApiModel.cs" />
+    <Compile Include="Models\ErrorDetailsApiModel.cs" />
     <Compile Include="Results\ResourceCreatedResult.cs" />
-    <Compile Include="Results\ResourceCreatePermissionResult.cs" />
-    <Compile Include="Results\ResourceNotFoundResult.cs" />
-    <Compile Include="Results\ResourcePermissionResult.cs" />
+    <Compile Include="Results\ResourceCreatePermissionActionResult.cs" />
+    <Compile Include="Results\ResourceNotFoundActionResult.cs" />
+    <Compile Include="Results\ResourcePermissionActionResult.cs" />
     <Compile Include="Results\ResourceValidationResult.cs" />
     <Compile Include="Results\ServiceErrorResult.cs" />
+    <Compile Include="Models\ValidationError.cs" />
+    <Compile Include="Models\ValidationErrorDetails.cs" />
+    <Compile Include="Results\ValidationErrorCode.cs" />
     <Compile Include="Validation\IsOneOfAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -95,6 +102,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Filters\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AutoResponse.Data\AutoResponse.Data.csproj">
+      <Project>{B0A0D479-599F-4462-8238-04C011100AE9}</Project>
+      <Name>AutoResponse.Data</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

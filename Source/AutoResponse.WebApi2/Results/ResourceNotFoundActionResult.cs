@@ -5,13 +5,13 @@
     using System.Net;
     using System.Net.Http;
 
-    public class ResourceNotFoundResult : ErrorResult
+    public class ResourceNotFoundActionResult : ErrorActionResult
     {
         private readonly string resourceType;
 
         private readonly string resourceId;
 
-        public ResourceNotFoundResult(HttpRequestMessage request, string resourceType, string resourceId)
+        public ResourceNotFoundActionResult(HttpRequestMessage request, string resourceType, string resourceId)
             : base(request, HttpStatusCode.NotFound)
         {
             if (string.IsNullOrWhiteSpace(resourceType))
@@ -37,16 +37,5 @@
                     new ValidationError(this.resourceType, "id", ValidationErrorCode.Missing)
                 });
         }
-    }
-
-    public enum ValidationErrorCode
-    {
-        None = 0,
-
-        Missing,
-
-        MissingField,
-
-        Invalid
     }
 }
