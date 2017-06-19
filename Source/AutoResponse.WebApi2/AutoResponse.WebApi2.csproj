@@ -58,7 +58,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExceptionHandling\DefaultExceptionActionResultMapper.cs" />
-    <Compile Include="ExceptionHandling\EntityValidationErrorDetailsExtensions.cs" />
+    <Compile Include="Extensions\EntityValidationErrorCodeExtensions.cs" />
+    <Compile Include="Extensions\EntityValidationErrorDetailsExtensions.cs" />
     <Compile Include="ExceptionHandling\ExceptionActionResultMapperBase.cs" />
     <Compile Include="ExceptionHandling\IExceptionActionResultMapper.cs" />
     <Compile Include="ExceptionHandling\StandardResponseExceptionHandler.cs" />
@@ -86,7 +87,7 @@
     <Compile Include="Models\ErrorApiModel.cs" />
     <Compile Include="Models\ErrorDetailsApiModel.cs" />
     <Compile Include="Results\ResourceCreatedResult.cs" />
-    <Compile Include="Results\ResourceCreatePermissionActionResult.cs" />
+    <Compile Include="Results\ResourceCreatePermissionResult.cs" />
     <Compile Include="Results\ResourceNotFoundActionResult.cs" />
     <Compile Include="Results\ResourcePermissionActionResult.cs" />
     <Compile Include="Results\ResourceValidationResult.cs" />

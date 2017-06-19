@@ -2,24 +2,25 @@
 {
     using System.Web.Http;
 
-    using AutoResponse.Data.Exceptions;
+    using AutoResponse.Sample.Domain;
+    using AutoResponse.Sample.Domain.Repositories;
+    using AutoResponse.Sample.WebApi2.Models;
 
     public class ValuesController : ApiController
     {
+        private readonly IValuesRepository valuesRepository;
+
+        public ValuesController(IValuesRepository valuesRepository)
+        {
+            this.valuesRepository = valuesRepository;
+        }
+
         [HttpGet]
-        [Route("api/value/{valueId}")]
+        [Route("api/values/{valueId}")]
         public IHttpActionResult GetValue(int valueId)
         {
-            if (valueId == 1)
-            {
-                return this.Ok(1);
-            }
-
-            throw new EntityNotFoundException<Value>(valueId.ToString());
+            var value = this.valuesRepository.GetValue(valueId);
+            return this.Ok(new ValueApiModel { Id = value.Id });
         }
-    }
-
-    public class Value
-    {
     }
 }

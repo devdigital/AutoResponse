@@ -4,7 +4,7 @@
     using System.Net;
     using System.Net.Http;
 
-    public class ResourceCreatePermissionActionResult : ErrorActionResult
+    public class ResourceCreatePermissionResult : ErrorActionResult
     {
         private readonly string userId;
 
@@ -12,7 +12,7 @@
 
         private readonly string resourceId;
 
-        public ResourceCreatePermissionActionResult(
+        public ResourceCreatePermissionResult(
             HttpRequestMessage request,
             string userId,
             string resourceType)
@@ -32,7 +32,7 @@
             this.resourceType = resourceType;
         }
 
-        public ResourceCreatePermissionActionResult(
+        public ResourceCreatePermissionResult(
             HttpRequestMessage request, 
             string userId, 
             string resourceType, 

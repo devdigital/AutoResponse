@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Web.Http;
-
-using AutoResponse.WebApi2.ExceptionHandling;
-
-namespace AutoResponse.WebApi2.ExceptionHandling
+﻿namespace AutoResponse.WebApi2.ExceptionHandling
 {
     using System;
     using System.Collections.Generic;
@@ -57,7 +50,27 @@ namespace AutoResponse.WebApi2.ExceptionHandling
                     $"Exception type {typeof(TException).Name} action result mapping already registered");
             }
 
-            this.actionResultFactories.Add(typeof(TException), (r, e) => actionResultFactory(r, e as TException));
+            this.actionResultFactories.Add(
+                typeof(TException), 
+                (r, e) => actionResultFactory(r, e as TException));
+        }
+
+        public void AddMapping<TExceptionInterface>(Type exceptionType, Func<HttpRequestMessage, TExceptionInterface, IHttpActionResult> actionResultFactory) where TExceptionInterface : class
+        {
+            if (actionResultFactory == null)
+            {
+                throw new ArgumentNullException(nameof(actionResultFactory));
+            }
+
+            if (this.actionResultFactories.ContainsKey(exceptionType))
+            {
+                throw new InvalidOperationException(
+                    $"Exception type {exceptionType.Name} action result mapping already registered");
+            }
+
+            this.actionResultFactories.Add(
+                exceptionType, 
+                (r, e) => actionResultFactory(r, e as TExceptionInterface));
         }
     }
 }

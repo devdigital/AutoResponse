@@ -131,8 +131,11 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Models\ValueApiModel.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Registrations.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -140,7 +143,20 @@
       <Project>{B0A0D479-599F-4462-8238-04C011100AE9}</Project>
       <Name>AutoResponse.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AutoResponse.Sample.Data\AutoResponse.Sample.Data.csproj">
+      <Project>{C262F933-6AD3-4CCE-9D3A-4C9B76AAAA32}</Project>
+      <Name>AutoResponse.Sample.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoResponse.Sample.Domain\AutoResponse.Sample.Domain.csproj">
+      <Project>{EB2F99CE-922E-49A4-8429-7EE957C15032}</Project>
+      <Name>AutoResponse.Sample.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoResponse.WebApi2\AutoResponse.WebApi2.csproj">
+      <Project>{0A14BBB6-FFB3-4805-951F-D21D3D7E594B}</Project>
+      <Name>AutoResponse.WebApi2</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

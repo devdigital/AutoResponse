@@ -1,8 +1,9 @@
-﻿namespace AutoResponse.WebApi2.ExceptionHandling
+﻿namespace AutoResponse.WebApi2.Extensions
 {
     using System.Linq;
 
     using AutoResponse.Data.Errors;
+    using AutoResponse.WebApi2.ExceptionHandling;
     using AutoResponse.WebApi2.Results;
 
     using Humanizer;
