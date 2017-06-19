@@ -27,9 +27,6 @@ assembly_info:
   assembly_informational_version: "{version}"
 nuget:
   disable_publish_on_pr: true
-artifacts:
-- path: '**\AutoResponse*.nupkg'
-  name: NuGet
 deploy:
 - provider: NuGet
   name: production
