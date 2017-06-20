@@ -1,14 +1,31 @@
 ﻿namespace AutoResponse.Sample.WebApi2.Controllers
 {
+    using System;
     using System.Web.Http;
+
+    using AutoResponse.Sample.Domain.Repositories;
+    using AutoResponse.Sample.WebApi2.Models;
 
     public class ValuesController : ApiController
     {
-        [HttpGet]
-        [Route("api/values")]
-        public IHttpActionResult GetValues()
+        private readonly IValuesRepository valuesRepository;
+
+        public ValuesController(IValuesRepository valuesRepository)
         {
-            return this.Ok(new[] { 1, 2, 3 });
+            if (valuesRepository == null)
+            {
+                throw new ArgumentNullException(nameof(valuesRepository));
+            }
+
+            this.valuesRepository = valuesRepository;
+        }
+
+        [HttpGet]
+        [Route("api/values/{valueId}")]
+        public IHttpActionResult GetValue(int valueId)
+        {
+            var value = this.valuesRepository.GetValue(valueId);
+            return this.Ok(new ValueApiModel { Id = value.Id });
         }
     }
 }

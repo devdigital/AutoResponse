@@ -5,7 +5,7 @@
     using System.Net;
     using System.Net.Http;
 
-    public class ResourceNotFoundResult : ErrorResult
+    public class ResourceNotFoundResult : ErrorActionResult
     {
         private readonly string resourceType;
 
@@ -37,16 +37,5 @@
                     new ValidationError(this.resourceType, "id", ValidationErrorCode.Missing)
                 });
         }
-    }
-
-    public enum ValidationErrorCode
-    {
-        None = 0,
-
-        Missing,
-
-        MissingField,
-
-        Invalid
     }
 }

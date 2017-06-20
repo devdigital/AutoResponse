@@ -4,7 +4,7 @@
     using System.Net;
     using System.Net.Http;
 
-    public class ResourcePermissionResult : ErrorResult
+    public class ResourcePermissionResult : ErrorActionResult
     {
         private readonly string userId;
 

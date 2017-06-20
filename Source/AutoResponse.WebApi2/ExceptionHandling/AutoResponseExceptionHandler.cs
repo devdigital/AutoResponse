@@ -3,11 +3,16 @@
     using System;
     using System.Web.Http.ExceptionHandling;
 
-    public class StandardResponseExceptionHandler : ExceptionHandler
+    public class AutoResponseExceptionHandler : ExceptionHandler
     {
         private readonly IExceptionActionResultMapper actionResultMapper;
 
-        public StandardResponseExceptionHandler(IExceptionActionResultMapper actionResultMapper)
+        public AutoResponseExceptionHandler()
+        {
+            this.actionResultMapper = new DefaultExceptionActionResultMapper();
+        }
+
+        public AutoResponseExceptionHandler(IExceptionActionResultMapper actionResultMapper)
         {
             if (actionResultMapper == null)
             {

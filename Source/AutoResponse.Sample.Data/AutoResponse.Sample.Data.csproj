@@ -4,15 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B0A0D479-599F-4462-8238-04C011100AE9}</ProjectGuid>
+    <ProjectGuid>{C262F933-6AD3-4CCE-9D3A-4C9B76AAAA32}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AutoResponse.Data</RootNamespace>
-    <AssemblyName>AutoResponse.Data</AssemblyName>
+    <RootNamespace>AutoResponse.Sample.Data</RootNamespace>
+    <AssemblyName>AutoResponse.Sample.Data</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,22 +40,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Errors\EntityValidationErrorCode.cs" />
-    <Compile Include="Errors\EntityValidationError{TEntity}.cs" />
-    <Compile Include="Exceptions\EntityCreatePermissionException{TEntity}.cs" />
-    <Compile Include="Exceptions\EntityPermissionException.cs" />
-    <Compile Include="Exceptions\IEntityCreatePermissionException.cs" />
-    <Compile Include="Exceptions\IEntityNotFoundException.cs" />
-    <Compile Include="Exceptions\IEntityPermissionException.cs" />
-    <Compile Include="Helpers\PropertyNameHelper.cs" />
-    <Compile Include="Exceptions\EntityNotFoundException.cs" />
-    <Compile Include="Exceptions\EntityNotFoundException{TEntity}.cs" />
-    <Compile Include="Exceptions\EntityCreatePermissionException.cs" />
-    <Compile Include="Exceptions\EntityPermissionException{TEntity}.cs" />
-    <Compile Include="Errors\EntityValidationError.cs" />
-    <Compile Include="Errors\EntityValidationErrorDetails.cs" />
-    <Compile Include="Exceptions\EntityValidationException.cs" />
+    <Compile Include="Repositories\DefaultValuesRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AutoResponse.Data\AutoResponse.Data.csproj">
+      <Project>{B0A0D479-599F-4462-8238-04C011100AE9}</Project>
+      <Name>AutoResponse.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoResponse.Sample.Domain\AutoResponse.Sample.Domain.csproj">
+      <Project>{EB2F99CE-922E-49A4-8429-7EE957C15032}</Project>
+      <Name>AutoResponse.Sample.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
