@@ -4,7 +4,7 @@
     using System.Net;
     using System.Net.Http;
 
-    public class ResourcePermissionActionResult : ErrorActionResult
+    public class ResourcePermissionResult : ErrorActionResult
     {
         private readonly string userId;
 
@@ -12,7 +12,7 @@
 
         private readonly string resourceId;
 
-        public ResourcePermissionActionResult(HttpRequestMessage request, string userId, string resourceType, string resourceId)
+        public ResourcePermissionResult(HttpRequestMessage request, string userId, string resourceType, string resourceId)
             : base(request, HttpStatusCode.Forbidden)
         {
             if (string.IsNullOrWhiteSpace(nameof(userId)))

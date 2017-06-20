@@ -59,6 +59,7 @@
     <Compile Include="Errors\EntityValidationError{TEntity}.cs" />
     <Compile Include="Exceptions\EntityCreatePermissionException{TEntity}.cs" />
     <Compile Include="Exceptions\EntityPermissionException.cs" />
+    <Compile Include="Exceptions\IEntityNotFoundException.cs" />
     <Compile Include="Helpers\PropertyNameHelper.cs" />
     <Compile Include="Exceptions\EntityNotFoundException.cs" />
     <Compile Include="Exceptions\EntityNotFoundException{TEntity}.cs" />

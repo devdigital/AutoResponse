@@ -26,13 +26,18 @@
                 throw new ArgumentNullException(nameof(exception));
             }
 
-            var key = exception.GetType();
-            if (!this.actionResultFactories.ContainsKey(key))
+            var exceptionType = exception.GetType();
+            if (exceptionType.IsGenericType)
+            {
+                exceptionType = exceptionType.GetGenericTypeDefinition();
+            }
+
+            if (!this.actionResultFactories.ContainsKey(exceptionType))
             {
                 return null;
             }
 
-            var actionResultFactory = this.actionResultFactories[key];
+            var actionResultFactory = this.actionResultFactories[exceptionType];
             return actionResultFactory?.Invoke(request, exception);
         }
         
@@ -55,7 +60,7 @@
                 (r, e) => actionResultFactory(r, e as TException));
         }
 
-        public void AddMapping<TExceptionInterface>(Type exceptionType, Func<HttpRequestMessage, TExceptionInterface, IHttpActionResult> actionResultFactory) where TExceptionInterface : class
+        public void AddGenericMapping<TExceptionInterface>(Type exceptionType, Func<HttpRequestMessage, TExceptionInterface, IHttpActionResult> actionResultFactory) where TExceptionInterface : class
         {
             if (actionResultFactory == null)
             {

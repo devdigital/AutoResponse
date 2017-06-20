@@ -5,13 +5,13 @@
     using System.Net;
     using System.Net.Http;
 
-    public class ResourceNotFoundActionResult : ErrorActionResult
+    public class ResourceNotFoundResult : ErrorActionResult
     {
         private readonly string resourceType;
 
         private readonly string resourceId;
 
-        public ResourceNotFoundActionResult(HttpRequestMessage request, string resourceType, string resourceId)
+        public ResourceNotFoundResult(HttpRequestMessage request, string resourceType, string resourceId)
             : base(request, HttpStatusCode.NotFound)
         {
             if (string.IsNullOrWhiteSpace(resourceType))

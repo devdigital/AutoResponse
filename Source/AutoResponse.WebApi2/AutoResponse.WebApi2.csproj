@@ -88,8 +88,8 @@
     <Compile Include="Models\ErrorDetailsApiModel.cs" />
     <Compile Include="Results\ResourceCreatedResult.cs" />
     <Compile Include="Results\ResourceCreatePermissionResult.cs" />
-    <Compile Include="Results\ResourceNotFoundActionResult.cs" />
-    <Compile Include="Results\ResourcePermissionActionResult.cs" />
+    <Compile Include="Results\ResourceNotFoundResult.cs" />
+    <Compile Include="Results\ResourcePermissionResult.cs" />
     <Compile Include="Results\ResourceValidationResult.cs" />
     <Compile Include="Results\ServiceErrorResult.cs" />
     <Compile Include="Models\ValidationError.cs" />
