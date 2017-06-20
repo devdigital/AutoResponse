@@ -5,8 +5,6 @@ using Owin;
 
 namespace AutoResponse.Sample.WebApi2
 {
-    using System.Web.Http;
-
     public class Startup
     {
         public void Configuration(IAppBuilder app)

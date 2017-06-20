@@ -8,12 +8,7 @@
     {
         public Value GetValue(int valueId)
         {
-            if (valueId == 1)
-            {
-                return new Value(1);
-            }
-
-            throw new EntityNotFoundException<Value>(valueId.ToString());
+            return new Value(valueId);
         }
     } 
 }

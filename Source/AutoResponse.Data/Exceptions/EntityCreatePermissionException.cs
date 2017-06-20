@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class EntityCreatePermissionException : Exception
+    public class EntityCreatePermissionException : Exception, IEntityCreatePermissionException
     {
         public EntityCreatePermissionException(string userId, string entityType)
         {

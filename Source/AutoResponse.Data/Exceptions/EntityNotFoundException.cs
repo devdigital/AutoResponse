@@ -2,8 +2,6 @@
 {
     using System;
 
-    using Ploeh.AutoFixture;
-
     public class EntityNotFoundException : Exception, IEntityNotFoundException
     {
         public EntityNotFoundException(string entityType, string entityId)

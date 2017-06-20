@@ -4,6 +4,8 @@
     using AutoResponse.WebApi2.Extensions;
     using AutoResponse.WebApi2.Results;
 
+    using Humanizer;
+
     public class DefaultExceptionActionResultMapper : ExceptionActionResultMapperBase
     {
         public DefaultExceptionActionResultMapper()
@@ -13,17 +15,25 @@
 
             // TODO: review mapping entity type to resource type?
             this.AddMapping<EntityNotFoundException>(
-                (r, e) => new ResourceNotFoundResult(r, e.EntityType, e.EntityId));
+                (r, e) => new ResourceNotFoundResult(r, e.EntityType.Kebaberize(), e.EntityId));
             
             this.AddGenericMapping<IEntityNotFoundException>(
                 typeof(EntityNotFoundException<>), 
-                (r, e) => new ResourceNotFoundResult(r, e.EntityType, e.EntityId));
+                (r, e) => new ResourceNotFoundResult(r, e.EntityType.Kebaberize(), e.EntityId));
 
             this.AddMapping<EntityCreatePermissionException>(
-                (r, e) => new ResourcePermissionResult(r, e.UserId, e.EntityType, e.EntityId));
+                (r, e) => new ResourceCreatePermissionResult(r, e.UserId, e.EntityType.Kebaberize(), e.EntityId));
+
+            this.AddGenericMapping<IEntityCreatePermissionException>(
+                typeof(EntityCreatePermissionException<>),
+                (r, e) => new ResourceCreatePermissionResult(r, e.UserId, e.EntityType.Kebaberize(), e.EntityId));
 
             this.AddMapping<EntityPermissionException>(
-                (r, e) => new ResourceCreatePermissionResult(r, e.UserId, e.EntityType, e.EntityId));
+                (r, e) => new ResourcePermissionResult(r, e.UserId, e.EntityType.Kebaberize(), e.EntityId));
+
+            this.AddGenericMapping<IEntityPermissionException>(
+                typeof(EntityPermissionException<>),
+                (r, e) => new ResourcePermissionResult(r, e.UserId, e.EntityType.Kebaberize(), e.EntityId));
         }
     }
 }

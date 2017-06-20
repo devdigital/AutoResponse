@@ -48,10 +48,12 @@
 
         private ErrorDetailsApiModel MapToErrorDetailsApiModel(ValidationErrorDetails errorDetails)
         {
+            var errors = errorDetails.Errors?.Select(this.MapToErrorApiModel);
+
             return new ErrorDetailsApiModel
             {
                 Message = errorDetails.Message,
-                Errors = errorDetails.Errors.Select(this.MapToErrorApiModel).ToList()
+                Errors = errors
             };
         }
 

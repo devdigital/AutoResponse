@@ -62,7 +62,7 @@
     <Compile Include="Extensions\EntityValidationErrorDetailsExtensions.cs" />
     <Compile Include="ExceptionHandling\ExceptionActionResultMapperBase.cs" />
     <Compile Include="ExceptionHandling\IExceptionActionResultMapper.cs" />
-    <Compile Include="ExceptionHandling\StandardResponseExceptionHandler.cs" />
+    <Compile Include="ExceptionHandling\AutoResponseExceptionHandler.cs" />
     <Compile Include="Extensions\ApiControllerExtensions.cs" />
     <Compile Include="Extensions\ModelStateExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />

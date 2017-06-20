@@ -1,8 +1,8 @@
 ﻿namespace AutoResponse.Sample.WebApi2.Controllers
 {
+    using System;
     using System.Web.Http;
 
-    using AutoResponse.Sample.Domain;
     using AutoResponse.Sample.Domain.Repositories;
     using AutoResponse.Sample.WebApi2.Models;
 
@@ -12,6 +12,11 @@
 
         public ValuesController(IValuesRepository valuesRepository)
         {
+            if (valuesRepository == null)
+            {
+                throw new ArgumentNullException(nameof(valuesRepository));
+            }
+
             this.valuesRepository = valuesRepository;
         }
 

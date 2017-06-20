@@ -47,7 +47,7 @@
 
             configuration.Services.Replace(
                 typeof(IExceptionHandler),
-                new StandardResponseExceptionHandler(new DefaultExceptionActionResultMapper()));
+                new AutoResponseExceptionHandler());
 
             var cors = new EnableCorsAttribute("*", "*", "*");
             configuration.EnableCors(cors);
@@ -94,8 +94,6 @@
 
         private void AdditionalRegistrations(ContainerBuilder builder)
         {
-            //... normal application container registrations here
-
             if (this.registrations != null)
             {
                 // Register additional registrations provided to the bootstrapper
