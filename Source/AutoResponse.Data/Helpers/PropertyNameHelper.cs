@@ -3,7 +3,7 @@ namespace AutoResponse.Data.Helpers
     using System;
     using System.Linq.Expressions;
 
-    internal static class PropertyNameHelper
+    public static class PropertyNameHelper
     {
         public static string PropertyName<TProperty>(Expression<Func<TProperty>> property)
         {
