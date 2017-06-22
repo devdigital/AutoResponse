@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.8"></a>
+## [0.1.8](https://github.com/devdigital/AutoResponse/compare/v0.1.6...v0.1.8) (2017-06-22)
+
+
+### Bug Fixes
+
+* ***.user:** removed user files ([5d7b653](https://github.com/devdigital/AutoResponse/commit/5d7b653))
+* **tests:** added additional response tests ([f95bf97](https://github.com/devdigital/AutoResponse/commit/f95bf97))
+
+
+
 <a name="0.1.7"></a>
 ## [0.1.7](https://github.com/devdigital/AutoResponse/compare/v0.1.6...v0.1.7) (2017-06-20)
 
