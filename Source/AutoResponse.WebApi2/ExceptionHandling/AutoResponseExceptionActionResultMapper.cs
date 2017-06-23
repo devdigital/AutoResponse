@@ -6,35 +6,34 @@
 
     using Humanizer;
 
-    public class DefaultExceptionActionResultMapper : ExceptionActionResultMapperBase
+    public class AutoResponseExceptionActionResultMapper : ExceptionActionResultMapperBase
     {
-        public DefaultExceptionActionResultMapper()
-        {            
-            this.AddMapping<NotAuthenticatedException>(
+        protected override void ConfigureMappings(ExceptionActionResultBuilder builder)
+        {
+            builder.AddMapping<NotAuthenticatedException>(
                 (r, e) => new NotAuthenticatedResult(r));
 
-            this.AddMapping<EntityValidationException>(
+            builder.AddMapping<EntityValidationException>(
                 (r, e) => new ResourceValidationResult(r, e.ErrorDetails.ToValidationErrorDetails()));
 
-            // TODO: review mapping entity type to resource type?
-            this.AddMapping<EntityNotFoundException>(
-                (r, e) => new ResourceNotFoundResult(r, e.EntityType.Kebaberize(), e.EntityId));
-            
-            this.AddGenericMapping<IEntityNotFoundException>(
-                typeof(EntityNotFoundException<>), 
+            builder.AddMapping<EntityNotFoundException>(
                 (r, e) => new ResourceNotFoundResult(r, e.EntityType.Kebaberize(), e.EntityId));
 
-            this.AddMapping<EntityCreatePermissionException>(
+            builder.AddGenericMapping<IEntityNotFoundException>(
+                typeof(EntityNotFoundException<>),
+                (r, e) => new ResourceNotFoundResult(r, e.EntityType.Kebaberize(), e.EntityId));
+
+            builder.AddMapping<EntityCreatePermissionException>(
                 (r, e) => new ResourceCreatePermissionResult(r, e.UserId, e.EntityType.Kebaberize(), e.EntityId));
 
-            this.AddGenericMapping<IEntityCreatePermissionException>(
+            builder.AddGenericMapping<IEntityCreatePermissionException>(
                 typeof(EntityCreatePermissionException<>),
                 (r, e) => new ResourceCreatePermissionResult(r, e.UserId, e.EntityType.Kebaberize(), e.EntityId));
 
-            this.AddMapping<EntityPermissionException>(
+            builder.AddMapping<EntityPermissionException>(
                 (r, e) => new ResourcePermissionResult(r, e.UserId, e.EntityType.Kebaberize(), e.EntityId));
 
-            this.AddGenericMapping<IEntityPermissionException>(
+            builder.AddGenericMapping<IEntityPermissionException>(
                 typeof(EntityPermissionException<>),
                 (r, e) => new ResourcePermissionResult(r, e.UserId, e.EntityType.Kebaberize(), e.EntityId));
         }

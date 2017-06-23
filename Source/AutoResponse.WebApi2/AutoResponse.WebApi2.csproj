@@ -57,7 +57,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExceptionHandling\DefaultExceptionActionResultMapper.cs" />
+    <Compile Include="ExceptionHandling\AutoResponseExceptionActionResultMapper.cs" />
+    <Compile Include="ExceptionHandling\ExceptionActionResultBuilder.cs" />
     <Compile Include="Extensions\EntityValidationErrorCodeExtensions.cs" />
     <Compile Include="Extensions\EntityValidationErrorDetailsExtensions.cs" />
     <Compile Include="ExceptionHandling\ExceptionActionResultMapperBase.cs" />

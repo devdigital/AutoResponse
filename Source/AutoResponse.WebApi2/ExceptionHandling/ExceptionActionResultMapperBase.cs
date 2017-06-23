@@ -7,12 +7,19 @@
 
     public abstract class ExceptionActionResultMapperBase : IExceptionActionResultMapper
     {
-        private readonly IDictionary<Type, Func<HttpRequestMessage, Exception, IHttpActionResult>> actionResultFactories;
+        private readonly Lazy<IDictionary<Type, Func<HttpRequestMessage, Exception, IHttpActionResult>>> actionResultFactories;
 
         protected ExceptionActionResultMapperBase()
         {
-            this.actionResultFactories = new Dictionary<Type, Func<HttpRequestMessage, Exception, IHttpActionResult>>();
+            this.actionResultFactories = new Lazy<IDictionary<Type, Func<HttpRequestMessage, Exception, IHttpActionResult>>>(() =>
+            {
+                var factories = new Dictionary<Type, Func<HttpRequestMessage, Exception, IHttpActionResult>>();
+                this.ConfigureMappings(new ExceptionActionResultBuilder(factories));
+                return factories;
+            });
         }
+
+        protected abstract void ConfigureMappings(ExceptionActionResultBuilder builder);
 
         public IHttpActionResult Get(HttpRequestMessage request, Exception exception)
         {
@@ -32,50 +39,13 @@
                 exceptionType = exceptionType.GetGenericTypeDefinition();
             }
 
-            if (!this.actionResultFactories.ContainsKey(exceptionType))
+            if (!this.actionResultFactories.Value.ContainsKey(exceptionType))
             {
                 return null;
             }
 
-            var actionResultFactory = this.actionResultFactories[exceptionType];
+            var actionResultFactory = this.actionResultFactories.Value[exceptionType];
             return actionResultFactory?.Invoke(request, exception);
-        }
-        
-        protected void AddMapping<TException>(            
-            Func<HttpRequestMessage, TException, IHttpActionResult> actionResultFactory) where TException : Exception
-        {
-            if (actionResultFactory == null)
-            {
-                throw new ArgumentNullException(nameof(actionResultFactory));
-            }
-
-            if (this.actionResultFactories.ContainsKey(typeof(TException)))
-            {
-                throw new InvalidOperationException(
-                    $"Exception type {typeof(TException).Name} action result mapping already registered");
-            }
-
-            this.actionResultFactories.Add(
-                typeof(TException), 
-                (r, e) => actionResultFactory(r, e as TException));
-        }
-
-        public void AddGenericMapping<TExceptionInterface>(Type exceptionType, Func<HttpRequestMessage, TExceptionInterface, IHttpActionResult> actionResultFactory) where TExceptionInterface : class
-        {
-            if (actionResultFactory == null)
-            {
-                throw new ArgumentNullException(nameof(actionResultFactory));
-            }
-
-            if (this.actionResultFactories.ContainsKey(exceptionType))
-            {
-                throw new InvalidOperationException(
-                    $"Exception type {exceptionType.Name} action result mapping already registered");
-            }
-
-            this.actionResultFactories.Add(
-                exceptionType, 
-                (r, e) => actionResultFactory(r, e as TExceptionInterface));
         }
     }
 }

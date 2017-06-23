@@ -9,7 +9,7 @@
 
         public AutoResponseExceptionHandler()
         {
-            this.actionResultMapper = new DefaultExceptionActionResultMapper();
+            this.actionResultMapper = new AutoResponseExceptionActionResultMapper();
         }
 
         public AutoResponseExceptionHandler(IExceptionActionResultMapper actionResultMapper)
