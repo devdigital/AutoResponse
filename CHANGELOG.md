@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.11"></a>
+## [0.1.11](https://github.com/devdigital/AutoResponse/compare/v0.1.10...v0.1.11) (2017-06-23)
+
+
+### Bug Fixes
+
+* **exception-constructor:** added message to not authenticated exception ([4057f16](https://github.com/devdigital/AutoResponse/commit/4057f16))
+
+
+
 <a name="0.1.10"></a>
 ## [0.1.10](https://github.com/devdigital/AutoResponse/compare/v0.1.9...v0.1.10) (2017-06-23)
 
