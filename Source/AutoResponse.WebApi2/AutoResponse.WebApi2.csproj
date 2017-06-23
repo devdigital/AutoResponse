@@ -87,6 +87,8 @@
     <Compile Include="Results\ErrorActionResult.cs" />
     <Compile Include="Models\ErrorApiModel.cs" />
     <Compile Include="Models\ErrorDetailsApiModel.cs" />
+    <Compile Include="Models\ResourceCreatedApiModel.cs" />
+    <Compile Include="Results\NotAuthenticatedResult.cs" />
     <Compile Include="Results\ResourceCreatedResult.cs" />
     <Compile Include="Results\ResourceCreatePermissionResult.cs" />
     <Compile Include="Results\ResourceNotFoundResult.cs" />

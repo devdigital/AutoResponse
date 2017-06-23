@@ -41,9 +41,4 @@
             return Task.FromResult(response);
         }
     }
-
-    public class ResourceCreatedApiModel
-    {
-        public string Id { get; set; }
-    }
 }

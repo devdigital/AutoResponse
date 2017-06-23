@@ -10,6 +10,9 @@
     {
         public DefaultExceptionActionResultMapper()
         {            
+            this.AddMapping<NotAuthenticatedException>(
+                (r, e) => new NotAuthenticatedResult(r));
+
             this.AddMapping<EntityValidationException>(
                 (r, e) => new ResourceValidationResult(r, e.ErrorDetails.ToValidationErrorDetails()));
 

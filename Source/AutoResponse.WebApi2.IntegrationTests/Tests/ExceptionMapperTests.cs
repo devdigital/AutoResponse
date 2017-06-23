@@ -19,6 +19,24 @@
     {
         [Theory]
         [AutoData]
+        public async Task NotAuthenticatedExceptionShouldReturn401(
+           SampleServerFactory serverFactory,
+           Mock<IValuesRepository> valuesRepository,
+           string entityType,
+           int entityId)
+        {
+            valuesRepository.Setup(r => r.GetValue(It.IsAny<int>()))
+                .Throws(new NotAuthenticatedException());
+
+            using (var server = serverFactory.With<IValuesRepository>(valuesRepository.Object).Create())
+            {
+                var response = await server.HttpClient.GetAsync($"/api/values/{entityId}");
+                Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+            }
+        }
+
+        [Theory]
+        [AutoData]
         public async Task NotFoundExceptionShouldReturn404(
            SampleServerFactory serverFactory,
            Mock<IValuesRepository> valuesRepository,
