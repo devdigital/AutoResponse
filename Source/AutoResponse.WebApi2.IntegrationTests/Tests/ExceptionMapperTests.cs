@@ -26,7 +26,7 @@
            int entityId)
         {
             valuesRepository.Setup(r => r.GetValue(It.IsAny<int>()))
-                .Throws(new NotAuthenticatedException());
+                .Throws(new NotAuthenticatedException("The user is not authenticated"));
 
             using (var server = serverFactory.With<IValuesRepository>(valuesRepository.Object).Create())
             {
