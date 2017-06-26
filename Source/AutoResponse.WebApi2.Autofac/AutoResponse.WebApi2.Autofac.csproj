@@ -83,6 +83,7 @@
   <ItemGroup>
     <Compile Include="Filters\BaseAuthorizationFilter.cs" />
     <Compile Include="Filters\RequireAuthenticationFilter.cs" />
+    <Compile Include="Filters\RequireLocalFilter.cs" />
     <Compile Include="Filters\ResourceValidationFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
