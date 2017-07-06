@@ -19,6 +19,18 @@
     {
         [Theory]
         [AutoData]
+        public async Task Foo(SampleServerFactory serverFactory)
+        {
+            using (var server = serverFactory.Create())
+            {
+                var response = await server.HttpClient.GetAsync("/fail");
+                var body = await response.Content.ReadAsStringAsync();
+                Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
+            }
+        }
+
+        [Theory]
+        [AutoData]
         public async Task NotAuthenticatedExceptionShouldReturn401(
            SampleServerFactory serverFactory,
            Mock<IValuesRepository> valuesRepository,
@@ -26,7 +38,7 @@
            int entityId)
         {
             valuesRepository.Setup(r => r.GetValue(It.IsAny<int>()))
-                .Throws(new NotAuthenticatedException("The user is not authenticated"));
+                .Throws(new UnauthenticatedException("The user is not authenticated"));
 
             using (var server = serverFactory.With<IValuesRepository>(valuesRepository.Object).Create())
             {

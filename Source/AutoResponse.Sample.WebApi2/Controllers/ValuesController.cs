@@ -24,6 +24,7 @@
         [Route("api/values/{valueId}")]
         public IHttpActionResult GetValue(int valueId)
         {
+
             var value = this.valuesRepository.GetValue(valueId);
             return this.Ok(new ValueApiModel { Id = value.Id });
         }

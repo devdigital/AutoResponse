@@ -4,15 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B0A0D479-599F-4462-8238-04C011100AE9}</ProjectGuid>
+    <ProjectGuid>{DB1D544E-AFBF-4B61-924C-8D17F298577E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AutoResponse.Data</RootNamespace>
-    <AssemblyName>AutoResponse.Data</AssemblyName>
+    <RootNamespace>AutoResponse.Owin</RootNamespace>
+    <AssemblyName>AutoResponse.Owin</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,6 +30,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,29 +48,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Errors\EntityValidationErrorCode.cs" />
-    <Compile Include="Errors\EntityValidationError{TEntity}.cs" />
-    <Compile Include="Exceptions\ServiceException.cs" />
-    <Compile Include="Exceptions\UnauthenticatedException.cs" />
-    <Compile Include="Exceptions\EntityCreatePermissionException{TEntity}.cs" />
-    <Compile Include="Exceptions\EntityPermissionException.cs" />
-    <Compile Include="Exceptions\IEntityCreatePermissionException.cs" />
-    <Compile Include="Exceptions\IEntityNotFoundException.cs" />
-    <Compile Include="Exceptions\IEntityPermissionException.cs" />
-    <Compile Include="Exceptions\EntityNotFoundException.cs" />
-    <Compile Include="Exceptions\EntityNotFoundException{TEntity}.cs" />
-    <Compile Include="Exceptions\EntityCreatePermissionException.cs" />
-    <Compile Include="Exceptions\EntityPermissionException{TEntity}.cs" />
-    <Compile Include="Errors\EntityValidationError.cs" />
-    <Compile Include="Errors\EntityValidationErrorDetails.cs" />
-    <Compile Include="Exceptions\EntityValidationException.cs" />
+    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AutoResponse.Core\AutoResponse.Core.csproj">
-      <Project>{E6AF0AC3-119C-43B3-8BFE-AAD23A37365D}</Project>
-      <Name>AutoResponse.Core</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

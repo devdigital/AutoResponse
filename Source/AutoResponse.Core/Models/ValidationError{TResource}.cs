@@ -1,9 +1,10 @@
-﻿namespace AutoResponse.WebApi2.Results
+﻿namespace AutoResponse.Core.Models
 {
     using System;
     using System.Linq.Expressions;
 
-    using AutoResponse.Data.Helpers;
+    using AutoResponse.Core;
+    using AutoResponse.Core.Helpers;
 
     public class ValidationError<TResource, TField> : ValidationError
     {

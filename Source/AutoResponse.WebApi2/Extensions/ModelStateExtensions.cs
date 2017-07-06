@@ -5,6 +5,8 @@
     using System.Linq;
     using System.Web.Http.ModelBinding;
 
+    using AutoResponse.Core;
+    using AutoResponse.Core.Models;
     using AutoResponse.WebApi2.Results;
 
     using Humanizer;

@@ -16,6 +16,8 @@
     using AutoResponse.Sample.Domain.Repositories;
     using AutoResponse.WebApi2.ExceptionHandling;
 
+    using global::Owin;
+
     using Newtonsoft.Json.Serialization;
 
     using Owin;
@@ -45,12 +47,23 @@
             ConfigureSerialization(configuration);
             var container = this.ConfigureContainer(configuration);
 
-            configuration.Services.Replace(
-                typeof(IExceptionHandler),
-                new AutoResponseExceptionHandler());
+            configuration.Services.Replace(typeof(IExceptionHandler), new AutoResponseExceptionHandler());
 
             var cors = new EnableCorsAttribute("*", "*", "*");
             configuration.EnableCors(cors);
+
+            this.app.Use<AutoResponseExceptionMiddleware>();
+
+            app.Use(
+                async (context, next) =>
+                    {
+                        if (context.Request.Uri.AbsolutePath.StartsWith("/fail"))
+                        {
+                            throw new Exception("This is a test exception");
+                        }
+
+                        await next();
+                    });
 
             // Register the Autofac middleware FIRST, then the Autofac Web API middleware,
             // and finally the standard Web API middleware.

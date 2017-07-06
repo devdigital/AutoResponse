@@ -4,15 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B0A0D479-599F-4462-8238-04C011100AE9}</ProjectGuid>
+    <ProjectGuid>{E6AF0AC3-119C-43B3-8BFE-AAD23A37365D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AutoResponse.Data</RootNamespace>
-    <AssemblyName>AutoResponse.Data</AssemblyName>
+    <RootNamespace>AutoResponse.Core</RootNamespace>
+    <AssemblyName>AutoResponse.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,6 +30,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Humanizer, Version=2.2.0.0, Culture=neutral, PublicKeyToken=979442b78dfc278e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Humanizer.Core.2.2.0\lib\netstandard1.0\Humanizer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,29 +44,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Errors\EntityValidationErrorCode.cs" />
-    <Compile Include="Errors\EntityValidationError{TEntity}.cs" />
-    <Compile Include="Exceptions\ServiceException.cs" />
-    <Compile Include="Exceptions\UnauthenticatedException.cs" />
-    <Compile Include="Exceptions\EntityCreatePermissionException{TEntity}.cs" />
-    <Compile Include="Exceptions\EntityPermissionException.cs" />
-    <Compile Include="Exceptions\IEntityCreatePermissionException.cs" />
-    <Compile Include="Exceptions\IEntityNotFoundException.cs" />
-    <Compile Include="Exceptions\IEntityPermissionException.cs" />
-    <Compile Include="Exceptions\EntityNotFoundException.cs" />
-    <Compile Include="Exceptions\EntityNotFoundException{TEntity}.cs" />
-    <Compile Include="Exceptions\EntityCreatePermissionException.cs" />
-    <Compile Include="Exceptions\EntityPermissionException{TEntity}.cs" />
-    <Compile Include="Errors\EntityValidationError.cs" />
-    <Compile Include="Errors\EntityValidationErrorDetails.cs" />
-    <Compile Include="Exceptions\EntityValidationException.cs" />
+    <Compile Include="Dtos\ErrorDto.cs" />
+    <Compile Include="Dtos\FullErrorDto.cs" />
+    <Compile Include="Helpers\PropertyNameHelper.cs" />
+    <Compile Include="Mappers\ExceptionHttpResponseMapperBase.cs" />
+    <Compile Include="Mappers\ExceptionHttpResponseBuilder.cs" />
+    <Compile Include="Mappers\IExceptionHttpResponseMapper.cs" />
+    <Compile Include="Responses\IHttpResponse.cs" />
+    <Compile Include="Responses\JsonHttpResponse.cs" />
+    <Compile Include="Models\ErrorApiModel.cs" />
+    <Compile Include="Models\ErrorDetailsApiModel.cs" />
+    <Compile Include="Models\ResourceCreatedApiModel.cs" />
+    <Compile Include="Models\ValidationError.cs" />
+    <Compile Include="Models\ValidationErrorApiModel.cs" />
+    <Compile Include="Models\ValidationErrorDetails.cs" />
+    <Compile Include="Models\ValidationError{TResource}.cs" />
+    <Compile Include="Responses\NotAuthenticatedHttpResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Responses\ResourceCreatePermissionHttpResponse.cs" />
+    <Compile Include="Responses\ResourceNotFoundHttpResponse.cs" />
+    <Compile Include="Responses\ResourcePermissionHttpResponse.cs" />
+    <Compile Include="Responses\ResourceValidationHttpResponse.cs" />
+    <Compile Include="Dtos\ValidationDetailsErrorDto.cs" />
+    <Compile Include="Dtos\ValidationErrorDto.cs" />
+    <Compile Include="Extensions\ValidationErrorDetailsExtensions.cs" />
+    <Compile Include="ValidationErrorCode.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AutoResponse.Core\AutoResponse.Core.csproj">
-      <Project>{E6AF0AC3-119C-43B3-8BFE-AAD23A37365D}</Project>
-      <Name>AutoResponse.Core</Name>
-    </ProjectReference>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

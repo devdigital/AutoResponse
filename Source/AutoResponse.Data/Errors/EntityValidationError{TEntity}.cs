@@ -3,7 +3,7 @@ namespace AutoResponse.Data.Errors
     using System;
     using System.Linq.Expressions;
 
-    using AutoResponse.Data.Helpers;
+    using AutoResponse.Core.Helpers;
 
     public class EntityValidationError<TEntity, TProperty> : EntityValidationError
     {

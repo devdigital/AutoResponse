@@ -8,9 +8,9 @@
     {
         public static IHttpActionResult ServiceErrorResult(
             this ApiController controller, 
-            ErrorDetailsApiModel errorDetails)
+            string message)
         {
-            return new ServiceErrorResult(controller.Request, errorDetails);
+            return new ServiceErrorResult(controller.Request, message);
         }
 
         public static IHttpActionResult ResourceCreatedResult(this ApiController controller, string id)

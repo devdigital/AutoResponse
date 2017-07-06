@@ -8,6 +8,8 @@
     using System.Threading.Tasks;
     using System.Web.Http;
 
+    using AutoResponse.Core.Models;
+
     using Humanizer;
 
     public abstract class ErrorActionResult : IHttpActionResult
@@ -38,7 +40,7 @@
         {
             var response = this.request.CreateResponse(this.statusCode);
 
-            response.Content = new ObjectContent<ErrorDetailsApiModel>(
+            response.Content = new ObjectContent<ErrorDetailsApiModel<ValidationErrorApiModel>>(
                 this.MapToErrorDetailsApiModel(this.GetErrorDetails()),
                 this.request.GetConfiguration().Formatters.JsonFormatter,
                 "application/json");
@@ -46,20 +48,20 @@
             return Task.FromResult(response);
         }
 
-        private ErrorDetailsApiModel MapToErrorDetailsApiModel(ValidationErrorDetails errorDetails)
+        private ErrorDetailsApiModel<ValidationErrorApiModel> MapToErrorDetailsApiModel(ValidationErrorDetails errorDetails)
         {
             var errors = errorDetails.Errors?.Select(this.MapToErrorApiModel);
 
-            return new ErrorDetailsApiModel
+            return new ErrorDetailsApiModel<ValidationErrorApiModel>
             {
                 Message = errorDetails.Message,
                 Errors = errors
             };
         }
 
-        private ErrorApiModel MapToErrorApiModel(ValidationError validationError)
+        private ValidationErrorApiModel MapToErrorApiModel(ValidationError validationError)
         {
-            return new ErrorApiModel
+            return new ValidationErrorApiModel
             {
                 Resource = validationError.Resource,
                 Field = validationError.Field,

@@ -4,6 +4,8 @@
     using System.Net;
     using System.Net.Http;
 
+    using AutoResponse.Core.Models;
+
     public class ResourceCreatePermissionResult : ErrorActionResult
     {
         private readonly string userId;

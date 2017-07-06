@@ -2,9 +2,9 @@
 {
     using System;
 
-    public class NotAuthenticatedException : Exception
+    public class UnauthenticatedException : Exception
     {
-        public NotAuthenticatedException(string message)
+        public UnauthenticatedException(string message)
             : base(message)
         {            
         }

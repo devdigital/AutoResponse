@@ -2,6 +2,7 @@
 {
     using System;
 
+    using AutoResponse.Core;
     using AutoResponse.Data.Errors;
     using AutoResponse.WebApi2.Results;
 

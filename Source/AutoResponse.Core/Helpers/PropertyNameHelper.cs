@@ -1,4 +1,4 @@
-namespace AutoResponse.Data.Helpers
+namespace AutoResponse.Core.Helpers
 {
     using System;
     using System.Linq.Expressions;

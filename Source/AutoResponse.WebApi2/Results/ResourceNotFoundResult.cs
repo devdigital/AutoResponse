@@ -5,6 +5,9 @@
     using System.Net;
     using System.Net.Http;
 
+    using AutoResponse.Core;
+    using AutoResponse.Core.Models;
+
     public class ResourceNotFoundResult : ErrorActionResult
     {
         private readonly string resourceType;

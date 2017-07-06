@@ -8,6 +8,8 @@
     using System.Threading.Tasks;
     using System.Web.Http;
 
+    using AutoResponse.Core.Models;
+
     using Humanizer;
 
     public class ResourceValidationResult : IHttpActionResult
@@ -36,11 +38,11 @@
         {
             var response = this.request.CreateResponse((HttpStatusCode)422);
             
-            var errorDetailsApiModel = new ErrorDetailsApiModel
+            var errorDetailsApiModel = new ErrorDetailsApiModel<ValidationErrorApiModel>
             {
                 Message = this.errorDetails.Message,
                 Errors = this.errorDetails.Errors.Select(e =>
-                    new ErrorApiModel
+                    new ValidationErrorApiModel
                         {
                             Resource = e.Resource,
                             Field = e.Field,
@@ -49,7 +51,7 @@
                         }).ToList()
             };
 
-            response.Content = new ObjectContent<ErrorDetailsApiModel>(
+            response.Content = new ObjectContent<ErrorDetailsApiModel<ValidationErrorApiModel>>(
                 errorDetailsApiModel,
                 this.request.GetConfiguration().Formatters.JsonFormatter,
                 "application/json");

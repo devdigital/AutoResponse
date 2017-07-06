@@ -1,4 +1,4 @@
-﻿namespace AutoResponse.WebApi2.Results
+﻿namespace AutoResponse.Core.Models
 {
     using System;
     using System.Collections.Generic;

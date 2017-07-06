@@ -3,6 +3,8 @@
     using System.Net;
     using System.Net.Http;
 
+    using AutoResponse.Core.Models;
+
     public class NotAuthenticatedResult : ErrorActionResult
     {
         public NotAuthenticatedResult(HttpRequestMessage request)

@@ -7,28 +7,31 @@
     using System.Threading.Tasks;
     using System.Web.Http;
 
+    using AutoResponse.Core.Dtos;
+    using AutoResponse.Core.Models;
+
     public class ServiceErrorResult : IHttpActionResult
     {
         private readonly HttpRequestMessage request;
-
-        private readonly object errorDetails;
+        
+        private readonly string message;
 
         private readonly Exception exception;
 
-        public ServiceErrorResult(HttpRequestMessage request, ErrorDetailsApiModel errorDetails)
+        public ServiceErrorResult(HttpRequestMessage request, string message)
         {
             if (request == null)
             {
                 throw new ArgumentNullException(nameof(request));
             }
 
-            if (errorDetails == null)
+            if (string.IsNullOrWhiteSpace(message))
             {
-                throw new ArgumentNullException(nameof(errorDetails));
+                throw new ArgumentNullException(nameof(message));
             }
 
             this.request = request;
-            this.errorDetails = errorDetails;
+            this.message = message;
         }
 
         public ServiceErrorResult(HttpRequestMessage request, Exception exception)
@@ -49,14 +52,21 @@
 
         public async Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
         {
-            // TODO: CreateErrorResponse checks if error details should be included in the response
-            // However, it doesn't support a custom model, but uses HttpError
-            // If this result is hooked up to unhandled exceptions (which I believe it should)
-            // then the Message property should include exception to string, only if error details included
-            return await Task.FromResult(
-                       this.request.CreateResponse(
-                           HttpStatusCode.InternalServerError,
-                           this.errorDetails));
+            var includeError = this.request.ShouldIncludeErrorDetail();
+            if (!includeError || this.exception == null)
+            {
+                return this.request.CreateResponse(
+                    HttpStatusCode.InternalServerError,
+                    new ErrorDto { Message = this.message });            
+            }
+
+            return this.request.CreateResponse(
+                HttpStatusCode.InternalServerError,
+                new FullErrorDto
+                    {
+                        Message = this.exception.ToString(),
+                        StackTrace = this.exception.StackTrace        
+                    });
         }
     }
 }
