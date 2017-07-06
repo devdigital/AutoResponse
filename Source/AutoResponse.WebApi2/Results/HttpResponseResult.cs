@@ -2,11 +2,11 @@
 {
     using System;
     using System.Net.Http;
+    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Web.Http;
 
-    using AutoResponse.Core;
     using AutoResponse.Core.Responses;
 
     public class HttpResponseResult : IHttpActionResult
@@ -42,11 +42,10 @@
             }
 
             // TODO: formatter based on content type
-            response.Content = new ObjectContent(
-                this.httpResponse.DataType, 
-                this.httpResponse.Data,                                
-                this.request.GetConfiguration().Formatters.JsonFormatter,
-                "application/json");
+            response.Content = new StringContent(
+                this.httpResponse.Content,
+                this.httpResponse.Encoding,
+                this.httpResponse.ContentType);
 
             return Task.FromResult(response);
         }

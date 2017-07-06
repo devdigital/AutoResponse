@@ -1,18 +1,18 @@
 namespace AutoResponse.Core.Responses
 {
-    using System;
     using System.Collections.Generic;
+    using System.Text;
 
     public interface IHttpResponse
     {
         int StatusCode { get; }
 
-        IDictionary<string, string> Headers { get; }
+        IDictionary<string, string[]> Headers { get; }
 
         string ContentType { get; }
 
-        Type DataType { get; }
+        string Content { get; }
 
-        object Data { get; }
+        Encoding Encoding { get; }
     }
 }

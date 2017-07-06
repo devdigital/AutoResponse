@@ -47,12 +47,12 @@
             ConfigureSerialization(configuration);
             var container = this.ConfigureContainer(configuration);
 
-            configuration.Services.Replace(typeof(IExceptionHandler), new AutoResponseExceptionHandler());
+            // configuration.Services.Replace(typeof(IExceptionHandler), new AutoResponseExceptionHandler());
 
             var cors = new EnableCorsAttribute("*", "*", "*");
             configuration.EnableCors(cors);
 
-            this.app.Use<AutoResponseExceptionMiddleware>();
+            this.app.Use<AutoResponseExceptionMiddleware>(new AutoResponseExceptionHttpResponseMapper());
 
             app.Use(
                 async (context, next) =>
