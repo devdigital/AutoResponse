@@ -1,24 +1,33 @@
 namespace AutoResponse.Core.Responses
 {
     using System.Collections.Generic;
+    using System.Net;
 
+    using AutoResponse.Core.Dtos;
     using AutoResponse.Core.Models;
 
-    public class ResourceNotFoundHttpResponse : ResourceValidationHttpResponse
-    {        
+    public class ResourceNotFoundHttpResponse : JsonHttpResponse<ValidationErrorDetailsDto>
+    {      
         public ResourceNotFoundHttpResponse(string resourceType, string resourceId)
-            : base(ToValidationErrorDetails(resourceType, resourceId))
+            : base(ToValidationErrorDetails(resourceType, resourceId), HttpStatusCode.NotFound)
         {            
         }
 
-        private static ValidationErrorDetails ToValidationErrorDetails(string resourceType, string resourceId)
+        private static ValidationErrorDetailsDto ToValidationErrorDetails(string resourceType, string resourceId)
         {
-            return new ValidationErrorDetails(
-                $"The {resourceType} resource with identifier '{resourceId}' was not found.",
-                new List<ValidationError>
+            return new ValidationErrorDetailsDto
+            {
+                Message = $"The {resourceType} resource with identifier '{resourceId}' was not found.",
+                Errors = new List<ValidationErrorDto>
                 {
-                    new ValidationError(resourceType, "id", ValidationErrorCode.Missing)
-                });
+                    new ValidationErrorDto
+                    {
+                        Resource = resourceType,
+                        Field = "id",
+                        Code = "missing",
+                    }
+                }
+            };
         }
     }
 }

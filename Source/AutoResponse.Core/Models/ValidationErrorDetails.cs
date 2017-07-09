@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class ValidationErrorDetails
     {
@@ -13,7 +14,7 @@
             }
 
             this.Message = message;
-            this.Errors = errors;
+            this.Errors = errors ?? Enumerable.Empty<ValidationError>();
         }
 
         public string Message { get; }

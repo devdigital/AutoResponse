@@ -1,5 +1,6 @@
 namespace AutoResponse.Core.Responses
 {
+    using System.Collections.Generic;
     using System.Net;
 
     using AutoResponse.Core.Dtos;

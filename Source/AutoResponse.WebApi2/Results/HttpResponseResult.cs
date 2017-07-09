@@ -2,7 +2,6 @@
 {
     using System;
     using System.Net.Http;
-    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
     using System.Web.Http;
@@ -35,13 +34,11 @@
         {
             var response = this.request.CreateResponse(this.httpResponse.StatusCode);
 
-            // TODO: review header collection value
             foreach (var keyValuePair in this.httpResponse.Headers)
             {
                 response.Headers.Add(keyValuePair.Key, keyValuePair.Value);
             }
 
-            // TODO: formatter based on content type
             response.Content = new StringContent(
                 this.httpResponse.Content,
                 this.httpResponse.Encoding,

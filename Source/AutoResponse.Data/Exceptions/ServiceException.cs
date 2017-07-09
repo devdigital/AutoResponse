@@ -8,5 +8,10 @@
             : base(message)
         {            
         }
+
+        public ServiceException(Exception exception) 
+            : base("There was an unhandled exception", exception)
+        {
+        }
     }
 }

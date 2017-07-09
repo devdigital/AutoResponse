@@ -20,9 +20,9 @@
         }
 
         protected abstract void ConfigureMappings(ExceptionHttpResponseBuilder builder);
-
+       
         public IHttpResponse GetHttpResponse(Exception exception)
-        {            
+        {
             if (exception == null)
             {
                 throw new ArgumentNullException(nameof(exception));
@@ -36,11 +36,18 @@
 
             if (!this.mappers.Value.ContainsKey(exceptionType))
             {
-                return null;
+                return this.GetUnhandledResponse(exception);
             }
 
             var mapper = this.mappers.Value[exceptionType];
-            return mapper?.Invoke(exception);
-        }        
+            if (mapper == null)
+            {
+                return this.GetUnhandledResponse(exception);
+            }
+
+            return mapper.Invoke(exception);
+        }
+
+        public abstract IHttpResponse GetUnhandledResponse(Exception exception);
     }
 }

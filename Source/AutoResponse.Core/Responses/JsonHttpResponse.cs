@@ -11,19 +11,22 @@ namespace AutoResponse.Core.Responses
     {
         public JsonHttpResponse(TData data, HttpStatusCode statusCode, IDictionary<string, string[]> headers = null)
         {
-            this.StatusCode = (int)statusCode;
+            this.StatusCode = statusCode;
             this.Headers = headers ?? new Dictionary<string, string[]>();
             this.ContentType = "application/json";
 
             this.Content = JsonConvert.SerializeObject(data);
+            this.ContentLength = Encoding.UTF8.GetByteCount(this.Content);
             this.Encoding = Encoding.UTF8;            
         }
-
-        public int StatusCode { get; }
+        
+        public HttpStatusCode StatusCode { get; }
 
         public IDictionary<string, string[]> Headers { get; }
 
         public string ContentType { get; }
+
+        public long? ContentLength { get; set; }
 
         public string Content { get; }
 

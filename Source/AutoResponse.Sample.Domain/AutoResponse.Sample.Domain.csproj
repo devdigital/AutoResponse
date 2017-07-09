@@ -43,6 +43,8 @@
     <Compile Include="Repositories\IValuesRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Value.cs" />
+    <Compile Include="Services\IExceptionService.cs" />
+    <Compile Include="Services\NullExceptionService.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

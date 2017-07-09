@@ -14,6 +14,7 @@
 
     using AutoResponse.Sample.Data.Repositories;
     using AutoResponse.Sample.Domain.Repositories;
+    using AutoResponse.Sample.Domain.Services;
     using AutoResponse.WebApi2.ExceptionHandling;
 
     using global::Owin;
@@ -47,21 +48,25 @@
             ConfigureSerialization(configuration);
             var container = this.ConfigureContainer(configuration);
 
-            // configuration.Services.Replace(typeof(IExceptionHandler), new AutoResponseExceptionHandler());
+            configuration.Services.Replace(typeof(IExceptionHandler), new AutoResponseExceptionHandler());
 
             var cors = new EnableCorsAttribute("*", "*", "*");
             configuration.EnableCors(cors);
 
-            this.app.Use<AutoResponseExceptionMiddleware>(new AutoResponseExceptionHttpResponseMapper());
+            this.app.UseAutoResponse();
 
-            app.Use(
+            this.app.Use(
                 async (context, next) =>
                     {
-                        if (context.Request.Uri.AbsolutePath.StartsWith("/fail"))
+                        var exceptionService =
+                            configuration.DependencyResolver.GetService(typeof(IExceptionService)) as IExceptionService;
+
+                        if (exceptionService == null)
                         {
-                            throw new Exception("This is a test exception");
+                            throw new InvalidOperationException($"No {typeof(IExceptionService).Name} registered");
                         }
 
+                        exceptionService.Execute();                        
                         await next();
                     });
 
@@ -96,6 +101,7 @@
             builder.RegisterSource(new AnyConcreteTypeNotAlreadyRegisteredSource());
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
+            builder.RegisterType<NullExceptionService>().As<IExceptionService>();
             builder.RegisterType<DefaultValuesRepository>().As<IValuesRepository>();
 
             this.AdditionalRegistrations(builder);

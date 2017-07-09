@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoResponseExceptionMiddleware.cs" />
+    <Compile Include="IAppBuilderExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +59,10 @@
     <ProjectReference Include="..\AutoResponse.Core\AutoResponse.Core.csproj">
       <Project>{E6AF0AC3-119C-43B3-8BFE-AAD23A37365D}</Project>
       <Name>AutoResponse.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoResponse.WebApi2\AutoResponse.WebApi2.csproj">
+      <Project>{0A14BBB6-FFB3-4805-951F-D21D3D7E594B}</Project>
+      <Name>AutoResponse.WebApi2</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

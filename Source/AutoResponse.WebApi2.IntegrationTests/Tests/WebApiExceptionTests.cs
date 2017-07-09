@@ -15,23 +15,11 @@
 
     using Xunit;
 
-    public class ExceptionMapperTests
+    public class WebApiExceptionTests
     {
         [Theory]
         [AutoData]
-        public async Task Foo(SampleServerFactory serverFactory)
-        {
-            using (var server = serverFactory.Create())
-            {
-                var response = await server.HttpClient.GetAsync("/fail");
-                var body = await response.Content.ReadAsStringAsync();
-                Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
-            }
-        }
-
-        [Theory]
-        [AutoData]
-        public async Task NotAuthenticatedExceptionShouldReturn401(
+        public async Task UnauthenticatedExceptionShouldReturn401(
            SampleServerFactory serverFactory,
            Mock<IValuesRepository> valuesRepository,
            string entityType,

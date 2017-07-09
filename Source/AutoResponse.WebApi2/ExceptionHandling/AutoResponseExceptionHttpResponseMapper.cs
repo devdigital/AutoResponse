@@ -1,5 +1,7 @@
 ﻿namespace AutoResponse.WebApi2.ExceptionHandling
 {
+    using System;
+
     using AutoResponse.Core.Mappers;
     using AutoResponse.Core.Responses;
     using AutoResponse.Data.Exceptions;
@@ -37,6 +39,12 @@
             builder.AddGenericMapping<IEntityPermissionException>(
                 typeof(EntityPermissionException<>),
                 e => new ResourcePermissionHttpResponse(e.UserId, e.EntityType.Kebaberize(), e.EntityId));
+        }
+
+        public override IHttpResponse GetUnhandledResponse(Exception exception)
+        {
+            return new ServiceExceptionHttpResponse(
+                "There was an unhandled exception", exception);
         }
     }
 }

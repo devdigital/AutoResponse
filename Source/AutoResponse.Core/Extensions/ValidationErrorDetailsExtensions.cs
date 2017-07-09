@@ -9,9 +9,9 @@ namespace AutoResponse.Core.Extensions
 
     internal static class ValidationErrorDetailsExtensions
     {
-        public static ValidationDetailsErrorDto ToApiModel(this ValidationErrorDetails validationErrorDetails)
+        public static ValidationErrorDetailsDto ToApiModel(this ValidationErrorDetails validationErrorDetails)
         {
-            return new ValidationDetailsErrorDto
+            return new ValidationErrorDetailsDto
             {
                 Message = validationErrorDetails.Message,
                 Errors = validationErrorDetails.Errors.Select(e => new ValidationErrorDto

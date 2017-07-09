@@ -69,9 +69,10 @@
     <Compile Include="Responses\ResourceNotFoundHttpResponse.cs" />
     <Compile Include="Responses\ResourcePermissionHttpResponse.cs" />
     <Compile Include="Responses\ResourceValidationHttpResponse.cs" />
-    <Compile Include="Dtos\ValidationDetailsErrorDto.cs" />
+    <Compile Include="Dtos\ValidationErrorDetailsDto.cs" />
     <Compile Include="Dtos\ValidationErrorDto.cs" />
     <Compile Include="Extensions\ValidationErrorDetailsExtensions.cs" />
+    <Compile Include="Responses\ServiceExceptionHttpResponse.cs" />
     <Compile Include="ValidationErrorCode.cs" />
   </ItemGroup>
   <ItemGroup>

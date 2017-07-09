@@ -3,7 +3,6 @@
     using System;
     using System.Web.Http.ExceptionHandling;
 
-    using AutoResponse.Core;
     using AutoResponse.Core.Mappers;
     using AutoResponse.WebApi2.Results;
 
