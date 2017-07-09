@@ -2,14 +2,14 @@
 {
     using System;
 
-    public class ServiceException : Exception
+    public class ServiceErrorException : Exception
     {
-        public ServiceException(string message)
+        public ServiceErrorException(string message)
             : base(message)
         {            
         }
 
-        public ServiceException(Exception exception) 
+        public ServiceErrorException(Exception exception) 
             : base("There was an unhandled exception", exception)
         {
         }

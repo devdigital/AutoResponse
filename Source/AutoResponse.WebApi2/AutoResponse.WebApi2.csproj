@@ -83,7 +83,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\ErrorActionResult.cs" />
     <Compile Include="Results\HttpResponseResult.cs" />
-    <Compile Include="Results\NotAuthenticatedResult.cs" />
+    <Compile Include="Results\UnauthenticatedResult.cs" />
     <Compile Include="Results\ResourceCreatedResult.cs" />
     <Compile Include="Results\ResourceCreatePermissionResult.cs" />
     <Compile Include="Results\ResourceNotFoundResult.cs" />

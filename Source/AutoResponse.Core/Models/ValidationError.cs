@@ -2,6 +2,8 @@
 {
     using System;
 
+    using AutoResponse.Core.Enums;
+
     public class ValidationError
     {
         public ValidationError(string resource, string field, ValidationErrorCode code, string errorMessage = null)

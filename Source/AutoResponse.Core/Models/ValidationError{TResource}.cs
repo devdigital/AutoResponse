@@ -4,6 +4,7 @@
     using System.Linq.Expressions;
 
     using AutoResponse.Core;
+    using AutoResponse.Core.Enums;
     using AutoResponse.Core.Helpers;
 
     public class ValidationError<TResource, TField> : ValidationError

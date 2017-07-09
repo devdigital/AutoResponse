@@ -5,33 +5,16 @@
     using System.Net.Http;
 
     using AutoResponse.Core.Models;
+    using AutoResponse.Core.Responses;
 
-    public class ResourceCreatePermissionResult : ErrorActionResult
-    {
-        private readonly string userId;
-
-        private readonly string resourceType;
-
-        private readonly string resourceId;
-
+    public class ResourceCreatePermissionResult : HttpResponseResult
+    {        
         public ResourceCreatePermissionResult(
             HttpRequestMessage request,
             string userId,
-            string resourceType)
-            : base(request, HttpStatusCode.Forbidden)
+            string resourceType)       
+            : base(request, new ResourceCreatePermissionHttpResponse(userId, resourceType))
         {
-            if (string.IsNullOrWhiteSpace(nameof(userId)))
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-
-            if (string.IsNullOrWhiteSpace(resourceType))
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-
-            this.userId = userId;
-            this.resourceType = resourceType;
         }
 
         public ResourceCreatePermissionResult(
@@ -39,38 +22,8 @@
             string userId, 
             string resourceType, 
             string resourceId)
-            : base(request, HttpStatusCode.Forbidden)
+            : base(request, new ResourceCreatePermissionHttpResponse(userId, resourceType, resourceId))
         {
-            if (string.IsNullOrWhiteSpace(nameof(userId)))
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
-
-            if (string.IsNullOrWhiteSpace(resourceType))
-            {
-                throw new ArgumentNullException(nameof(resourceType));
-            }
-
-            if (string.IsNullOrWhiteSpace(resourceId))
-            {
-                throw new ArgumentNullException(nameof(resourceId));
-            }
-
-            this.userId = userId;
-            this.resourceType = resourceType;
-            this.resourceId = resourceId;
-        }
-
-        protected override ValidationErrorDetails GetErrorDetails()
-        {
-            if (string.IsNullOrWhiteSpace(this.resourceId))
-            {
-                return new ValidationErrorDetails(
-                    $"The user with identifier '{this.userId}', does not have permission to create a {this.resourceType} resource");
-            }
-
-            return new ValidationErrorDetails(
-                $"The user with identifier '{this.userId}', does not have permission to create a {this.resourceType} resource with resource identifier '{this.resourceId}'");
-        }
+        }        
     }
 }

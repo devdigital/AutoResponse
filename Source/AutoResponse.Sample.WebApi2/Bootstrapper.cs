@@ -15,6 +15,7 @@
     using AutoResponse.Sample.Data.Repositories;
     using AutoResponse.Sample.Domain.Repositories;
     using AutoResponse.Sample.Domain.Services;
+    using AutoResponse.Sample.WebApi2.Factories;
     using AutoResponse.WebApi2.ExceptionHandling;
 
     using global::Owin;
@@ -103,6 +104,7 @@
 
             builder.RegisterType<NullExceptionService>().As<IExceptionService>();
             builder.RegisterType<DefaultValuesRepository>().As<IValuesRepository>();
+            builder.RegisterType<OkActionResultFactory>().As<IHttpActionResultFactory>();
 
             this.AdditionalRegistrations(builder);
 

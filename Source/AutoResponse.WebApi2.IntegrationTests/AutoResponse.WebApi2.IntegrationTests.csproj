@@ -71,6 +71,14 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -98,6 +106,8 @@
     <Compile Include="Helpers\AutoCustomData.cs" />
     <Compile Include="Helpers\AutoInjectBuilder.cs" />
     <Compile Include="Helpers\AutoInjectBuilderCustomization.cs" />
+    <Compile Include="Attributes\AutoMoqDataAttribute.cs" />
+    <Compile Include="Tests\WebApiActionResultTests.cs" />
     <Compile Include="Tests\WebApiExceptionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\SampleServerFactory.cs" />
@@ -109,6 +119,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AutoResponse.Core\AutoResponse.Core.csproj">
+      <Project>{E6AF0AC3-119C-43B3-8BFE-AAD23A37365D}</Project>
+      <Name>AutoResponse.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AutoResponse.Data\AutoResponse.Data.csproj">
       <Project>{B0A0D479-599F-4462-8238-04C011100AE9}</Project>
       <Name>AutoResponse.Data</Name>
@@ -120,6 +134,10 @@
     <ProjectReference Include="..\AutoResponse.Sample.WebApi2\AutoResponse.Sample.WebApi2.csproj">
       <Project>{C474C4E8-F2A8-4D91-9F0E-4A91DEFC4235}</Project>
       <Name>AutoResponse.Sample.WebApi2</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoResponse.WebApi2\AutoResponse.WebApi2.csproj">
+      <Project>{0a14bbb6-ffb3-4805-951f-d21d3d7e594b}</Project>
+      <Name>AutoResponse.WebApi2</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

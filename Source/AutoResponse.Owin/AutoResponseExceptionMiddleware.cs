@@ -85,8 +85,17 @@
                 case HttpStatusCode.BadGateway: return "Bad Gateway";
                 case HttpStatusCode.ServiceUnavailable: return "Service Unavailable";
                 case HttpStatusCode.GatewayTimeout: return "Gateway Time-out";
+                case (HttpStatusCode)418: return "I'm a teapot";
+                case (HttpStatusCode)421: return "Misdirected Request";
+                case (HttpStatusCode)422: return "Unprocessable Entity";
+                case (HttpStatusCode)423: return "Locked";
+                case (HttpStatusCode)424: return "Failed Dependency";
+                case HttpStatusCode.UpgradeRequired: return "Upgrade Required";
+                case (HttpStatusCode)429: return "Too Many Requests";
+                case (HttpStatusCode)431: return "Request Header Fields Too Large";
+                case (HttpStatusCode)451: return "Unavailable For Legal Reasons";
                 default:
-                    return string.Empty;
+                    throw new ArgumentOutOfRangeException(nameof(statusCode), statusCode, "Unexpected HTTP status code when generating reason phrase");
             }
         }
     }

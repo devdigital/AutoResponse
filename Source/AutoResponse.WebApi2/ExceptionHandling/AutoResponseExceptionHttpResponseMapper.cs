@@ -13,8 +13,11 @@
     {
         protected override void ConfigureMappings(ExceptionHttpResponseBuilder builder)
         {
+            builder.AddMapping<ServiceErrorException>(
+                e => new ServiceErrorHttpResponse(e.Message, e.InnerException));
+
             builder.AddMapping<UnauthenticatedException>(
-                e => new NotAuthenticatedHttpResponse());
+                e => new UnauthenticatedHttpResponse());
 
             builder.AddMapping<EntityValidationException>(
                 e => new ResourceValidationHttpResponse(e.ErrorDetails.ToValidationErrorDetails()));
@@ -27,7 +30,9 @@
                 e => new ResourceNotFoundHttpResponse(e.EntityType.Kebaberize(), e.EntityId));
 
             builder.AddMapping<EntityCreatePermissionException>(
-                e => new ResourceCreatePermissionHttpResponse(e.UserId, e.EntityType.Kebaberize(), e.EntityId));
+                e => string.IsNullOrWhiteSpace(e.EntityId) 
+                    ? new ResourceCreatePermissionHttpResponse(e.UserId, e.EntityType.Kebaberize())
+                    : new ResourceCreatePermissionHttpResponse(e.UserId, e.EntityType.Kebaberize(), e.EntityId));
 
             builder.AddGenericMapping<IEntityCreatePermissionException>(
                 typeof(EntityCreatePermissionException<>),
@@ -43,7 +48,7 @@
 
         public override IHttpResponse GetUnhandledResponse(Exception exception)
         {
-            return new ServiceExceptionHttpResponse(
+            return new ServiceErrorHttpResponse(
                 "There was an unhandled exception", exception);
         }
     }

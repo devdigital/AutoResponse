@@ -132,6 +132,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Factories\IHttpActionResultFactory.cs" />
+    <Compile Include="Factories\OkActionResultFactory.cs" />
     <Compile Include="Models\ValueApiModel.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

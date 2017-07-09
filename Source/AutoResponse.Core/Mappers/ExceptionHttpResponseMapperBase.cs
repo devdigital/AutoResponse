@@ -40,12 +40,7 @@
             }
 
             var mapper = this.mappers.Value[exceptionType];
-            if (mapper == null)
-            {
-                return this.GetUnhandledResponse(exception);
-            }
-
-            return mapper.Invoke(exception);
+            return mapper == null ? this.GetUnhandledResponse(exception) : mapper.Invoke(exception);
         }
 
         public abstract IHttpResponse GetUnhandledResponse(Exception exception);

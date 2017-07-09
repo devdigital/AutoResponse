@@ -44,7 +44,7 @@
   <ItemGroup>
     <Compile Include="Errors\EntityValidationErrorCode.cs" />
     <Compile Include="Errors\EntityValidationError{TEntity}.cs" />
-    <Compile Include="Exceptions\ServiceException.cs" />
+    <Compile Include="Exceptions\ServiceErrorException.cs" />
     <Compile Include="Exceptions\UnauthenticatedException.cs" />
     <Compile Include="Exceptions\EntityCreatePermissionException{TEntity}.cs" />
     <Compile Include="Exceptions\EntityPermissionException.cs" />

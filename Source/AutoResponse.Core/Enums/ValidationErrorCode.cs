@@ -1,4 +1,4 @@
-﻿namespace AutoResponse.Core
+﻿namespace AutoResponse.Core.Enums
 {
     public enum ValidationErrorCode
     {

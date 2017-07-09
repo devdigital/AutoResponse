@@ -4,9 +4,9 @@ namespace AutoResponse.Core.Responses
 
     using AutoResponse.Core.Dtos;
 
-    public class NotAuthenticatedHttpResponse : JsonHttpResponse<ErrorDto>
+    public class UnauthenticatedHttpResponse : JsonHttpResponse<ErrorDto>
     {
-        public NotAuthenticatedHttpResponse()
+        public UnauthenticatedHttpResponse()
             : base(new ErrorDto { Message = "The user is not authenticated" }, HttpStatusCode.Unauthorized)
         {
         }
