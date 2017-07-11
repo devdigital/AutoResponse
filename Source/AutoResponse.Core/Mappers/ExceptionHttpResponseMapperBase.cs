@@ -7,13 +7,13 @@
 
     public abstract class ExceptionHttpResponseMapperBase : IExceptionHttpResponseMapper
     {
-        private readonly Lazy<IDictionary<Type, Func<Exception, IHttpResponse>>> mappers;
+        private readonly Lazy<IDictionary<Type, Func<object, Exception, IHttpResponse>>> mappers;
 
         protected ExceptionHttpResponseMapperBase()
         {
-            this.mappers = new Lazy<IDictionary<Type, Func<Exception, IHttpResponse>>>(() =>
+            this.mappers = new Lazy<IDictionary<Type, Func<object, Exception, IHttpResponse>>>(() =>
             {
-                var mappersInstance = new Dictionary<Type, Func<Exception, IHttpResponse>>();
+                var mappersInstance = new Dictionary<Type, Func<object, Exception, IHttpResponse>>();
                 this.ConfigureMappings(new ExceptionHttpResponseBuilder(mappersInstance));
                 return mappersInstance;
             });
@@ -21,7 +21,7 @@
 
         protected abstract void ConfigureMappings(ExceptionHttpResponseBuilder builder);
        
-        public IHttpResponse GetHttpResponse(Exception exception)
+        public IHttpResponse GetHttpResponse(object context, Exception exception)
         {
             if (exception == null)
             {
@@ -36,13 +36,15 @@
 
             if (!this.mappers.Value.ContainsKey(exceptionType))
             {
-                return this.GetUnhandledResponse(exception);
+                return this.GetUnhandledResponse(context, exception);
             }
 
             var mapper = this.mappers.Value[exceptionType];
-            return mapper == null ? this.GetUnhandledResponse(exception) : mapper.Invoke(exception);
+            return mapper == null 
+                ? this.GetUnhandledResponse(context, exception) 
+                : mapper.Invoke(context, exception);
         }
 
-        public abstract IHttpResponse GetUnhandledResponse(Exception exception);
+        public abstract IHttpResponse GetUnhandledResponse(object context, Exception exception);
     }
 }

@@ -57,10 +57,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExceptionHandling\AutoResponseExceptionHttpResponseMapper.cs" />
-    <Compile Include="Extensions\EntityValidationErrorCodeExtensions.cs" />
-    <Compile Include="Extensions\EntityValidationErrorDetailsExtensions.cs" />
     <Compile Include="ExceptionHandling\AutoResponseExceptionHandler.cs" />
+    <Compile Include="ExceptionHandling\WebApiContextResolver.cs" />
     <Compile Include="Extensions\ApiControllerExtensions.cs" />
     <Compile Include="Extensions\ModelStateExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
@@ -107,6 +105,10 @@
     <ProjectReference Include="..\AutoResponse.Data\AutoResponse.Data.csproj">
       <Project>{B0A0D479-599F-4462-8238-04C011100AE9}</Project>
       <Name>AutoResponse.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoResponse.Owin\AutoResponse.Owin.csproj">
+      <Project>{DB1D544E-AFBF-4B61-924C-8D17F298577E}</Project>
+      <Name>AutoResponse.Owin</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

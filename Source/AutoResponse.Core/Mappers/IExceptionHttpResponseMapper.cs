@@ -6,8 +6,8 @@
 
     public interface IExceptionHttpResponseMapper
     {
-        IHttpResponse GetHttpResponse(Exception exception);
+        IHttpResponse GetHttpResponse(object context, Exception exception);
 
-        IHttpResponse GetUnhandledResponse(Exception exception);
+        IHttpResponse GetUnhandledResponse(object context, Exception exception);
     }
 }

@@ -1,11 +1,9 @@
-﻿namespace AutoResponse.WebApi2.Extensions
+﻿namespace AutoResponse.Owin
 {
     using System.Linq;
 
     using AutoResponse.Core.Models;
     using AutoResponse.Data.Errors;
-    using AutoResponse.WebApi2.ExceptionHandling;
-    using AutoResponse.WebApi2.Results;
 
     using Humanizer;
 

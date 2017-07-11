@@ -39,7 +39,7 @@
 
         private void ConvertExceptionToHttpReponse(Exception exception, IOwinContext context)
         {
-            var httpResponse = this.mapper.GetHttpResponse(exception);
+            var httpResponse = this.mapper.GetHttpResponse(context: null, exception: exception);
             if (httpResponse == null)
             {
                 throw exception;

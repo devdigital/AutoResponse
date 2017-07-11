@@ -50,11 +50,23 @@
             var container = this.ConfigureContainer(configuration);
 
             configuration.Services.Replace(typeof(IExceptionHandler), new AutoResponseExceptionHandler());
+            configuration.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Never;
 
             var cors = new EnableCorsAttribute("*", "*", "*");
             configuration.EnableCors(cors);
 
             this.app.UseAutoResponse();
+
+            this.app.Use(
+               async (context, next) =>
+               {
+                   if (context.Request.Uri.AbsolutePath.StartsWith("/fail"))
+                   {
+                       throw new Exception("There was an error");
+                   }
+                   
+                   await next();
+               });
 
             this.app.Use(
                 async (context, next) =>

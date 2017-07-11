@@ -4,6 +4,7 @@
     using System.Web.Http.ExceptionHandling;
 
     using AutoResponse.Core.Mappers;
+    using AutoResponse.Owin;
     using AutoResponse.WebApi2.Results;
 
     public class AutoResponseExceptionHandler : ExceptionHandler
@@ -12,7 +13,7 @@
 
         public AutoResponseExceptionHandler()
         {
-            this.mapper = new AutoResponseExceptionHttpResponseMapper();
+            this.mapper = new AutoResponseExceptionHttpResponseMapper(new WebApiContextResolver());
         }
 
         public AutoResponseExceptionHandler(IExceptionHttpResponseMapper mapper)
@@ -40,7 +41,7 @@
                 return;
             }
 
-            var httpResponse = this.mapper.GetHttpResponse(context.Exception);
+            var httpResponse = this.mapper.GetHttpResponse(context.Request, context.Exception);
             if (httpResponse == null)
             {
                 base.Handle(context);

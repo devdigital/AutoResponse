@@ -6,6 +6,7 @@ namespace AutoResponse.Core.Responses
     using System.Text;
 
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
 
     public abstract class JsonHttpResponse<TData> : IHttpResponse
     {
@@ -14,8 +15,13 @@ namespace AutoResponse.Core.Responses
             this.StatusCode = statusCode;
             this.Headers = headers ?? new Dictionary<string, string[]>();
             this.ContentType = "application/json";
+            
+            var jsonSettings = new JsonSerializerSettings
+            {
+                ContractResolver = new CamelCasePropertyNamesContractResolver()
+            };
 
-            this.Content = JsonConvert.SerializeObject(data);
+            this.Content = JsonConvert.SerializeObject(data, jsonSettings);
             this.ContentLength = Encoding.UTF8.GetByteCount(this.Content);
             this.Encoding = Encoding.UTF8;            
         }
