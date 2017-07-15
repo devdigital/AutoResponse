@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+    <metadata>
+        <id>AutoResponse.Core</id>
+        <version>$version$</version>
+        <authors>DevDigital</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Create standardised responses for .NET RESTful APIs.</description>
+        <dependencies>
+            <group targetFramework=".NETFramework4.5">
+                <dependency id="Newtonsoft.Json" version="10.0.3" />
+                <dependency id="Humanizer.Core" version="2.2.0" />                
+            </group>
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="bin\Release\AutoResponse.Core.dll" target="lib\net45\AutoResponse.Core.dll" />
+    </files>
+</package>
