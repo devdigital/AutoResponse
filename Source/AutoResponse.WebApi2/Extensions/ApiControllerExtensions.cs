@@ -6,12 +6,12 @@
 
     public static class ApiControllerExtensions
     {
-        public static IHttpActionResult ServiceErrorResult(
-            this ApiController controller, 
-            ErrorDetailsApiModel errorDetails)
-        {
-            return new ServiceErrorResult(controller.Request, errorDetails);
-        }
+        //public static IHttpActionResult ServiceErrorResult(
+        //    this ApiController controller, 
+        //    string message)
+        //{
+        //    return new ServiceErrorResult(controller.Request, message);
+        //}
 
         public static IHttpActionResult ResourceCreatedResult(this ApiController controller, string id)
         {

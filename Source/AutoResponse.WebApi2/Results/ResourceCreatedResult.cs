@@ -7,6 +7,8 @@
     using System.Threading.Tasks;
     using System.Web.Http;
 
+    using AutoResponse.Core.Models;
+
     public class ResourceCreatedResult : IHttpActionResult
     {
         private readonly HttpRequestMessage request;

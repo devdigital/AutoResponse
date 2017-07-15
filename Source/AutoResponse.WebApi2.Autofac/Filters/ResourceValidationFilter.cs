@@ -11,6 +11,7 @@
     using System.Web.Http.Filters;
     using System.Web.Http.ModelBinding;
 
+    using AutoResponse.Core.Models;
     using AutoResponse.WebApi2.Extensions;
     using AutoResponse.WebApi2.Results;
 

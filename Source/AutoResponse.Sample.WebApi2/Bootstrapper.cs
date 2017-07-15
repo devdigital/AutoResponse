@@ -14,7 +14,11 @@
 
     using AutoResponse.Sample.Data.Repositories;
     using AutoResponse.Sample.Domain.Repositories;
+    using AutoResponse.Sample.Domain.Services;
+    using AutoResponse.Sample.WebApi2.Factories;
     using AutoResponse.WebApi2.ExceptionHandling;
+
+    using global::Owin;
 
     using Newtonsoft.Json.Serialization;
 
@@ -45,12 +49,39 @@
             ConfigureSerialization(configuration);
             var container = this.ConfigureContainer(configuration);
 
-            configuration.Services.Replace(
-                typeof(IExceptionHandler),
-                new AutoResponseExceptionHandler());
+            configuration.Services.Replace(typeof(IExceptionHandler), new AutoResponseExceptionHandler());
+            configuration.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Never;
 
             var cors = new EnableCorsAttribute("*", "*", "*");
             configuration.EnableCors(cors);
+
+            this.app.UseAutoResponse();
+
+            this.app.Use(
+               async (context, next) =>
+               {
+                   if (context.Request.Uri.AbsolutePath.StartsWith("/fail"))
+                   {
+                       throw new Exception("There was an error");
+                   }
+                   
+                   await next();
+               });
+
+            this.app.Use(
+                async (context, next) =>
+                    {
+                        var exceptionService =
+                            configuration.DependencyResolver.GetService(typeof(IExceptionService)) as IExceptionService;
+
+                        if (exceptionService == null)
+                        {
+                            throw new InvalidOperationException($"No {typeof(IExceptionService).Name} registered");
+                        }
+
+                        exceptionService.Execute();                        
+                        await next();
+                    });
 
             // Register the Autofac middleware FIRST, then the Autofac Web API middleware,
             // and finally the standard Web API middleware.
@@ -83,7 +114,9 @@
             builder.RegisterSource(new AnyConcreteTypeNotAlreadyRegisteredSource());
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
+            builder.RegisterType<NullExceptionService>().As<IExceptionService>();
             builder.RegisterType<DefaultValuesRepository>().As<IValuesRepository>();
+            builder.RegisterType<OkActionResultFactory>().As<IHttpActionResultFactory>();
 
             this.AdditionalRegistrations(builder);
 

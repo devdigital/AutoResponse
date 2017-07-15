@@ -132,6 +132,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Factories\IHttpActionResultFactory.cs" />
+    <Compile Include="Factories\OkActionResultFactory.cs" />
     <Compile Include="Models\ValueApiModel.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -139,9 +141,13 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AutoResponse.Data\AutoResponse.Data.csproj">
-      <Project>{B0A0D479-599F-4462-8238-04C011100AE9}</Project>
-      <Name>AutoResponse.Data</Name>
+    <ProjectReference Include="..\AutoResponse.Core\AutoResponse.Core.csproj">
+      <Project>{E6AF0AC3-119C-43B3-8BFE-AAD23A37365D}</Project>
+      <Name>AutoResponse.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoResponse.Owin\AutoResponse.Owin.csproj">
+      <Project>{DB1D544E-AFBF-4B61-924C-8D17F298577E}</Project>
+      <Name>AutoResponse.Owin</Name>
     </ProjectReference>
     <ProjectReference Include="..\AutoResponse.Sample.Data\AutoResponse.Sample.Data.csproj">
       <Project>{C262F933-6AD3-4CCE-9D3A-4C9B76AAAA32}</Project>

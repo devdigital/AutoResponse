@@ -3,23 +3,27 @@
     using System;
     using System.Web.Http.ExceptionHandling;
 
+    using AutoResponse.Core.Mappers;
+    using AutoResponse.Owin;
+    using AutoResponse.WebApi2.Results;
+
     public class AutoResponseExceptionHandler : ExceptionHandler
     {
-        private readonly IExceptionActionResultMapper actionResultMapper;
+        private readonly IExceptionHttpResponseMapper mapper;
 
         public AutoResponseExceptionHandler()
         {
-            this.actionResultMapper = new AutoResponseExceptionActionResultMapper();
+            this.mapper = new AutoResponseExceptionHttpResponseMapper(new WebApiContextResolver());
         }
 
-        public AutoResponseExceptionHandler(IExceptionActionResultMapper actionResultMapper)
+        public AutoResponseExceptionHandler(IExceptionHttpResponseMapper mapper)
         {
-            if (actionResultMapper == null)
+            if (mapper == null)
             {
-                throw new ArgumentNullException(nameof(actionResultMapper));
+                throw new ArgumentNullException(nameof(mapper));
             }
 
-            this.actionResultMapper = actionResultMapper;
+            this.mapper = mapper;
         }
 
         // Fix for exception handler not being invoked because of CORs package handling exceptions 
@@ -37,14 +41,14 @@
                 return;
             }
 
-            var actionResult = this.actionResultMapper.Get(context.Request, context.Exception);
-            if (actionResult == null)
+            var httpResponse = this.mapper.GetHttpResponse(context.Request, context.Exception);
+            if (httpResponse == null)
             {
                 base.Handle(context);
                 return;
             }
 
-            context.Result = actionResult;
+            context.Result = new HttpResponseResult(context.Request, httpResponse);
         }
     }
 }
