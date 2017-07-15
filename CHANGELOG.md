@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.14"></a>
+## [0.1.14](https://github.com/devdigital/AutoResponse/compare/v0.1.7...v0.1.14) (2017-07-15)
+
+
+### Bug Fixes
+
+* **action-result-tests:** added action result tests ([3a813d7](https://github.com/devdigital/AutoResponse/commit/3a813d7))
+* **context-resolver:** added context resolver for service error exception ([f00c73d](https://github.com/devdigital/AutoResponse/commit/f00c73d))
+* **data:** removed data project ([366d7a0](https://github.com/devdigital/AutoResponse/commit/366d7a0))
+* **exception-constructor:** added message to not authenticated exception ([4057f16](https://github.com/devdigital/AutoResponse/commit/4057f16))
+* **mapper:** exception to action result mapper now allows overrides ([320e4ea](https://github.com/devdigital/AutoResponse/commit/320e4ea))
+* **not-authenticated:** added message to exception ([fc849ae](https://github.com/devdigital/AutoResponse/commit/fc849ae))
+* **nuspec:** updated core nuspec file ([f6fbdef](https://github.com/devdigital/AutoResponse/commit/f6fbdef))
+* **owin-mapper:** added owin exception mapper ([91a3fcc](https://github.com/devdigital/AutoResponse/commit/91a3fcc))
+
+
+
 <a name="0.1.13"></a>
 ## [0.1.13](https://github.com/devdigital/AutoResponse/compare/v0.1.12...v0.1.13) (2017-06-26)
 
