@@ -4,8 +4,8 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
     using System.Net;
     using System.Threading.Tasks;
 
-    using AutoResponse.Data.Errors;
-    using AutoResponse.Data.Exceptions;
+    using AutoResponse.Core.Errors;
+    using AutoResponse.Core.Exceptions;
     using AutoResponse.Sample.Domain.Services;
     using AutoResponse.WebApi2.IntegrationTests.Helpers;
 

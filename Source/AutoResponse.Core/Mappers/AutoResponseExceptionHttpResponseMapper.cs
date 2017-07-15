@@ -2,9 +2,10 @@
 {
     using System;
 
+    using AutoResponse.Core.Exceptions;
+    using AutoResponse.Core.Extensions;
     using AutoResponse.Core.Mappers;
     using AutoResponse.Core.Responses;
-    using AutoResponse.Data.Exceptions;
 
     using Humanizer;
 

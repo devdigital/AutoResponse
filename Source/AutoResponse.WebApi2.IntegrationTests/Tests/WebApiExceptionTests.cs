@@ -3,8 +3,8 @@
     using System.Net;
     using System.Threading.Tasks;
 
-    using AutoResponse.Data.Errors;
-    using AutoResponse.Data.Exceptions;
+    using AutoResponse.Core.Errors;
+    using AutoResponse.Core.Exceptions;
     using AutoResponse.Sample.Domain.Models;
     using AutoResponse.Sample.Domain.Repositories;
     using AutoResponse.WebApi2.IntegrationTests.Helpers;

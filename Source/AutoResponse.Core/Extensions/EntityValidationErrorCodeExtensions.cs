@@ -1,9 +1,9 @@
-﻿namespace AutoResponse.Owin
+﻿namespace AutoResponse.Core.Extensions
 {
     using System;
 
     using AutoResponse.Core.Enums;
-    using AutoResponse.Data.Errors;
+    using AutoResponse.Core.Errors;
 
     internal static class EntityValidationErrorCodeExtensions
     {

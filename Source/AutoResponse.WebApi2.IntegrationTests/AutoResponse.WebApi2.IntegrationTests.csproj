@@ -123,10 +123,6 @@
       <Project>{E6AF0AC3-119C-43B3-8BFE-AAD23A37365D}</Project>
       <Name>AutoResponse.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\AutoResponse.Data\AutoResponse.Data.csproj">
-      <Project>{B0A0D479-599F-4462-8238-04C011100AE9}</Project>
-      <Name>AutoResponse.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AutoResponse.Sample.Domain\AutoResponse.Sample.Domain.csproj">
       <Project>{EB2F99CE-922E-49A4-8429-7EE957C15032}</Project>
       <Name>AutoResponse.Sample.Domain</Name>

@@ -52,12 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoResponseExceptionHttpResponseMapper.cs" />
     <Compile Include="AutoResponseExceptionMiddleware.cs" />
-    <Compile Include="EntityValidationErrorCodeExtensions.cs" />
-    <Compile Include="EntityValidationErrorDetailsExtensions.cs" />
     <Compile Include="IAppBuilderExtensions.cs" />
-    <Compile Include="IContextResolver.cs" />
     <Compile Include="OwinContextResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -68,10 +64,6 @@
     <ProjectReference Include="..\AutoResponse.Core\AutoResponse.Core.csproj">
       <Project>{E6AF0AC3-119C-43B3-8BFE-AAD23A37365D}</Project>
       <Name>AutoResponse.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AutoResponse.Data\AutoResponse.Data.csproj">
-      <Project>{B0A0D479-599F-4462-8238-04C011100AE9}</Project>
-      <Name>AutoResponse.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

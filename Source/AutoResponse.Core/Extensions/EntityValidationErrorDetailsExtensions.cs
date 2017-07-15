@@ -1,9 +1,9 @@
-﻿namespace AutoResponse.Owin
+﻿namespace AutoResponse.Core.Extensions
 {
     using System.Linq;
 
+    using AutoResponse.Core.Errors;
     using AutoResponse.Core.Models;
-    using AutoResponse.Data.Errors;
 
     using Humanizer;
 

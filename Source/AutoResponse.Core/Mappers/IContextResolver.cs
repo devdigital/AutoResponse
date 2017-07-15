@@ -1,4 +1,4 @@
-﻿namespace AutoResponse.Owin
+﻿namespace AutoResponse.Core.Mappers
 {
     public interface IContextResolver
     {

@@ -2,7 +2,7 @@
 {
     using AutoResponse.Sample.WebApi2;
 
-    using Owin;
+    using global::Owin;
 
     using WebApiTestServer;
 
