@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.1.15"></a>
+## [0.1.15](https://github.com/devdigital/AutoResponse/compare/v0.1.13...v0.1.15) (2017-07-19)
+
+
+### Bug Fixes
+
+* **action-result-tests:** added action result tests ([3a813d7](https://github.com/devdigital/AutoResponse/commit/3a813d7))
+* **context-resolver:** added context resolver for service error exception ([f00c73d](https://github.com/devdigital/AutoResponse/commit/f00c73d))
+* **data:** removed data project ([366d7a0](https://github.com/devdigital/AutoResponse/commit/366d7a0))
+* **nuspec:** updated core nuspec file ([f6fbdef](https://github.com/devdigital/AutoResponse/commit/f6fbdef))
+* **owin-mapper:** added owin exception mapper ([91a3fcc](https://github.com/devdigital/AutoResponse/commit/91a3fcc))
+* **permission-exception-message:** added message override to permission exception ([4cd5a22](https://github.com/devdigital/AutoResponse/commit/4cd5a22))
+
+
+
 <a name="0.1.14"></a>
 ## [0.1.14](https://github.com/devdigital/AutoResponse/compare/v0.1.7...v0.1.14) (2017-07-15)
 
