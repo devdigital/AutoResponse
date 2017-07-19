@@ -1,4 +1,4 @@
-﻿namespace AutoResponse.Core.Models
+﻿namespace AutoResponse.Client
 {
     public class ResourceCreatedApiModel
     {

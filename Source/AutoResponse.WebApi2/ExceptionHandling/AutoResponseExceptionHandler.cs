@@ -4,7 +4,6 @@
     using System.Web.Http.ExceptionHandling;
 
     using AutoResponse.Core.Mappers;
-    using AutoResponse.Owin;
     using AutoResponse.WebApi2.Results;
 
     public class AutoResponseExceptionHandler : ExceptionHandler

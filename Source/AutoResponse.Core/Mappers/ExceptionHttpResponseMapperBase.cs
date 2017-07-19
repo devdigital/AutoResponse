@@ -7,19 +7,28 @@
 
     public abstract class ExceptionHttpResponseMapperBase : IExceptionHttpResponseMapper
     {
-        private readonly Lazy<IDictionary<Type, Func<object, Exception, IHttpResponse>>> mappers;
+        private readonly IHttpResponseFormatter httpResponseFormatter;
 
-        protected ExceptionHttpResponseMapperBase()
+        private readonly Lazy<IDictionary<Type, Func<object, Exception, IHttpResponse>>> mappers;        
+
+        protected ExceptionHttpResponseMapperBase(IHttpResponseFormatter httpResponseFormatter)
         {
+            if (httpResponseFormatter == null)
+            {
+                throw new ArgumentNullException(nameof(httpResponseFormatter));
+            }
+
+            this.httpResponseFormatter = httpResponseFormatter;
+
             this.mappers = new Lazy<IDictionary<Type, Func<object, Exception, IHttpResponse>>>(() =>
             {
                 var mappersInstance = new Dictionary<Type, Func<object, Exception, IHttpResponse>>();
-                this.ConfigureMappings(new ExceptionHttpResponseBuilder(mappersInstance));
+                this.ConfigureMappings(new ExceptionHttpResponseConfiguration(mappersInstance, httpResponseFormatter));
                 return mappersInstance;
             });
         }
 
-        protected abstract void ConfigureMappings(ExceptionHttpResponseBuilder builder);
+        protected abstract void ConfigureMappings(ExceptionHttpResponseConfiguration configuration);
        
         public IHttpResponse GetHttpResponse(object context, Exception exception)
         {
@@ -36,15 +45,18 @@
 
             if (!this.mappers.Value.ContainsKey(exceptionType))
             {
-                return this.GetUnhandledResponse(context, exception);
+                return this.GetUnhandledResponse(context, exception, this.httpResponseFormatter);
             }
 
             var mapper = this.mappers.Value[exceptionType];
             return mapper == null 
-                ? this.GetUnhandledResponse(context, exception) 
+                ? this.GetUnhandledResponse(context, exception, this.httpResponseFormatter) 
                 : mapper.Invoke(context, exception);
         }
 
-        public abstract IHttpResponse GetUnhandledResponse(object context, Exception exception);
+        public abstract IHttpResponse GetUnhandledResponse(
+            object context,
+            Exception exception,
+            IHttpResponseFormatter formatter);
     }
 }

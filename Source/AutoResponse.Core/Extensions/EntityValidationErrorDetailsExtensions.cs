@@ -1,24 +1,35 @@
 ﻿namespace AutoResponse.Core.Extensions
 {
+    using System;
     using System.Linq;
 
     using AutoResponse.Core.Errors;
+    using AutoResponse.Core.Mappers;
     using AutoResponse.Core.Models;
-
-    using Humanizer;
 
     internal static class EntityValidationErrorDetailsExtensions
     {
         public static ValidationErrorDetails ToValidationErrorDetails(
-            this EntityValidationErrorDetails errorDetails)
+            this EntityValidationErrorDetails errorDetails,
+            IHttpResponseFormatter httpResponseFormatter)
         {
+            if (errorDetails == null)
+            {
+                throw new ArgumentNullException(nameof(errorDetails));
+            }
+
+            if (httpResponseFormatter == null)
+            {
+                throw new ArgumentNullException(nameof(httpResponseFormatter));
+            }
+
             return new ValidationErrorDetails(
-                errorDetails.Message,
+                httpResponseFormatter.EntityMessageToResourceMessage(errorDetails.Message),                
                 errorDetails.Errors.Select(e => new ValidationError(
-                    e.EntityType.Kebaberize(),
-                    e.EntityProperty.Kebaberize(),
+                    httpResponseFormatter.EntityTypeToResource(e.EntityType),
+                    httpResponseFormatter.EntityPropertyToField(e.EntityProperty),
                     e.Code.ToValidationErrorCode(),
-                    e.Message)));
+                    httpResponseFormatter.EntityMessageToResourceMessage(e.Message))));
         }
     }
 }

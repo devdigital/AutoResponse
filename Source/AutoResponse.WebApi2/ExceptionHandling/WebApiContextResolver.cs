@@ -4,7 +4,6 @@
     using System.Net.Http;
 
     using AutoResponse.Core.Mappers;
-    using AutoResponse.Owin;
 
     public class WebApiContextResolver : IContextResolver
     {
