@@ -1,5 +1,6 @@
 namespace AutoResponse.Core.Extensions
 {
+    using System;
     using System.Linq;
 
     using AutoResponse.Core.Dtos;
@@ -9,8 +10,13 @@ namespace AutoResponse.Core.Extensions
 
     internal static class ValidationErrorDetailsExtensions
     {
-        public static ValidationErrorDetailsDto ToApiModel(this ValidationErrorDetails validationErrorDetails)
+        public static ValidationErrorDetailsDto ToDto(this ValidationErrorDetails validationErrorDetails)
         {
+            if (validationErrorDetails == null)
+            {
+                throw new ArgumentNullException(nameof(validationErrorDetails));
+            }
+
             return new ValidationErrorDetailsDto
             {
                 Message = validationErrorDetails.Message,

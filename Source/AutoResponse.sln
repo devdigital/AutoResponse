@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoResponse.Owin", "AutoRe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoResponse.Core", "AutoResponse.Core\AutoResponse.Core.csproj", "{E6AF0AC3-119C-43B3-8BFE-AAD23A37365D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoResponse.Client", "AutoResponse.Client\AutoResponse.Client.csproj", "{00712C05-2367-422E-87C8-25893AEB3044}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{E6AF0AC3-119C-43B3-8BFE-AAD23A37365D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6AF0AC3-119C-43B3-8BFE-AAD23A37365D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6AF0AC3-119C-43B3-8BFE-AAD23A37365D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00712C05-2367-422E-87C8-25893AEB3044}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00712C05-2367-422E-87C8-25893AEB3044}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00712C05-2367-422E-87C8-25893AEB3044}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00712C05-2367-422E-87C8-25893AEB3044}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -76,5 +82,6 @@ Global
 		{C262F933-6AD3-4CCE-9D3A-4C9B76AAAA32} = {ADE4AC96-F3EC-464B-BFEE-0F76CFB8F263}
 		{DB1D544E-AFBF-4B61-924C-8D17F298577E} = {C6E4DAB6-C280-4FDC-916C-D60FB7BAC498}
 		{E6AF0AC3-119C-43B3-8BFE-AAD23A37365D} = {C6E4DAB6-C280-4FDC-916C-D60FB7BAC498}
+		{00712C05-2367-422E-87C8-25893AEB3044} = {C6E4DAB6-C280-4FDC-916C-D60FB7BAC498}
 	EndGlobalSection
 EndGlobal

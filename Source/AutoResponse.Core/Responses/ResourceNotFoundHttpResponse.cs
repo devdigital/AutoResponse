@@ -4,7 +4,6 @@ namespace AutoResponse.Core.Responses
     using System.Net;
 
     using AutoResponse.Core.Dtos;
-    using AutoResponse.Core.Models;
 
     public class ResourceNotFoundHttpResponse : JsonHttpResponse<ValidationErrorDetailsDto>
     {      
@@ -24,7 +23,7 @@ namespace AutoResponse.Core.Responses
                     {
                         Resource = resourceType,
                         Field = "id",
-                        Code = "missing",
+                        Code = "invalid"
                     }
                 }
             };

@@ -107,6 +107,11 @@
     <Compile Include="Helpers\AutoInjectBuilder.cs" />
     <Compile Include="Helpers\AutoInjectBuilderCustomization.cs" />
     <Compile Include="Attributes\AutoMoqDataAttribute.cs" />
+    <Compile Include="Models\ApiModel.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserApiModel.cs" />
+    <Compile Include="Models\UserDto.cs" />
+    <Compile Include="Tests\HttpFormatterTests.cs" />
     <Compile Include="Tests\WebApiActionResultTests.cs" />
     <Compile Include="Tests\WebApiExceptionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -119,6 +124,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AutoResponse.Client\AutoResponse.Client.csproj">
+      <Project>{00712C05-2367-422E-87C8-25893AEB3044}</Project>
+      <Name>AutoResponse.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AutoResponse.Core\AutoResponse.Core.csproj">
       <Project>{E6AF0AC3-119C-43B3-8BFE-AAD23A37365D}</Project>
       <Name>AutoResponse.Core</Name>

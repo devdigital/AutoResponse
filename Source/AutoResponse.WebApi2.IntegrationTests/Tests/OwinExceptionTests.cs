@@ -1,11 +1,13 @@
 namespace AutoResponse.WebApi2.IntegrationTests.Tests
 {
     using System;
+    using System.Collections.Generic;
     using System.Net;
     using System.Threading.Tasks;
 
     using AutoResponse.Core.Errors;
     using AutoResponse.Core.Exceptions;
+    using AutoResponse.Core.Models;
     using AutoResponse.Sample.Domain.Services;
     using AutoResponse.WebApi2.IntegrationTests.Helpers;
 
@@ -122,6 +124,6 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
                 var response = await server.HttpClient.GetAsync("/");
                 Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
             }
-        }
+        }    
     }
 }

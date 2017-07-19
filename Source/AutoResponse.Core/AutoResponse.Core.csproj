@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Dtos\ErrorDto.cs" />
     <Compile Include="Dtos\ErrorWithExceptionDto.cs" />
+    <Compile Include="Dtos\ResourceCreatedDto.cs" />
     <Compile Include="Errors\EntityValidationError.cs" />
     <Compile Include="Errors\EntityValidationErrorCode.cs" />
     <Compile Include="Errors\EntityValidationErrorDetails.cs" />
@@ -58,31 +59,36 @@
     <Compile Include="Exceptions\EntityCreatePermissionException{TEntity}.cs" />
     <Compile Include="Exceptions\EntityNotFoundException.cs" />
     <Compile Include="Exceptions\EntityNotFoundException{TEntity}.cs" />
+    <Compile Include="Exceptions\EntityNotFoundQueryException.cs" />
+    <Compile Include="Exceptions\EntityNotFoundQueryException{TEntity}.cs" />
     <Compile Include="Exceptions\EntityPermissionException.cs" />
     <Compile Include="Exceptions\EntityPermissionException{TEntity}.cs" />
     <Compile Include="Exceptions\EntityValidationException.cs" />
     <Compile Include="Exceptions\IEntityCreatePermissionException.cs" />
     <Compile Include="Exceptions\IEntityNotFoundException.cs" />
+    <Compile Include="Exceptions\IEntityNotFoundQueryException.cs" />
     <Compile Include="Exceptions\IEntityPermissionException.cs" />
+    <Compile Include="Models\QueryParameter.cs" />
     <Compile Include="Exceptions\ServiceErrorException.cs" />
     <Compile Include="Exceptions\UnauthenticatedException.cs" />
     <Compile Include="Extensions\EntityValidationErrorCodeExtensions.cs" />
     <Compile Include="Extensions\EntityValidationErrorDetailsExtensions.cs" />
+    <Compile Include="Formatters\DefaultHttpResponseFormatter.cs" />
+    <Compile Include="Formatters\IHttpResponseFormatter.cs" />
     <Compile Include="Helpers\PropertyNameHelper.cs" />
     <Compile Include="Mappers\AutoResponseExceptionHttpResponseMapper.cs" />
     <Compile Include="Mappers\ExceptionHttpResponseMapperBase.cs" />
-    <Compile Include="Mappers\ExceptionHttpResponseBuilder.cs" />
+    <Compile Include="Mappers\ExceptionHttpResponseConfiguration.cs" />
     <Compile Include="Mappers\IContextResolver.cs" />
     <Compile Include="Mappers\IExceptionHttpResponseMapper.cs" />
+    <Compile Include="Mappers\MappingConfiguration.cs" />
     <Compile Include="Responses\IHttpResponse.cs" />
     <Compile Include="Responses\JsonHttpResponse.cs" />
-    <Compile Include="Models\ErrorApiModel.cs" />
-    <Compile Include="Models\ErrorDetailsApiModel.cs" />
-    <Compile Include="Models\ResourceCreatedApiModel.cs" />
     <Compile Include="Models\ValidationError.cs" />
-    <Compile Include="Models\ValidationErrorApiModel.cs" />
     <Compile Include="Models\ValidationErrorDetails.cs" />
     <Compile Include="Models\ValidationError{TResource}.cs" />
+    <Compile Include="Responses\ResourceCreatedHttpResponse.cs" />
+    <Compile Include="Responses\ResourceNotFoundQueryHttpResponse.cs" />
     <Compile Include="Responses\ServiceErrorWithExceptionHttpResponse.cs" />
     <Compile Include="Responses\UnauthenticatedHttpResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -99,6 +105,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

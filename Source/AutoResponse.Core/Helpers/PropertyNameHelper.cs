@@ -5,7 +5,7 @@ namespace AutoResponse.Core.Helpers
 
     public static class PropertyNameHelper
     {
-        public static string PropertyName<TProperty>(Expression<Func<TProperty>> property)
+        public static string PropertyName<TEntity, TProperty>(Expression<Func<TEntity, TProperty>> property)
         {
             var lambda = (LambdaExpression)property;
 

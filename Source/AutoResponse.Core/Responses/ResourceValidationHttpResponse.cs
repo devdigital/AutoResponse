@@ -8,8 +8,8 @@ namespace AutoResponse.Core.Responses
 
     public class ResourceValidationHttpResponse : JsonHttpResponse<ValidationErrorDetailsDto>
     {
-        public ResourceValidationHttpResponse(ValidationErrorDetails data)
-            : base(data.ToApiModel(), (HttpStatusCode)422)
+        public ResourceValidationHttpResponse(ValidationErrorDetails validationErrorDetails)
+            : base(validationErrorDetails.ToDto(), (HttpStatusCode)422)
         {
         }
     }

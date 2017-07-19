@@ -1,10 +1,7 @@
 ﻿namespace AutoResponse.WebApi2.Results
 {
-    using System;
-    using System.Net;
     using System.Net.Http;
 
-    using AutoResponse.Core.Models;
     using AutoResponse.Core.Responses;
 
     public class ResourceCreatePermissionResult : HttpResponseResult

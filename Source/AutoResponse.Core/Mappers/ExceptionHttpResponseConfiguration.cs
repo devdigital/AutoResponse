@@ -5,11 +5,11 @@ namespace AutoResponse.Core.Mappers
 
     using AutoResponse.Core.Responses;
 
-    public class ExceptionHttpResponseBuilder
+    public class ExceptionHttpResponseConfiguration
     {
-        private readonly IDictionary<Type, Func<object, Exception, IHttpResponse>> mappers;
-
-        public ExceptionHttpResponseBuilder(IDictionary<Type, Func<object, Exception, IHttpResponse>> mappers)
+        private readonly IDictionary<Type, Func<MappingConfiguration, Exception, IHttpResponse>> mappers;
+        
+        public ExceptionHttpResponseConfiguration(IDictionary<Type, Func<MappingConfiguration, Exception, IHttpResponse>> mappers)
         {
             if (mappers == null)
             {
@@ -20,7 +20,7 @@ namespace AutoResponse.Core.Mappers
         }
 
         public void AddMapping<TException>(
-            Func<object, TException, IHttpResponse> mapper) where TException : Exception
+            Func<MappingConfiguration, TException, IHttpResponse> mapper) where TException : Exception
         {
             if (mapper == null)
             {
@@ -38,7 +38,9 @@ namespace AutoResponse.Core.Mappers
                 (c, e) => mapper(c, e as TException));
         }
 
-        public void AddGenericMapping<TExceptionInterface>(Type exceptionType, Func<object, TExceptionInterface, IHttpResponse> mapper) where TExceptionInterface : class
+        public void AddGenericMapping<TExceptionInterface>(
+            Type exceptionType,
+            Func<MappingConfiguration, TExceptionInterface, IHttpResponse> mapper) where TExceptionInterface : class
         {
             if (mapper == null)
             {
