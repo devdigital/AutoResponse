@@ -54,6 +54,10 @@
                 (c, e) => new ResourceNotFoundHttpResponse(
                     c.Formatter.EntityTypeToResource(e.EntityType), e.EntityId));
 
+            configuration.AddMapping<EntityNotFoundQueryException>(
+                (c, e) => new ResourceNotFoundQueryHttpResponse(
+                    c.Formatter.EntityTypeToResource(e.EntityType), e.Parameters));
+
             configuration.AddMapping<EntityCreatePermissionException>(
                 (c, e) => string.IsNullOrWhiteSpace(e.EntityId) 
                     ? new ResourceCreatePermissionHttpResponse(e.UserId, c.Formatter.EntityTypeToResource(e.EntityType))

@@ -59,12 +59,16 @@
     <Compile Include="Exceptions\EntityCreatePermissionException{TEntity}.cs" />
     <Compile Include="Exceptions\EntityNotFoundException.cs" />
     <Compile Include="Exceptions\EntityNotFoundException{TEntity}.cs" />
+    <Compile Include="Exceptions\EntityNotFoundQueryException.cs" />
+    <Compile Include="Exceptions\EntityNotFoundQueryException{TEntity}.cs" />
     <Compile Include="Exceptions\EntityPermissionException.cs" />
     <Compile Include="Exceptions\EntityPermissionException{TEntity}.cs" />
     <Compile Include="Exceptions\EntityValidationException.cs" />
     <Compile Include="Exceptions\IEntityCreatePermissionException.cs" />
     <Compile Include="Exceptions\IEntityNotFoundException.cs" />
+    <Compile Include="Exceptions\IEntityNotFoundQueryException.cs" />
     <Compile Include="Exceptions\IEntityPermissionException.cs" />
+    <Compile Include="Models\QueryParameter.cs" />
     <Compile Include="Exceptions\ServiceErrorException.cs" />
     <Compile Include="Exceptions\UnauthenticatedException.cs" />
     <Compile Include="Extensions\EntityValidationErrorCodeExtensions.cs" />
@@ -84,6 +88,7 @@
     <Compile Include="Models\ValidationErrorDetails.cs" />
     <Compile Include="Models\ValidationError{TResource}.cs" />
     <Compile Include="Responses\ResourceCreatedHttpResponse.cs" />
+    <Compile Include="Responses\ResourceNotFoundQueryHttpResponse.cs" />
     <Compile Include="Responses\ServiceErrorWithExceptionHttpResponse.cs" />
     <Compile Include="Responses\UnauthenticatedHttpResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -23,7 +23,7 @@ namespace AutoResponse.Core.Responses
                     {
                         Resource = resourceType,
                         Field = "id",
-                        Code = "missing",
+                        Code = "invalid"
                     }
                 }
             };
