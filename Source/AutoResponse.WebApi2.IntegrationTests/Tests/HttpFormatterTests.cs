@@ -62,5 +62,68 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
                 Assert.Equal("user-name", error.Field);
             }
         }
+
+        [Theory]
+        [AutoData]
+        public async Task EntityWithDtoPostFixShouldReturnKebabCaseWithPostFixRemoved(
+            SampleServerFactory serverFactory,
+            Mock<IExceptionService> exceptionService,
+            string userId,
+            string entityId,
+            string message)
+        {
+            exceptionService.Setup(s => s.Execute()).Throws(new EntityValidationException(new EntityValidationErrorDetails(
+                message, new EntityValidationError<UserDto, Guid>(u => u.Id, EntityValidationErrorCode.Invalid))));
+
+            using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
+            {
+                var response = await server.HttpClient.GetAsync("/");
+                var apiModel = response.As<ErrorDetailsApiModel<ValidationErrorApiModel>>();
+                var error = apiModel.Errors.First();
+                Assert.Equal("user", error.Resource);
+            }
+        }
+
+        [Theory]
+        [AutoData]
+        public async Task EntityWithApiModelPostFixShouldReturnKebabCaseWithPostFixRemoved(
+            SampleServerFactory serverFactory,
+            Mock<IExceptionService> exceptionService,
+            string userId,
+            string entityId,
+            string message)
+        {
+            exceptionService.Setup(s => s.Execute()).Throws(new EntityValidationException(new EntityValidationErrorDetails(
+                message, new EntityValidationError<UserApiModel, Guid>(u => u.Id, EntityValidationErrorCode.Invalid))));
+
+            using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
+            {
+                var response = await server.HttpClient.GetAsync("/");
+                var apiModel = response.As<ErrorDetailsApiModel<ValidationErrorApiModel>>();
+                var error = apiModel.Errors.First();
+                Assert.Equal("user", error.Resource);
+            }
+        }
+
+        [Theory]
+        [AutoData]
+        public async Task EntityWithPostFixNameShouldReturnKebabCaseEntityType(
+            SampleServerFactory serverFactory,
+            Mock<IExceptionService> exceptionService,
+            string userId,
+            string entityId,
+            string message)
+        {
+            exceptionService.Setup(s => s.Execute()).Throws(new EntityValidationException(new EntityValidationErrorDetails(
+                message, new EntityValidationError<ApiModel, Guid>(u => u.Id, EntityValidationErrorCode.Invalid))));
+
+            using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
+            {
+                var response = await server.HttpClient.GetAsync("/");
+                var apiModel = response.As<ErrorDetailsApiModel<ValidationErrorApiModel>>();
+                var error = apiModel.Errors.First();
+                Assert.Equal("api-model", error.Resource);
+            }
+        }
     }
 }

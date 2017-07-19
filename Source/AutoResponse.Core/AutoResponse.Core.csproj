@@ -69,14 +69,15 @@
     <Compile Include="Exceptions\UnauthenticatedException.cs" />
     <Compile Include="Extensions\EntityValidationErrorCodeExtensions.cs" />
     <Compile Include="Extensions\EntityValidationErrorDetailsExtensions.cs" />
-    <Compile Include="Mappers\DefaultHttpResponseFormatter.cs" />
-    <Compile Include="Mappers\IHttpResponseFormatter.cs" />
+    <Compile Include="Formatters\DefaultHttpResponseFormatter.cs" />
+    <Compile Include="Formatters\IHttpResponseFormatter.cs" />
     <Compile Include="Helpers\PropertyNameHelper.cs" />
     <Compile Include="Mappers\AutoResponseExceptionHttpResponseMapper.cs" />
     <Compile Include="Mappers\ExceptionHttpResponseMapperBase.cs" />
     <Compile Include="Mappers\ExceptionHttpResponseConfiguration.cs" />
     <Compile Include="Mappers\IContextResolver.cs" />
     <Compile Include="Mappers\IExceptionHttpResponseMapper.cs" />
+    <Compile Include="Mappers\MappingConfiguration.cs" />
     <Compile Include="Responses\IHttpResponse.cs" />
     <Compile Include="Responses\JsonHttpResponse.cs" />
     <Compile Include="Models\ValidationError.cs" />
@@ -99,9 +100,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Formatters\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

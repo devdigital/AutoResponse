@@ -7,26 +7,20 @@ namespace AutoResponse.Core.Mappers
 
     public class ExceptionHttpResponseConfiguration
     {
-        private readonly IDictionary<Type, Func<object, Exception, IHttpResponse>> mappers;
+        private readonly IDictionary<Type, Func<MappingConfiguration, Exception, IHttpResponse>> mappers;
         
-        public ExceptionHttpResponseConfiguration(IDictionary<Type, Func<object, Exception, IHttpResponse>> mappers, IHttpResponseFormatter httpResponseFormatter)
+        public ExceptionHttpResponseConfiguration(IDictionary<Type, Func<MappingConfiguration, Exception, IHttpResponse>> mappers)
         {
             if (mappers == null)
             {
                 throw new ArgumentNullException(nameof(mappers));
             }
 
-            if (httpResponseFormatter == null)
-            {
-                throw new ArgumentNullException(nameof(httpResponseFormatter));
-            }
-
             this.mappers = mappers;
-            this.HttpResponseFormatter = httpResponseFormatter;
         }
 
         public void AddMapping<TException>(
-            Func<object, TException, IHttpResponse> mapper) where TException : Exception
+            Func<MappingConfiguration, TException, IHttpResponse> mapper) where TException : Exception
         {
             if (mapper == null)
             {
@@ -44,7 +38,9 @@ namespace AutoResponse.Core.Mappers
                 (c, e) => mapper(c, e as TException));
         }
 
-        public void AddGenericMapping<TExceptionInterface>(Type exceptionType, Func<object, TExceptionInterface, IHttpResponse> mapper) where TExceptionInterface : class
+        public void AddGenericMapping<TExceptionInterface>(
+            Type exceptionType,
+            Func<MappingConfiguration, TExceptionInterface, IHttpResponse> mapper) where TExceptionInterface : class
         {
             if (mapper == null)
             {
@@ -61,7 +57,5 @@ namespace AutoResponse.Core.Mappers
                 exceptionType,
                 (c, e) => mapper(c, e as TExceptionInterface));
         }
-
-        public IHttpResponseFormatter HttpResponseFormatter { get; }
     }
 }

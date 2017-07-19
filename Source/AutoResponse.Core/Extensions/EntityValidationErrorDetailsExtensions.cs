@@ -11,25 +11,25 @@
     {
         public static ValidationErrorDetails ToValidationErrorDetails(
             this EntityValidationErrorDetails errorDetails,
-            IHttpResponseFormatter httpResponseFormatter)
+            IHttpResponseFormatter formatter)
         {
             if (errorDetails == null)
             {
                 throw new ArgumentNullException(nameof(errorDetails));
             }
 
-            if (httpResponseFormatter == null)
+            if (formatter == null)
             {
-                throw new ArgumentNullException(nameof(httpResponseFormatter));
+                throw new ArgumentNullException(nameof(formatter));
             }
 
             return new ValidationErrorDetails(
-                httpResponseFormatter.EntityMessageToResourceMessage(errorDetails.Message),                
+                formatter.EntityMessageToResourceMessage(errorDetails.Message),                
                 errorDetails.Errors.Select(e => new ValidationError(
-                    httpResponseFormatter.EntityTypeToResource(e.EntityType),
-                    httpResponseFormatter.EntityPropertyToField(e.EntityProperty),
+                    formatter.EntityTypeToResource(e.EntityType),
+                    formatter.EntityPropertyToField(e.EntityProperty),
                     e.Code.ToValidationErrorCode(),
-                    httpResponseFormatter.EntityMessageToResourceMessage(e.Message))));
+                    formatter.EntityMessageToResourceMessage(e.Message))));
         }
     }
 }

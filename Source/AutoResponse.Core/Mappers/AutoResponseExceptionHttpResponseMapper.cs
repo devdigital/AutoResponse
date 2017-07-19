@@ -4,6 +4,7 @@
 
     using AutoResponse.Core.Exceptions;
     using AutoResponse.Core.Extensions;
+    using AutoResponse.Core.Formatters;
     using AutoResponse.Core.Responses;
 
     public class AutoResponseExceptionHttpResponseMapper : ExceptionHttpResponseMapperBase
@@ -17,7 +18,7 @@
 
         public AutoResponseExceptionHttpResponseMapper(
             IContextResolver contextResolver,
-            IHttpResponseFormatter httpResponseFormatter) : base(httpResponseFormatter)
+            IHttpResponseFormatter formatter) : base(formatter)
         {
             if (contextResolver == null)
             {
@@ -29,44 +30,45 @@
 
         protected override void ConfigureMappings(ExceptionHttpResponseConfiguration configuration)
         {
-            var formatter = configuration.HttpResponseFormatter;
-
             configuration.AddMapping<ServiceErrorException>(
-                (c, e) => this.contextResolver.IncludeFullDetails(c)
-                    ? (IHttpResponse)new ServiceErrorHttpResponse("A service error has occurred")
-                    : (IHttpResponse)new ServiceErrorWithExceptionHttpResponse("A service error has occurred", e.Message, e.ToString()));
+                (c, e) => this.contextResolver.IncludeFullDetails(c.Context)
+                    ? new ServiceErrorHttpResponse(c.Formatter.EntityMessageToResourceMessage("A service error has occurred")) as IHttpResponse
+                    : new ServiceErrorWithExceptionHttpResponse(
+                        c.Formatter.EntityMessageToResourceMessage("A service error has occurred"),
+                        c.Formatter.EntityMessageToResourceMessage(e.Message),
+                        c.Formatter.EntityMessageToResourceMessage(e.ToString())));
 
             configuration.AddMapping<UnauthenticatedException>(
                 (c, e) => new UnauthenticatedHttpResponse());
             
             configuration.AddMapping<EntityValidationException>(
                 (c, e) => new ResourceValidationHttpResponse(
-                    e.ErrorDetails.ToValidationErrorDetails(formatter)));
+                    e.ErrorDetails.ToValidationErrorDetails(c.Formatter)));
 
             configuration.AddMapping<EntityNotFoundException>(
                 (c, e) => new ResourceNotFoundHttpResponse(
-                    formatter.EntityTypeToResource(e.EntityType), e.EntityId));
+                    c.Formatter.EntityTypeToResource(e.EntityType), e.EntityId));
 
             configuration.AddGenericMapping<IEntityNotFoundException>(
                 typeof(EntityNotFoundException<>),
                 (c, e) => new ResourceNotFoundHttpResponse(
-                    formatter.EntityTypeToResource(e.EntityType), e.EntityId));
+                    c.Formatter.EntityTypeToResource(e.EntityType), e.EntityId));
 
             configuration.AddMapping<EntityCreatePermissionException>(
                 (c, e) => string.IsNullOrWhiteSpace(e.EntityId) 
-                    ? new ResourceCreatePermissionHttpResponse(e.UserId, formatter.EntityTypeToResource(e.EntityType))
-                    : new ResourceCreatePermissionHttpResponse(e.UserId, formatter.EntityTypeToResource(e.EntityType), e.EntityId));
+                    ? new ResourceCreatePermissionHttpResponse(e.UserId, c.Formatter.EntityTypeToResource(e.EntityType))
+                    : new ResourceCreatePermissionHttpResponse(e.UserId, c.Formatter.EntityTypeToResource(e.EntityType), e.EntityId));
 
             configuration.AddGenericMapping<IEntityCreatePermissionException>(
                 typeof(EntityCreatePermissionException<>),
-                (c, e) => new ResourceCreatePermissionHttpResponse(e.UserId, formatter.EntityTypeToResource(e.EntityType), e.EntityId));
+                (c, e) => new ResourceCreatePermissionHttpResponse(e.UserId, c.Formatter.EntityTypeToResource(e.EntityType), e.EntityId));
 
             configuration.AddMapping<EntityPermissionException>(
-                (c, e) => new ResourcePermissionHttpResponse(e.UserId, formatter.EntityTypeToResource(e.EntityType), e.EntityId));
+                (c, e) => new ResourcePermissionHttpResponse(e.UserId, c.Formatter.EntityTypeToResource(e.EntityType), e.EntityId));
 
             configuration.AddGenericMapping<IEntityPermissionException>(
                 typeof(EntityPermissionException<>),
-                (c, e) => new ResourcePermissionHttpResponse(e.UserId, formatter.EntityTypeToResource(e.EntityType), e.EntityId));
+                (c, e) => new ResourcePermissionHttpResponse(e.UserId, c.Formatter.EntityTypeToResource(e.EntityType), e.EntityId));
         }
 
         public override IHttpResponse GetUnhandledResponse(
