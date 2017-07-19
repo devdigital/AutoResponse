@@ -1,12 +1,16 @@
 namespace AutoResponse.Core.Responses
 {
-    using System.Collections.Generic;
     using System.Net;
 
     using AutoResponse.Core.Dtos;
 
     public class ResourcePermissionHttpResponse : JsonHttpResponse<ErrorDto>
     {
+        public ResourcePermissionHttpResponse(string message)
+            : base(new ErrorDto { Message = message }, HttpStatusCode.Forbidden)
+        {
+        }
+
         public ResourcePermissionHttpResponse(string userId, string resourceType, string resourceId)
             : base(ToErrorDto(userId, resourceType, resourceId), HttpStatusCode.Forbidden)
         {

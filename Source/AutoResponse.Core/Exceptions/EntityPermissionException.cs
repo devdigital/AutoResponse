@@ -4,6 +4,14 @@
 
     public class EntityPermissionException : Exception, IEntityPermissionException
     {
+        public EntityPermissionException(string message) : base(message)
+        {
+            if (string.IsNullOrWhiteSpace(message))
+            {
+                throw new ArgumentNullException(nameof(message));
+            }
+        }
+
         public EntityPermissionException(string userId, string entityType, string entityId)
         {
             if (string.IsNullOrWhiteSpace(userId))

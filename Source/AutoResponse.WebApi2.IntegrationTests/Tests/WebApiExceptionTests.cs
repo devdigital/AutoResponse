@@ -3,6 +3,7 @@
     using System.Net;
     using System.Threading.Tasks;
 
+    using AutoResponse.Client;
     using AutoResponse.Core.Errors;
     using AutoResponse.Core.Exceptions;
     using AutoResponse.Sample.Domain.Models;
@@ -12,6 +13,8 @@
     using Moq;
 
     using Ploeh.AutoFixture.Xunit2;
+
+    using WebApiTestServer;
 
     using Xunit;
 
@@ -104,6 +107,25 @@
             {
                 var response = await server.HttpClient.GetAsync($"/api/values/{entityId}");
                 Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+            }
+        }
+
+        [Theory]
+        [AutoCustomData]
+        public async Task PermissionExceptionWithMessageShouldReturnMessage(
+            SampleServerFactory serverFactory,
+            Mock<IValuesRepository> valuesRepository,
+            int entityId,
+            string message)
+        {
+            valuesRepository.Setup(r => r.GetValue(It.IsAny<int>()))
+                .Throws(new EntityPermissionException(message));
+
+            using (var server = serverFactory.With<IValuesRepository>(valuesRepository.Object).Create())
+            {
+                var response = await server.HttpClient.GetAsync($"/api/values/{entityId}");
+                var apiModel = response.As<ErrorApiModel>();
+                Assert.Equal(message, apiModel.Message);
             }
         }
 

@@ -64,7 +64,9 @@
                 (c, e) => new ResourceCreatePermissionHttpResponse(e.UserId, c.Formatter.EntityTypeToResource(e.EntityType), e.EntityId));
 
             configuration.AddMapping<EntityPermissionException>(
-                (c, e) => new ResourcePermissionHttpResponse(e.UserId, c.Formatter.EntityTypeToResource(e.EntityType), e.EntityId));
+                (c, e) => string.IsNullOrWhiteSpace(e.Message) 
+                    ? new ResourcePermissionHttpResponse(e.UserId, c.Formatter.EntityTypeToResource(e.EntityType), e.EntityId)
+                    : new ResourcePermissionHttpResponse(e.Message));
 
             configuration.AddGenericMapping<IEntityPermissionException>(
                 typeof(EntityPermissionException<>),
