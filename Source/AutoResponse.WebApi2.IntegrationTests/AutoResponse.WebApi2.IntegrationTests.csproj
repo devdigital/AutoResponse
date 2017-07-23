@@ -111,6 +111,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserApiModel.cs" />
     <Compile Include="Models\UserDto.cs" />
+    <Compile Include="Tests\FooTests.cs" />
     <Compile Include="Tests\HttpFormatterTests.cs" />
     <Compile Include="Tests\WebApiActionResultTests.cs" />
     <Compile Include="Tests\WebApiExceptionTests.cs" />

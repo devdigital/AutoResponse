@@ -2,11 +2,11 @@
 {
     using System;
 
-    using AutoResponse.Core.Errors;
+    using AutoResponse.Core.Models;
 
     public class EntityValidationException : Exception
     {
-        public EntityValidationException(EntityValidationErrorDetails errorDetails)
+        public EntityValidationException(ValidationErrorDetails errorDetails)
         {
             if (errorDetails == null)
             {
@@ -16,6 +16,6 @@
             this.ErrorDetails = errorDetails;
         }
 
-        public EntityValidationErrorDetails ErrorDetails { get; }
+        public ValidationErrorDetails ErrorDetails { get; }
     }
 }

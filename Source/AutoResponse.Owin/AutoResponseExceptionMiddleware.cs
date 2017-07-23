@@ -4,17 +4,19 @@
     using System.Net;
     using System.Threading.Tasks;
 
+    using AutoResponse.Core.ApiEvents;
+    using AutoResponse.Core.Exceptions;
     using AutoResponse.Core.Mappers;
 
     using Microsoft.Owin;
 
     public class AutoResponseExceptionMiddleware : OwinMiddleware
     {
-        private readonly IExceptionHttpResponseMapper mapper;
+        private readonly IApiEventHttpResponseMapper mapper;
 
         public AutoResponseExceptionMiddleware(
             OwinMiddleware next, 
-            IExceptionHttpResponseMapper mapper)
+            IApiEventHttpResponseMapper mapper)
             : base(next)
         {
             if (mapper == null)
@@ -31,18 +33,18 @@
             {
                 await this.Next.Invoke(context);
             }
-            catch (Exception exception)
+            catch (AutoResponseException exception)
             {
                 this.ConvertExceptionToHttpReponse(exception, context);
             }            
         }
 
-        private void ConvertExceptionToHttpReponse(Exception exception, IOwinContext context)
+        private void ConvertExceptionToHttpReponse(AutoResponseException exception, IOwinContext context)
         {
-            var httpResponse = this.mapper.GetHttpResponse(context: null, exception: exception);
+            var httpResponse = this.mapper.GetHttpResponse(context: null, apiEvent: exception.Event); 
             if (httpResponse == null)
             {
-                throw exception;
+                throw new InvalidOperationException("No ");
             }
 
             context.Response.StatusCode = (int)httpResponse.StatusCode;

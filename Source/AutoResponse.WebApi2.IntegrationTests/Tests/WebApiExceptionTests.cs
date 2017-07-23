@@ -3,9 +3,9 @@
     using System.Net;
     using System.Threading.Tasks;
 
-    using AutoResponse.Client;
-    using AutoResponse.Core.Errors;
+    using AutoResponse.Client.Models;
     using AutoResponse.Core.Exceptions;
+    using AutoResponse.Core.Models;
     using AutoResponse.Sample.Domain.Models;
     using AutoResponse.Sample.Domain.Repositories;
     using AutoResponse.WebApi2.IntegrationTests.Helpers;
@@ -78,7 +78,7 @@
         public async Task ValidationExceptionShouldReturn422(
             SampleServerFactory serverFactory,
             Mock<IValuesRepository> valuesRepository,
-            EntityValidationErrorDetails errorDetails,
+            ValidationErrorDetails errorDetails,
             int entityId)
         {
             valuesRepository.Setup(r => r.GetValue(It.IsAny<int>()))

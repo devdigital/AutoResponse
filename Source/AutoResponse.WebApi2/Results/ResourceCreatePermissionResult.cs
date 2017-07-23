@@ -2,16 +2,17 @@
 {
     using System.Net.Http;
 
+    using AutoResponse.Core.ApiEvents;
     using AutoResponse.Core.Responses;
 
-    public class ResourceCreatePermissionResult : HttpResponseResult
+    public class ResourceCreatePermissionResult : AutoResponseResult
     {        
         public ResourceCreatePermissionResult(
             HttpRequestMessage request,
             string userId,
             string resourceType)       
-            : base(request, new ResourceCreatePermissionHttpResponse(userId, resourceType))
-        {
+            : base(request, new EntityCreatedApiEvent(userId, resourceType))
+        {            
         }
 
         public ResourceCreatePermissionResult(
@@ -19,7 +20,7 @@
             string userId, 
             string resourceType, 
             string resourceId)
-            : base(request, new ResourceCreatePermissionHttpResponse(userId, resourceType, resourceId))
+            : base(request, new EntityCreatedApiEvent(userId, resourceType, resourceId))
         {
         }        
     }

@@ -10,7 +10,7 @@ namespace AutoResponse.Core.Extensions
 
     internal static class ValidationErrorDetailsExtensions
     {
-        public static ValidationErrorDetailsDto ToDto(this ValidationErrorDetails validationErrorDetails)
+        public static ValidationErrorDetailsDto ToDto(this ValidationErrorDetails validationErrorDetails, string code)
         {
             if (validationErrorDetails == null)
             {
@@ -20,6 +20,7 @@ namespace AutoResponse.Core.Extensions
             return new ValidationErrorDetailsDto
             {
                 Message = validationErrorDetails.Message,
+                Code = code,
                 Errors = validationErrorDetails.Errors.Select(e => new ValidationErrorDto
                 {
                     Message = e.Message,

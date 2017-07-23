@@ -1,4 +1,4 @@
-﻿namespace AutoResponse.Client
+﻿namespace AutoResponse.Client.Models
 {
     using System.Collections.Generic;
 

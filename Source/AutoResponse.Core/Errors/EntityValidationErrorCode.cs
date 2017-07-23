@@ -1,15 +1,15 @@
-namespace AutoResponse.Core.Errors
-{
-    public enum EntityValidationErrorCode
-    {
-        None = 0,
+//namespace AutoResponse.Core.Errors
+//{
+//    public enum EntityValidationErrorCode
+//    {
+//        None = 0,
 
-        Missing,
+//        Missing,
 
-        MissingField,
+//        MissingField,
 
-        Invalid,
+//        Invalid,
 
-        AlreadyExists
-    }
-}
+//        AlreadyExists
+//    }
+//}

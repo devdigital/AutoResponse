@@ -1,11 +1,9 @@
 namespace AutoResponse.WebApi2.IntegrationTests.Tests
 {
     using System;
-    using System.Collections.Generic;
     using System.Net;
     using System.Threading.Tasks;
 
-    using AutoResponse.Core.Errors;
     using AutoResponse.Core.Exceptions;
     using AutoResponse.Core.Models;
     using AutoResponse.Sample.Domain.Services;
@@ -68,7 +66,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
             SampleServerFactory serverFactory,
             Mock<IExceptionService> exceptionService)
         {
-            exceptionService.Setup(s => s.Execute()).Throws(new EntityValidationException(new EntityValidationErrorDetails("Validation error")));
+            exceptionService.Setup(s => s.Execute()).Throws(new EntityValidationException(new ValidationErrorDetails("Validation error")));
             using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
             {
                 var response = await server.HttpClient.GetAsync("/");

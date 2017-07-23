@@ -2,6 +2,8 @@
 {
     using System;
 
+    using AutoResponse.Core.Formatters;
+
     public class MappingConfiguration
     {
         public MappingConfiguration(object context, IHttpResponseFormatter formatter)

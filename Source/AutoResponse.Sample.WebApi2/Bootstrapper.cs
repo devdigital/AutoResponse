@@ -12,6 +12,7 @@
     using Autofac.Features.ResolveAnything;
     using Autofac.Integration.WebApi;
 
+    using AutoResponse.Core.Mappers;
     using AutoResponse.Sample.Data.Repositories;
     using AutoResponse.Sample.Domain.Repositories;
     using AutoResponse.Sample.Domain.Services;
@@ -117,6 +118,9 @@
             builder.RegisterType<NullExceptionService>().As<IExceptionService>();
             builder.RegisterType<DefaultValuesRepository>().As<IValuesRepository>();
             builder.RegisterType<OkActionResultFactory>().As<IHttpActionResultFactory>();
+
+            builder.RegisterType<AutoResponseApiEventHttpResponseMapper>().As<IApiEventHttpResponseMapper>();
+            builder.RegisterType<WebApiContextResolver>().As<IContextResolver>();
 
             this.AdditionalRegistrations(builder);
 

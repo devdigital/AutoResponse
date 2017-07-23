@@ -1,4 +1,4 @@
-﻿namespace AutoResponse.Client
+﻿namespace AutoResponse.Client.Models
 {
     public class ValidationErrorApiModel
     {

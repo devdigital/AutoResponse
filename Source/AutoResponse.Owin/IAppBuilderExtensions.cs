@@ -6,10 +6,10 @@ namespace AutoResponse.Owin
 
     public static class IAppBuilderExtensions
     {
-        public static void UseAutoResponse(this IAppBuilder appBuilder, IExceptionHttpResponseMapper mapper = null)
+        public static void UseAutoResponse(this IAppBuilder appBuilder, IApiEventHttpResponseMapper mapper = null)
         {
             appBuilder.Use<AutoResponseExceptionMiddleware>(
-                mapper ?? new AutoResponseExceptionHttpResponseMapper(new OwinContextResolver()));
+                mapper ?? new AutoResponseApiEventHttpResponseMapper(new OwinContextResolver()));
         }
     }
 }

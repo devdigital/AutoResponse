@@ -7,16 +7,25 @@ namespace AutoResponse.Core.Responses
 
     public class ServiceErrorWithExceptionHttpResponse : JsonHttpResponse<ErrorWithExceptionDto>
     {
-        public ServiceErrorWithExceptionHttpResponse(string message, string exceptionMessage, string exceptionString)
-            : base(ToErrorWithException(message, exceptionMessage, exceptionString), HttpStatusCode.InternalServerError)
+        public ServiceErrorWithExceptionHttpResponse(string message, string code, string exceptionMessage, string exceptionString)
+            : base(ToErrorWithException(message, code, exceptionMessage, exceptionString), HttpStatusCode.InternalServerError)
         {
         }
 
-        private static ErrorWithExceptionDto ToErrorWithException(string message, string exceptionMessage, string exceptionString)
+        private static ErrorWithExceptionDto ToErrorWithException(
+            string message,
+            string code, 
+            string exceptionMessage, 
+            string exceptionString)
         {
             if (string.IsNullOrWhiteSpace(message))
             {
                 throw new ArgumentNullException(nameof(message));
+            }
+
+            if (string.IsNullOrWhiteSpace(code))
+            {
+                throw new ArgumentNullException(nameof(code));
             }
 
             if (string.IsNullOrWhiteSpace(exceptionMessage))
@@ -32,6 +41,7 @@ namespace AutoResponse.Core.Responses
             return new ErrorWithExceptionDto
             {
                 Message = message,
+                Code = code,
                 ExceptionMessage = exceptionMessage,
                 ExceptionString = exceptionString
             };

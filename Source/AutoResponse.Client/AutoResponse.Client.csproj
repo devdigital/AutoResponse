@@ -40,11 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ErrorApiModel.cs" />
-    <Compile Include="ErrorDetailsApiModel.cs" />
+    <Compile Include="AutoResponseHttpResponseExceptionMapper.cs" />
+    <Compile Include="HttpResponseMessageExtensions.cs" />
+    <Compile Include="IHttpResponseExceptionMapper.cs" />
+    <Compile Include="Models\ErrorApiModel.cs" />
+    <Compile Include="Models\ErrorDetailsApiModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ResourceCreatedApiModel.cs" />
-    <Compile Include="ValidationErrorApiModel.cs" />
+    <Compile Include="Models\ResourceCreatedApiModel.cs" />
+    <Compile Include="Models\ValidationErrorApiModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

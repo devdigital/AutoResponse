@@ -2,17 +2,20 @@ namespace AutoResponse.Core.Formatters
 {
     using System;
 
-    using AutoResponse.Core.Mappers;
+    using AutoResponse.Core.ApiEvents;
 
     using Humanizer;
 
-    internal class DefaultHttpResponseFormatter : IHttpResponseFormatter
+    internal class AutoResponseHttpResponseFormatter : IHttpResponseFormatter
     {
         private readonly string[] postFixes;
 
-        public DefaultHttpResponseFormatter()
+        private readonly AutoResponseApiEventCodeMapper apiEventCodeMapper;
+
+        public AutoResponseHttpResponseFormatter()
         {
             this.postFixes = new[] { "ApiModel", "Dto" };
+            this.apiEventCodeMapper = new AutoResponseApiEventCodeMapper();
         }
 
         public string EntityMessageToResourceMessage(string message)
@@ -49,6 +52,11 @@ namespace AutoResponse.Core.Formatters
         {
             return string.IsNullOrWhiteSpace(entityProperty) 
                 ? null : entityProperty.Kebaberize();
+        }
+
+        public string ApiEventToCode(AutoResponseApiEvent apiEvent)
+        {
+            return this.apiEventCodeMapper.GetCode(apiEvent);
         }
     }
 }

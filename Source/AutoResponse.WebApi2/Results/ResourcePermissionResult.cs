@@ -2,12 +2,17 @@
 {
     using System.Net.Http;
 
-    using AutoResponse.Core.Responses;
+    using AutoResponse.Core.ApiEvents;
 
-    public class ResourcePermissionResult : HttpResponseResult
+    public class ResourcePermissionResult : AutoResponseResult
     {
+        public ResourcePermissionResult(HttpRequestMessage request, string message)
+            : base(request, new EntityPermissionApiEvent(message))
+        {         
+        }
+
         public ResourcePermissionResult(HttpRequestMessage request, string userId, string resourceType, string resourceId)
-            : base(request, new ResourcePermissionHttpResponse(userId, resourceType, resourceId))
+            : base(request, new EntityPermissionApiEvent(userId, resourceType, resourceId))
         {
         } 
     }
