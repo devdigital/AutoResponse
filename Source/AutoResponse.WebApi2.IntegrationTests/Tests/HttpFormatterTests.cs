@@ -48,7 +48,6 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
             SampleServerFactory serverFactory,
             Mock<IExceptionService> exceptionService,
             string userId,
-            string entityId,
             string message)
         {
             exceptionService.Setup(s => s.Execute()).Throws(new EntityValidationException(new ValidationErrorDetails(

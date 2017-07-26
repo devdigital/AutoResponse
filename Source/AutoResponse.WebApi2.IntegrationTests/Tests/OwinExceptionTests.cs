@@ -2,6 +2,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
 {
     using System;
     using System.Net;
+    using System.Net.NetworkInformation;
     using System.Threading.Tasks;
 
     using AutoResponse.Core.Exceptions;
@@ -14,9 +15,17 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
     using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
+    using Xunit.Abstractions;
 
     public class OwinExceptionTests
     {
+        private readonly ITestOutputHelper output;
+
+        public OwinExceptionTests(ITestOutputHelper output)
+        {
+            this.output = output;
+        }
+
         [Theory]
         [AutoData]
         public async Task GeneralExceptionShouldReturn500(
@@ -27,6 +36,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
             using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
             {
                 var response = await server.HttpClient.GetAsync("/");
+                this.output.WriteLine($"{response.StatusCode}");
                 Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
             }
         }

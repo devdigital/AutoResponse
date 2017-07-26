@@ -18,6 +18,7 @@
     using AutoResponse.Sample.Domain.Services;
     using AutoResponse.Sample.WebApi2.Factories;
     using AutoResponse.WebApi2.ExceptionHandling;
+    using AutoResponse.WebApi2.Logging;
 
     using global::Owin;
 
@@ -53,21 +54,23 @@
             configuration.Services.Replace(typeof(IExceptionHandler), new AutoResponseExceptionHandler());
             configuration.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Never;
 
+            configuration.Services.Add(typeof(IExceptionLogger), new DefaultExceptionLogger(null));
+
             var cors = new EnableCorsAttribute("*", "*", "*");
             configuration.EnableCors(cors);
 
             this.app.UseAutoResponse();
 
-            this.app.Use(
-               async (context, next) =>
-               {
-                   if (context.Request.Uri.AbsolutePath.StartsWith("/fail"))
-                   {
-                       throw new Exception("There was an error");
-                   }
+            //this.app.Use(
+            //   async (context, next) =>
+            //   {
+            //       if (context.Request.Uri.AbsolutePath.StartsWith("/fail"))
+            //       {
+            //           throw new Exception("There was an error");
+            //       }
                    
-                   await next();
-               });
+            //       await next();
+            //   });
 
             this.app.Use(
                 async (context, next) =>
@@ -121,7 +124,7 @@
 
             builder.RegisterType<AutoResponseApiEventHttpResponseMapper>().As<IApiEventHttpResponseMapper>();
             builder.RegisterType<WebApiContextResolver>().As<IContextResolver>();
-
+      
             this.AdditionalRegistrations(builder);
 
             var container = builder.Build();

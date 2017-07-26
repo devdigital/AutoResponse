@@ -48,6 +48,7 @@
                 : autoResponseException.Event;
 
             context.Result = new AutoResponseResult(context.Request, apiEvent);
+            base.Handle(context);
         }
     }
 }
