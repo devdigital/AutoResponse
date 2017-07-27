@@ -1,11 +1,16 @@
 ﻿namespace AutoResponse.Core.Exceptions
 {
-    using System;
+    using AutoResponse.Core.ApiEvents;
 
-    public class UnauthenticatedException : Exception
+    public class UnauthenticatedException : AutoResponseException
     {
-        public UnauthenticatedException(string message)
-            : base(message)
+        public UnauthenticatedException() 
+            : base(new UnauthenticatedApiEvent())
+        {            
+        }
+
+        public UnauthenticatedException(string message) 
+            : base(new UnauthenticatedApiEvent(message))
         {            
         }
     }

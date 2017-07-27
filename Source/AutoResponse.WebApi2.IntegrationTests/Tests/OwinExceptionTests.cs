@@ -1,11 +1,8 @@
 namespace AutoResponse.WebApi2.IntegrationTests.Tests
 {
-    using System;
-    using System.Collections.Generic;
     using System.Net;
     using System.Threading.Tasks;
 
-    using AutoResponse.Core.Errors;
     using AutoResponse.Core.Exceptions;
     using AutoResponse.Core.Models;
     using AutoResponse.Sample.Domain.Services;
@@ -16,36 +13,15 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
     using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
+    using Xunit.Abstractions;
 
     public class OwinExceptionTests
     {
-        [Theory]
-        [AutoData]
-        public async Task GeneralExceptionShouldReturn500(
-            SampleServerFactory serverFactory,
-            Mock<IExceptionService> exceptionService)
-        {
-            exceptionService.Setup(s => s.Execute()).Throws(new Exception("General exception"));
-            using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
-            {
-                var response = await server.HttpClient.GetAsync("/");
-                Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
-            }
-        }
+        private readonly ITestOutputHelper output;
 
-        [Theory]
-        [AutoData]
-        public async Task GeneralExceptionShouldExceptionDetails(
-            SampleServerFactory serverFactory,
-            Mock<IExceptionService> exceptionService)
+        public OwinExceptionTests(ITestOutputHelper output)
         {
-            exceptionService.Setup(s => s.Execute()).Throws(new Exception("General exception"));
-            using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
-            {
-                var response = await server.HttpClient.GetAsync("/");
-                var content = await response.Content.ReadAsStringAsync();
-                Assert.NotNull(content);
-            }
+            this.output = output;
         }
 
         [Theory]
@@ -68,7 +44,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
             SampleServerFactory serverFactory,
             Mock<IExceptionService> exceptionService)
         {
-            exceptionService.Setup(s => s.Execute()).Throws(new EntityValidationException(new EntityValidationErrorDetails("Validation error")));
+            exceptionService.Setup(s => s.Execute()).Throws(new EntityValidationException(new ValidationErrorDetails("Validation error")));
             using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
             {
                 var response = await server.HttpClient.GetAsync("/");

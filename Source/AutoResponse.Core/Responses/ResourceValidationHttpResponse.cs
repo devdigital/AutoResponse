@@ -6,10 +6,10 @@ namespace AutoResponse.Core.Responses
     using AutoResponse.Core.Extensions;
     using AutoResponse.Core.Models;
 
-    public class ResourceValidationHttpResponse : JsonHttpResponse<ValidationErrorDetailsDto>
+    public class ResourceValidationHttpResponse : JsonHttpResponse<ValidationResponseDetailsDto>
     {
-        public ResourceValidationHttpResponse(ValidationErrorDetails validationErrorDetails)
-            : base(validationErrorDetails.ToDto(), (HttpStatusCode)422)
+        public ResourceValidationHttpResponse(string code, ValidationErrorDetails validationErrorDetails)
+            : base(validationErrorDetails.ToDto(code), (HttpStatusCode)422)
         {
         }
     }

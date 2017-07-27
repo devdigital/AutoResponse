@@ -2,20 +2,14 @@
 {
     using System;
 
-    using AutoResponse.Core.Errors;
+    using AutoResponse.Core.ApiEvents;
+    using AutoResponse.Core.Models;
 
-    public class EntityValidationException : Exception
+    public class EntityValidationException : AutoResponseException
     {
-        public EntityValidationException(EntityValidationErrorDetails errorDetails)
+        public EntityValidationException(ValidationErrorDetails errorDetails) 
+            : base(new EntityValidationApiEvent(errorDetails))
         {
-            if (errorDetails == null)
-            {
-                throw new ArgumentNullException(nameof(errorDetails));
-            }
-
-            this.ErrorDetails = errorDetails;
         }
-
-        public EntityValidationErrorDetails ErrorDetails { get; }
     }
 }

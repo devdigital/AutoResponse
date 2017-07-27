@@ -3,9 +3,11 @@
     using System;
     using System.Web.Http;
 
+    using AutoResponse.Core.Models;
     using AutoResponse.Sample.Domain.Repositories;
     using AutoResponse.Sample.WebApi2.Factories;
     using AutoResponse.Sample.WebApi2.Models;
+    using AutoResponse.WebApi2.Results;
 
     public class ValuesController : ApiController
     {
@@ -54,6 +56,14 @@
             throw new Exception("There was an error", 
                 new Exception("I am an inner exception", 
                 new Exception("I am an inner inner exception")));
+        }
+
+        [HttpGet]
+        [Route("api/validation-result")]
+        public IHttpActionResult GetValidationResult()
+        {
+            return new ResourceValidationResult(
+                this.Request, new ValidationErrorDetails("There was a validation error"));
         }
     }
 }

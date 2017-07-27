@@ -2,12 +2,12 @@
 {
     using System.Net.Http;
 
-    using AutoResponse.Core.Responses;
+    using AutoResponse.Core.ApiEvents;
 
-    public class UnauthenticatedResult : HttpResponseResult
+    public class UnauthenticatedResult : AutoResponseResult
     {
         public UnauthenticatedResult(HttpRequestMessage request)
-            : base(request, new UnauthenticatedHttpResponse())
+            : base(request, new UnauthenticatedApiEvent())
         {
         }
     }

@@ -1,12 +1,12 @@
 namespace AutoResponse.WebApi2.IntegrationTests.Tests
 {
-    using System;
     using System.Linq;
     using System.Threading.Tasks;
 
-    using AutoResponse.Client;
-    using AutoResponse.Core.Errors;
+    using AutoResponse.Client.Models;
+    using AutoResponse.Core.Enums;
     using AutoResponse.Core.Exceptions;
+    using AutoResponse.Core.Models;
     using AutoResponse.Sample.Domain.Services;
     using AutoResponse.WebApi2.IntegrationTests.Helpers;
     using AutoResponse.WebApi2.IntegrationTests.Models;
@@ -30,8 +30,8 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
             string entityId,
             string message)
         {
-            exceptionService.Setup(s => s.Execute()).Throws(new EntityValidationException(new EntityValidationErrorDetails(
-                message, new EntityValidationError<User, Guid>(u => u.Id, EntityValidationErrorCode.Invalid))));
+            exceptionService.Setup(s => s.Execute()).Throws(new EntityValidationException(new ValidationErrorDetails(
+                message, new ValidationError<User>(u => u.Id, ValidationErrorCode.Invalid))));
 
             using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
             {
@@ -48,11 +48,10 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
             SampleServerFactory serverFactory,
             Mock<IExceptionService> exceptionService,
             string userId,
-            string entityId,
             string message)
         {
-            exceptionService.Setup(s => s.Execute()).Throws(new EntityValidationException(new EntityValidationErrorDetails(
-                message, new EntityValidationError<User, string>(u => u.UserName, EntityValidationErrorCode.Invalid))));
+            exceptionService.Setup(s => s.Execute()).Throws(new EntityValidationException(new ValidationErrorDetails(
+                message, new ValidationError<User>(u => u.UserName, ValidationErrorCode.Invalid))));
 
             using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
             {
@@ -72,8 +71,8 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
             string entityId,
             string message)
         {
-            exceptionService.Setup(s => s.Execute()).Throws(new EntityValidationException(new EntityValidationErrorDetails(
-                message, new EntityValidationError<UserDto, Guid>(u => u.Id, EntityValidationErrorCode.Invalid))));
+            exceptionService.Setup(s => s.Execute()).Throws(new EntityValidationException(new ValidationErrorDetails(
+                message, new ValidationError<UserDto>(u => u.Id, ValidationErrorCode.Invalid))));
 
             using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
             {
@@ -93,8 +92,8 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
             string entityId,
             string message)
         {
-            exceptionService.Setup(s => s.Execute()).Throws(new EntityValidationException(new EntityValidationErrorDetails(
-                message, new EntityValidationError<UserApiModel, Guid>(u => u.Id, EntityValidationErrorCode.Invalid))));
+            exceptionService.Setup(s => s.Execute()).Throws(new EntityValidationException(new ValidationErrorDetails(
+                message, new ValidationError<UserApiModel>(u => u.Id, ValidationErrorCode.Invalid))));
 
             using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
             {
@@ -114,8 +113,8 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
             string entityId,
             string message)
         {
-            exceptionService.Setup(s => s.Execute()).Throws(new EntityValidationException(new EntityValidationErrorDetails(
-                message, new EntityValidationError<ApiModel, Guid>(u => u.Id, EntityValidationErrorCode.Invalid))));
+            exceptionService.Setup(s => s.Execute()).Throws(new EntityValidationException(new ValidationErrorDetails(
+                message, new ValidationError<ApiModel>(u => u.Id, ValidationErrorCode.Invalid))));
 
             using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
             {

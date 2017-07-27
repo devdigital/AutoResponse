@@ -2,12 +2,12 @@
 {
     using System.Net.Http;
 
-    using AutoResponse.Core.Responses;
+    using AutoResponse.Core.ApiEvents;
 
-    public class ResourceNotFoundResult : HttpResponseResult
+    public class ResourceNotFoundResult : AutoResponseResult
     {
         public ResourceNotFoundResult(HttpRequestMessage request, string resourceType, string resourceId)
-            : base(request, new ResourceNotFoundHttpResponse(resourceType, resourceId))
+            : base(request, new EntityNotFoundApiEvent(resourceType, resourceId))
         {            
         }        
     }

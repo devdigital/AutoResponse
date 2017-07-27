@@ -12,11 +12,13 @@
     using Autofac.Features.ResolveAnything;
     using Autofac.Integration.WebApi;
 
+    using AutoResponse.Core.Mappers;
     using AutoResponse.Sample.Data.Repositories;
     using AutoResponse.Sample.Domain.Repositories;
     using AutoResponse.Sample.Domain.Services;
     using AutoResponse.Sample.WebApi2.Factories;
     using AutoResponse.WebApi2.ExceptionHandling;
+    using AutoResponse.WebApi2.Logging;
 
     using global::Owin;
 
@@ -52,11 +54,14 @@
             configuration.Services.Replace(typeof(IExceptionHandler), new AutoResponseExceptionHandler());
             configuration.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Never;
 
+            configuration.Services.Add(typeof(IExceptionLogger), new DefaultExceptionLogger(null));
+
             var cors = new EnableCorsAttribute("*", "*", "*");
             configuration.EnableCors(cors);
 
             this.app.UseAutoResponse();
 
+            // Allow easier testing of responses via browser
             this.app.Use(
                async (context, next) =>
                {
@@ -64,10 +69,11 @@
                    {
                        throw new Exception("There was an error");
                    }
-                   
+
                    await next();
                });
 
+            // Allow automated tests of OWIN exceptions
             this.app.Use(
                 async (context, next) =>
                     {
@@ -83,8 +89,6 @@
                         await next();
                     });
 
-            // Register the Autofac middleware FIRST, then the Autofac Web API middleware,
-            // and finally the standard Web API middleware.
             this.app.UseAutofacMiddleware(container);
             this.app.UseAutofacWebApi(configuration);
             this.app.UseWebApi(configuration);
@@ -118,6 +122,9 @@
             builder.RegisterType<DefaultValuesRepository>().As<IValuesRepository>();
             builder.RegisterType<OkActionResultFactory>().As<IHttpActionResultFactory>();
 
+            builder.RegisterType<AutoResponseApiEventHttpResponseMapper>().As<IApiEventHttpResponseMapper>();
+            builder.RegisterType<WebApiContextResolver>().As<IContextResolver>();
+      
             this.AdditionalRegistrations(builder);
 
             var container = builder.Build();

@@ -2,15 +2,21 @@
 {
     using System.Net.Http;
 
-    using AutoResponse.Core.Responses;
+    using AutoResponse.Core.ApiEvents;
 
-    public class ResourceCreatedResult : HttpResponseResult
+    public class ResourceCreatedResult : AutoResponseResult
     {
         public ResourceCreatedResult(
-              HttpRequestMessage request,
-              string resourceId)       
-            : base(request, new ResourceCreatedHttpResponse(resourceId))
+            HttpRequestMessage request,
+            string userId,
+            string resourceType)       
+            : base(request, new EntityCreatedApiEvent(userId, resourceType))
         {
+        }
+
+        public ResourceCreatedResult(HttpRequestMessage request, string userId, string resourceType, string resourceId)
+            : base(request, new EntityCreatedApiEvent(userId, resourceType, resourceId))
+        {            
         }
     }
 }

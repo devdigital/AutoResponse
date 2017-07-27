@@ -9,6 +9,7 @@
         <dependencies>
             <group targetFramework=".NETFramework4.5">
                 <dependency id="Microsoft.Owin" version="3.1.0" />
+                <dependency id="AutoResponse.Core" version="$version$" />
             </group>
         </dependencies>
     </metadata>

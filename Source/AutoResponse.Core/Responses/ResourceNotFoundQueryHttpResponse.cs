@@ -7,20 +7,23 @@ namespace AutoResponse.Core.Responses
     using AutoResponse.Core.Dtos;
     using AutoResponse.Core.Models;
 
-    public class ResourceNotFoundQueryHttpResponse : JsonHttpResponse<ValidationErrorDetailsDto>
+    public class ResourceNotFoundQueryHttpResponse : JsonHttpResponse<ValidationResponseDetailsDto>
     {
-        public ResourceNotFoundQueryHttpResponse(string resourceType, IEnumerable<QueryParameter> parameters)
-            : base(ToValidationErrorDetails(resourceType, parameters), HttpStatusCode.NotFound)
+        public ResourceNotFoundQueryHttpResponse(string message, string code, string resourceType, IEnumerable<QueryParameter> parameters)
+            : base(ToValidationErrorDetails(message, code, resourceType, parameters), HttpStatusCode.NotFound)
         {
         }
 
-        private static ValidationErrorDetailsDto ToValidationErrorDetails(
+        private static ValidationResponseDetailsDto ToValidationErrorDetails(
+            string message,
+            string code,
             string resourceType, 
             IEnumerable<QueryParameter> parameters)
         {
-            return new ValidationErrorDetailsDto
+            return new ValidationResponseDetailsDto
             {
-                Message = $"The {resourceType} resource was not found with the specified parameters",
+                Message = message,
+                Code = code,
                 Errors = parameters.Select(p => new ValidationErrorDto
                 {
                     Resource = resourceType,

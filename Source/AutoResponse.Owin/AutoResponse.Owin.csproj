@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoResponseExceptionMiddleware.cs" />
+    <Compile Include="AutoResponseOptions.cs" />
     <Compile Include="IAppBuilderExtensions.cs" />
     <Compile Include="OwinContextResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

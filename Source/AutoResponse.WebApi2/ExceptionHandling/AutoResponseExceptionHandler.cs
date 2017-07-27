@@ -3,19 +3,21 @@
     using System;
     using System.Web.Http.ExceptionHandling;
 
+    using AutoResponse.Core.ApiEvents;
+    using AutoResponse.Core.Exceptions;
     using AutoResponse.Core.Mappers;
     using AutoResponse.WebApi2.Results;
 
     public class AutoResponseExceptionHandler : ExceptionHandler
     {
-        private readonly IExceptionHttpResponseMapper mapper;
+        private readonly IApiEventHttpResponseMapper mapper;
 
         public AutoResponseExceptionHandler()
         {
-            this.mapper = new AutoResponseExceptionHttpResponseMapper(new WebApiContextResolver());
+            this.mapper = new AutoResponseApiEventHttpResponseMapper(new WebApiContextResolver());
         }
 
-        public AutoResponseExceptionHandler(IExceptionHttpResponseMapper mapper)
+        public AutoResponseExceptionHandler(IApiEventHttpResponseMapper mapper)
         {
             if (mapper == null)
             {
@@ -40,14 +42,13 @@
                 return;
             }
 
-            var httpResponse = this.mapper.GetHttpResponse(context.Request, context.Exception);
-            if (httpResponse == null)
-            {
-                base.Handle(context);
-                return;
-            }
+            var autoResponseException = context.Exception as AutoResponseException;
+            var apiEvent = autoResponseException == null
+                ? new ServiceErrorApiEvent(context.Exception)
+                : autoResponseException.Event;
 
-            context.Result = new HttpResponseResult(context.Request, httpResponse);
+            context.Result = new AutoResponseResult(context.Request, apiEvent);
+            base.Handle(context);
         }
     }
 }
