@@ -33,11 +33,7 @@
 
         public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
         {
-            var dependencyScope = this.request.GetDependencyScope();
-            
-            var mapper = dependencyScope?.GetService(typeof(IApiEventHttpResponseMapper)) as
-                IApiEventHttpResponseMapper;
-
+            var mapper = this.GetMapper();
             if (mapper == null)
             {
                 throw new InvalidOperationException($"No {typeof(IApiEventHttpResponseMapper).Name} registered in dependency resolver");
@@ -62,6 +58,16 @@
                 httpResponse.ContentType);
 
             return Task.FromResult(response);
+        }
+
+        protected virtual IApiEventHttpResponseMapper GetMapper()
+        {
+            var dependencyScope = this.request.GetDependencyScope();
+
+            var mapper = dependencyScope?.GetService(typeof(IApiEventHttpResponseMapper)) as
+                IApiEventHttpResponseMapper;
+
+            return mapper;
         }
     }
 }

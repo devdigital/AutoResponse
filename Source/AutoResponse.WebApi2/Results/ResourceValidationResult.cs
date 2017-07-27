@@ -4,7 +4,6 @@
 
     using AutoResponse.Core.ApiEvents;
     using AutoResponse.Core.Models;
-    using AutoResponse.Core.Responses;
 
     public class ResourceValidationResult : AutoResponseResult
     {

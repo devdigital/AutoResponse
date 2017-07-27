@@ -4,9 +4,10 @@
     using System.Net;
     using System.Threading.Tasks;
 
-    using AutoResponse.Core.ApiEvents;
     using AutoResponse.Core.Exceptions;
+    using AutoResponse.Core.Logging;
     using AutoResponse.Core.Mappers;
+    using AutoResponse.Core.Responses;
 
     using Microsoft.Owin;
 
@@ -14,9 +15,12 @@
     {
         private readonly IApiEventHttpResponseMapper mapper;
 
+        private readonly IAutoResponseLogger logger;
+
         public AutoResponseExceptionMiddleware(
             OwinMiddleware next, 
-            IApiEventHttpResponseMapper mapper)
+            IApiEventHttpResponseMapper mapper,
+            IAutoResponseLogger logger)
             : base(next)
         {
             if (mapper == null)
@@ -24,29 +28,46 @@
                 throw new ArgumentNullException(nameof(mapper));
             }
 
+            if (logger == null)
+            {
+                throw new ArgumentNullException(nameof(logger));
+            }
+
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         public override async Task Invoke(IOwinContext context)
-        {             
+        {
             try
             {
                 await this.Next.Invoke(context);
             }
             catch (AutoResponseException exception)
             {
-                this.ConvertExceptionToHttpReponse(exception, context);
-            }            
+                this.ConvertExceptionToHttpResponse(exception, context);
+            }
+            catch (Exception exception)
+            {
+                await this.logger.LogException(exception);
+                throw;
+            }
         }
 
-        private void ConvertExceptionToHttpReponse(AutoResponseException exception, IOwinContext context)
+        private void ConvertExceptionToHttpResponse(AutoResponseException exception, IOwinContext context)
         {
             var httpResponse = this.mapper.GetHttpResponse(context: null, apiEvent: exception.Event); 
             if (httpResponse == null)
             {
-                throw new InvalidOperationException("No ");
+                throw new InvalidOperationException(
+                    $"No HTTP response registered for exception type '{exception.GetType()}");
             }
 
+            this.ConvertHttpResponseToResponse(httpResponse, context);
+        }
+
+        private void ConvertHttpResponseToResponse(IHttpResponse httpResponse, IOwinContext context)
+        {
             context.Response.StatusCode = (int)httpResponse.StatusCode;
             context.Response.ReasonPhrase = this.GetReasonPhrase(httpResponse.StatusCode);
 

@@ -77,6 +77,8 @@
     <Compile Include="Formatters\AutoResponseApiEventCodeMapper.cs" />
     <Compile Include="Formatters\IApiEventCodeMapper.cs" />
     <Compile Include="Formatters\NullApiEventCodeMapper.cs" />
+    <Compile Include="Logging\IAutoResponseLogger.cs" />
+    <Compile Include="Logging\NullAutoResponseLogger.cs" />
     <Compile Include="Models\QueryParameter.cs" />
     <Compile Include="Exceptions\ServiceErrorException.cs" />
     <Compile Include="Exceptions\UnauthenticatedException.cs" />

@@ -18,12 +18,12 @@ namespace AutoResponse.Core.Formatters
             this.apiEventCodeMapper = new AutoResponseApiEventCodeMapper();
         }
 
-        public string EntityMessageToResourceMessage(string message)
+        public string Message(string message)
         {
             return string.IsNullOrWhiteSpace(message) ? null : message;
         }
 
-        public string EntityTypeToResource(string entityType)
+        public string Resource(string entityType)
         {
             if (string.IsNullOrWhiteSpace(entityType))
             {
@@ -48,7 +48,7 @@ namespace AutoResponse.Core.Formatters
             return string.IsNullOrWhiteSpace(entityType) ? null : entityType.Kebaberize();
         }
 
-        public string EntityPropertyToField(string entityProperty)
+        public string Field(string entityProperty)
         {
             return string.IsNullOrWhiteSpace(entityProperty) 
                 ? null : entityProperty.Kebaberize();

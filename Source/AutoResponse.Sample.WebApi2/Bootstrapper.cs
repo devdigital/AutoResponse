@@ -61,17 +61,19 @@
 
             this.app.UseAutoResponse();
 
-            //this.app.Use(
-            //   async (context, next) =>
-            //   {
-            //       if (context.Request.Uri.AbsolutePath.StartsWith("/fail"))
-            //       {
-            //           throw new Exception("There was an error");
-            //       }
-                   
-            //       await next();
-            //   });
+            // Allow easier testing of responses via browser
+            this.app.Use(
+               async (context, next) =>
+               {
+                   if (context.Request.Uri.AbsolutePath.StartsWith("/fail"))
+                   {
+                       throw new Exception("There was an error");
+                   }
 
+                   await next();
+               });
+
+            // Allow automated tests of OWIN exceptions
             this.app.Use(
                 async (context, next) =>
                     {
@@ -87,8 +89,6 @@
                         await next();
                     });
 
-            // Register the Autofac middleware FIRST, then the Autofac Web API middleware,
-            // and finally the standard Web API middleware.
             this.app.UseAutofacMiddleware(container);
             this.app.UseAutofacWebApi(configuration);
             this.app.UseWebApi(configuration);

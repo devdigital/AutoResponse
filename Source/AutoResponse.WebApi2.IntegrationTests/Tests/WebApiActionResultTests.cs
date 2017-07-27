@@ -3,7 +3,6 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
     using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
-    using System.Web.Http.Results;
 
     using AutoResponse.Core.Models;
     using AutoResponse.Sample.WebApi2.Factories;
@@ -12,8 +11,6 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
     using AutoResponse.WebApi2.Results;
 
     using Moq;
-
-    using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
 
@@ -59,7 +56,8 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
            HttpRequestMessage request,
            string message)
         {
-            actionResultFactory.Setup(f => f.Create(It.IsAny<HttpRequestMessage>())).Returns(new ResourceValidationResult(request, new ValidationErrorDetails(message)));
+            actionResultFactory.Setup(f => f.Create(It.IsAny<HttpRequestMessage>())).Returns(
+                new ResourceValidationResult(request, new ValidationErrorDetails(message)));
 
             using (var server = serverFactory.With<IHttpActionResultFactory>(actionResultFactory.Object).Create())
             {
@@ -77,13 +75,14 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
         {
             actionResultFactory.Setup(f => f.Create(It.IsAny<HttpRequestMessage>())).Returns(result);
 
-            using (var server = serverFactory.With<IHttpActionResultFactory>(actionResultFactory.Object).Create())
+            using (var server = serverFactory
+                .With<IHttpActionResultFactory>(actionResultFactory.Object)
+                .Create())
             {
                 var response = await server.HttpClient.GetAsync("/api/result");
                 Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
             }
         }
-
 
         [Theory]
         [AutoMoqData]
@@ -94,12 +93,13 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
         {
             actionResultFactory.Setup(f => f.Create(It.IsAny<HttpRequestMessage>())).Returns(result);
 
-            using (var server = serverFactory.With<IHttpActionResultFactory>(actionResultFactory.Object).Create())
+            using (var server = serverFactory
+                .With<IHttpActionResultFactory>(actionResultFactory.Object)
+                .Create())
             {
                 var response = await server.HttpClient.GetAsync("/api/result");
                 Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
             }
         }
-
     }
 }

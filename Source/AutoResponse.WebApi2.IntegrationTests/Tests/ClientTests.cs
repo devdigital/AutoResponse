@@ -16,9 +16,9 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
 
     using Xunit;
 
-    public class FooTests
+    public class ClientTests
     {
-        [Theory]
+        [Theory(Skip = "Not implemented")]
         [AutoData]
         public async Task EntityValidationExceptionShouldReturnKebabCaseEntityType(
             SampleServerFactory serverFactory,

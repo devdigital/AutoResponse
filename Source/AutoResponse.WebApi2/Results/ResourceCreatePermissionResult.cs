@@ -3,7 +3,6 @@
     using System.Net.Http;
 
     using AutoResponse.Core.ApiEvents;
-    using AutoResponse.Core.Responses;
 
     public class ResourceCreatePermissionResult : AutoResponseResult
     {        

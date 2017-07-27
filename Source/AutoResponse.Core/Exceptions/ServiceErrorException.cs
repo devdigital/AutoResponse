@@ -2,10 +2,12 @@
 {
     using System;
 
-    public class ServiceErrorException : Exception
+    using AutoResponse.Core.ApiEvents;
+
+    public class ServiceErrorException : AutoResponseException
     {
-        public ServiceErrorException(string message)
-            : base(message)
+        public ServiceErrorException(Exception exception) 
+            : base(new ServiceErrorApiEvent(exception))
         {            
         }
     }
