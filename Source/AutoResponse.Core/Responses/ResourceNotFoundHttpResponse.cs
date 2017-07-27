@@ -5,19 +5,19 @@ namespace AutoResponse.Core.Responses
 
     using AutoResponse.Core.Dtos;
 
-    public class ResourceNotFoundHttpResponse : JsonHttpResponse<ValidationErrorDetailsDto>
+    public class ResourceNotFoundHttpResponse : JsonHttpResponse<ValidationResponseDetailsDto>
     {      
         public ResourceNotFoundHttpResponse(string message, string code, string resourceType)
             : base(ToValidationErrorDetails(message, code, resourceType), HttpStatusCode.NotFound)
         {
         }
 
-        private static ValidationErrorDetailsDto ToValidationErrorDetails(
+        private static ValidationResponseDetailsDto ToValidationErrorDetails(
             string message,
             string code,
             string resourceType)
         {
-            return new ValidationErrorDetailsDto
+            return new ValidationResponseDetailsDto
             {
                 Message = message,
                 Code = code,

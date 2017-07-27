@@ -7,8 +7,8 @@ namespace AutoResponse.Core.Responses
     public class ResourceCreatedHttpResponse : JsonHttpResponse<ResourceCreatedDto>
     {
         // TODO: location header
-        public ResourceCreatedHttpResponse(string resourceId)
-            : base(new ResourceCreatedDto { Id = resourceId }, HttpStatusCode.Created)
+        public ResourceCreatedHttpResponse(string message, string code, string resourceId)
+            : base(new ResourceCreatedDto { Message = message, Code = code, Id = resourceId }, HttpStatusCode.Created)
         {
         }
     }

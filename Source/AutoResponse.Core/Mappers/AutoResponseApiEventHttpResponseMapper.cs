@@ -71,11 +71,9 @@
                     c.Formatter.Resource(e.EntityType),
                     e.Parameters));
 
-            configuration.AddMapping<EntityCreatePermissionApiEvent>(
-                this.ToCreate);
-
-            configuration.AddMapping<EntityPermissionApiEvent>(
-                this.ToPermission);
+            configuration.AddMapping<EntityCreatePermissionApiEvent>(this.ToCreatePermission);
+            configuration.AddMapping<EntityPermissionApiEvent>(this.ToPermission);
+            configuration.AddMapping<EntityCreatedApiEvent>(this.ToCreate);                
         }
 
         private IHttpResponse ToPermission(
@@ -93,7 +91,7 @@
                 configuration.Formatter.ApiEventToCode(apiEvent));
         }
 
-        private IHttpResponse ToCreate(
+        private IHttpResponse ToCreatePermission(
             ExceptionHttpResponseContext configuration, 
             EntityCreatePermissionApiEvent apiEvent)
         {            
@@ -106,6 +104,23 @@
             return new ResourceCreatePermissionHttpResponse(
                 configuration.Formatter.Message(message),
                 configuration.Formatter.ApiEventToCode(apiEvent));
+        }
+
+        private IHttpResponse ToCreate(
+            ExceptionHttpResponseContext configuration, 
+            EntityCreatedApiEvent apiEvent)
+        {
+            var resource = configuration.Formatter.Resource(apiEvent.EntityType);
+
+            var message = string.IsNullOrWhiteSpace(apiEvent.EntityId)
+                ? $"The user with identifier '{apiEvent.UserId}', created a {resource} resource"
+                : $"The user with identifier '{apiEvent.UserId}', created a {resource} resource with resource identifier '{configuration.Formatter.Field(apiEvent.EntityId)}'";
+
+            // TODO: entityId is optional in the api event, but the response will always include id
+            return new ResourceCreatedHttpResponse(
+                configuration.Formatter.Message(message),
+                configuration.Formatter.ApiEventToCode(apiEvent),
+                configuration.Formatter.Field(apiEvent.EntityId));
         }
 
         private IHttpResponse ToNotFound(

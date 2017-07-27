@@ -6,10 +6,10 @@ namespace AutoResponse.Core.Responses
 
     using AutoResponse.Core.Dtos;
 
-    public class ErrorHttpResponse : JsonHttpResponse<ErrorDto>
+    public class ErrorHttpResponse : JsonHttpResponse<ResponseDto>
     {
         public ErrorHttpResponse(string message, string code, HttpStatusCode statusCode, IDictionary<string, string[]> headers = null) 
-            : base(new ErrorDto { Message = message, Code = code }, statusCode, headers)
+            : base(new ResponseDto { Message = message, Code = code }, statusCode, headers)
         {
             if (string.IsNullOrWhiteSpace(message))
             {

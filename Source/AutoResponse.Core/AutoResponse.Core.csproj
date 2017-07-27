@@ -57,8 +57,8 @@
     <Compile Include="ApiEvents\EntityValidationApiEvent.cs" />
     <Compile Include="ApiEvents\ServiceErrorApiEvent.cs" />
     <Compile Include="ApiEvents\UnauthenticatedApiEvent.cs" />
-    <Compile Include="Dtos\ErrorDto.cs" />
-    <Compile Include="Dtos\ErrorWithExceptionDto.cs" />
+    <Compile Include="Dtos\ResponseDto.cs" />
+    <Compile Include="Dtos\ResponseWithExceptionDto.cs" />
     <Compile Include="Dtos\ResourceCreatedDto.cs" />
     <Compile Include="Errors\EntityValidationError.cs" />
     <Compile Include="Errors\EntityValidationErrorCode.cs" />
@@ -107,7 +107,7 @@
     <Compile Include="Responses\ResourceNotFoundHttpResponse.cs" />
     <Compile Include="Responses\ResourcePermissionHttpResponse.cs" />
     <Compile Include="Responses\ResourceValidationHttpResponse.cs" />
-    <Compile Include="Dtos\ValidationErrorDetailsDto.cs" />
+    <Compile Include="Dtos\ValidationResponseDetailsDto.cs" />
     <Compile Include="Dtos\ValidationErrorDto.cs" />
     <Compile Include="Extensions\ValidationErrorDetailsExtensions.cs" />
     <Compile Include="Responses\ServiceErrorHttpResponse.cs" />

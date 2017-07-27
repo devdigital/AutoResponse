@@ -2,7 +2,7 @@ namespace AutoResponse.Core.Dtos
 {
     using System.Collections.Generic;
 
-    public class ValidationErrorDetailsDto : ErrorDto
+    public class ValidationResponseDetailsDto : ResponseDto
     {        
         public IEnumerable<ValidationErrorDto> Errors { get; set; }
     }

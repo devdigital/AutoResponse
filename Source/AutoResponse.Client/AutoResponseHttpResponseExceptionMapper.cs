@@ -25,7 +25,8 @@
             // also difference between create permission response and permission response
             configuration.AddMapping(
                 HttpStatusCode.Unauthorized,
-                (r, c) => new UnauthenticatedException());
+                (r, c) => new UnauthenticatedException(
+                    c.Formatter.Message(r.Property("message"))));
 
             configuration.AddMapping(
                 HttpStatusCode.Forbidden,
@@ -39,10 +40,9 @@
                         c.Formatter.Message(r.Property("message")))));
 
             configuration.AddMapping(
-                HttpStatusCode.NotFound, 
+                HttpStatusCode.NotFound,
                 (r, c) => new EntityNotFoundException(
-                    c.Formatter.EntityType(r.Property("resource")), 
-                    c.Formatter.EntityProperty(r.Property("field"))));  
+                    c.Formatter.Message(r.Property("message"))));
             
             configuration.AddMapping(
                 HttpStatusCode.InternalServerError,
