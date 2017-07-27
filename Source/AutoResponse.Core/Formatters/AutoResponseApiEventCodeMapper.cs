@@ -23,7 +23,7 @@ namespace AutoResponse.Core.Formatters
             };
         }
 
-        public string GetCode(AutoResponseApiEvent apiEvent)
+        public string GetCode(object apiEvent)
         {
             if (apiEvent == null)
             {

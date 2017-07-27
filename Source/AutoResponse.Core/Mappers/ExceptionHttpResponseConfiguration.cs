@@ -3,14 +3,13 @@ namespace AutoResponse.Core.Mappers
     using System;
     using System.Collections.Generic;
 
-    using AutoResponse.Core.ApiEvents;
     using AutoResponse.Core.Responses;
 
     public class ExceptionHttpResponseConfiguration
     {
-        private readonly IDictionary<Type, Func<ExceptionHttpResponseContext, AutoResponseApiEvent, IHttpResponse>> mappers;
+        private readonly IDictionary<Type, Func<ExceptionHttpResponseContext, object, IHttpResponse>> mappers;
         
-        public ExceptionHttpResponseConfiguration(IDictionary<Type, Func<ExceptionHttpResponseContext, AutoResponseApiEvent, IHttpResponse>> mappers)
+        public ExceptionHttpResponseConfiguration(IDictionary<Type, Func<ExceptionHttpResponseContext, object, IHttpResponse>> mappers)
         {   
             if (mappers == null)
             {
@@ -21,7 +20,7 @@ namespace AutoResponse.Core.Mappers
         }
 
         public void AddMapping<TApiEvent>(
-            Func<ExceptionHttpResponseContext, TApiEvent, IHttpResponse> mapper) where TApiEvent : AutoResponseApiEvent
+            Func<ExceptionHttpResponseContext, TApiEvent, IHttpResponse> mapper) where TApiEvent : class
         {
             if (mapper == null)
             {

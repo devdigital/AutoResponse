@@ -2,7 +2,7 @@ namespace AutoResponse.Core.ApiEvents
 {
     using System;
 
-    public class UnauthenticatedApiEvent : AutoResponseApiEvent
+    public class UnauthenticatedApiEvent
     {
         public UnauthenticatedApiEvent()
         {            

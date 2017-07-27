@@ -24,7 +24,6 @@
 
         public override void Log(ExceptionLoggerContext context)
         {
-            var x = 5;
             // this.logger.Error(context.Exception, "There was an unhandled exception");
         }
     }

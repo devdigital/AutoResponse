@@ -2,7 +2,7 @@ namespace AutoResponse.Core.ApiEvents
 {
     using System;
 
-    public class EntityCreatedApiEvent : AutoResponseApiEvent
+    public class EntityCreatedApiEvent
     {        
         public EntityCreatedApiEvent(string userId, string entityType)
         {

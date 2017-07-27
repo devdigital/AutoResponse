@@ -1,7 +1,5 @@
 ﻿namespace AutoResponse.Core.Formatters
 {
-    using AutoResponse.Core.ApiEvents;
-
     public interface IHttpResponseExceptionFormatter
     {
         string Message(string message);
@@ -10,6 +8,6 @@
 
         string Field(string entityProperty);
 
-        string ApiEventToCode(AutoResponseApiEvent apiEvent);
+        string ApiEventToCode(object apiEvent);
     }
 }

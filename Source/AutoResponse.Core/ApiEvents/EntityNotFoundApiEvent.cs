@@ -2,7 +2,7 @@ namespace AutoResponse.Core.ApiEvents
 {
     using System;
 
-    public class EntityNotFoundApiEvent : AutoResponseApiEvent
+    public class EntityNotFoundApiEvent
     {
         public EntityNotFoundApiEvent(string message)
         {

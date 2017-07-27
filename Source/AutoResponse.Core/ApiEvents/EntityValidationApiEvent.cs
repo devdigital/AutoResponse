@@ -4,7 +4,7 @@ namespace AutoResponse.Core.ApiEvents
 
     using AutoResponse.Core.Models;
 
-    public class EntityValidationApiEvent : AutoResponseApiEvent
+    public class EntityValidationApiEvent
     {        
         public EntityValidationApiEvent(ValidationErrorDetails errorDetails)           
         {

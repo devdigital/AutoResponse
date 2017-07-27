@@ -2,7 +2,7 @@ namespace AutoResponse.Core.ApiEvents
 {
     using System;
 
-    public class ServiceErrorApiEvent : AutoResponseApiEvent
+    public class ServiceErrorApiEvent
     {
         public ServiceErrorApiEvent(Exception exception)
         {

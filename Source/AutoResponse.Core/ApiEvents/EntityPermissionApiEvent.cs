@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class EntityPermissionApiEvent : AutoResponseApiEvent
+    public class EntityPermissionApiEvent
     {
         public EntityPermissionApiEvent(string message)
         {

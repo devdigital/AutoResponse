@@ -11,7 +11,7 @@
     {
         private readonly IHttpResponseExceptionFormatter formatter;
 
-        private readonly Lazy<IDictionary<Type, Func<ExceptionHttpResponseContext, AutoResponseApiEvent, IHttpResponse>>> mappers;        
+        private readonly Lazy<IDictionary<Type, Func<ExceptionHttpResponseContext, object, IHttpResponse>>> mappers;        
 
         protected ApiEventHttpResponseMapperBase(IHttpResponseExceptionFormatter formatter)
         {
@@ -22,9 +22,9 @@
 
             this.formatter = formatter;
 
-            this.mappers = new Lazy<IDictionary<Type, Func<ExceptionHttpResponseContext, AutoResponseApiEvent, IHttpResponse>>>(() =>
+            this.mappers = new Lazy<IDictionary<Type, Func<ExceptionHttpResponseContext, object, IHttpResponse>>>(() =>
             {
-                var mappersInstance = new Dictionary<Type, Func<ExceptionHttpResponseContext, AutoResponseApiEvent, IHttpResponse>>();
+                var mappersInstance = new Dictionary<Type, Func<ExceptionHttpResponseContext, object, IHttpResponse>>();
                 this.ConfigureMappings(new ExceptionHttpResponseConfiguration(mappersInstance));
                 return mappersInstance;
             });
@@ -32,7 +32,7 @@
 
         protected abstract void ConfigureMappings(ExceptionHttpResponseConfiguration configuration);
 
-        public IHttpResponse GetHttpResponse(object context, AutoResponseApiEvent apiEvent)
+        public IHttpResponse GetHttpResponse(object context, object apiEvent)
         {
             if (apiEvent == null)
             {

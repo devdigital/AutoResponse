@@ -6,7 +6,7 @@
 
     public class AutoResponseException : Exception
     {
-        public AutoResponseException(AutoResponseApiEvent apiEvent)
+        public AutoResponseException(object apiEvent)
         {
             if (apiEvent == null)
             {
@@ -16,6 +16,6 @@
             this.Event = apiEvent;
         }
 
-        public AutoResponseApiEvent Event { get; }
+        public object Event { get; }
     }
 }

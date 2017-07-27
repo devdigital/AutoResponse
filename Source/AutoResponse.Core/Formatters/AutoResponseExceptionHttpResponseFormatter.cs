@@ -2,8 +2,6 @@ namespace AutoResponse.Core.Formatters
 {
     using System;
 
-    using AutoResponse.Core.ApiEvents;
-
     using Humanizer;
 
     internal class AutoResponseExceptionHttpResponseFormatter : IHttpResponseExceptionFormatter
@@ -64,7 +62,7 @@ namespace AutoResponse.Core.Formatters
                 ? null : entityProperty.Kebaberize();
         }
 
-        public string ApiEventToCode(AutoResponseApiEvent apiEvent)
+        public string ApiEventToCode(object apiEvent)
         {
             return this.apiEventCodeMapper.GetCode(apiEvent);
         }

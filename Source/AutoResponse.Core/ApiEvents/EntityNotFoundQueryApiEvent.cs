@@ -1,12 +1,11 @@
 namespace AutoResponse.Core.ApiEvents
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
 
     using AutoResponse.Core.Models;
 
-    public class EntityNotFoundQueryApiEvent : AutoResponseApiEvent
+    public class EntityNotFoundQueryApiEvent
     {
         public EntityNotFoundQueryApiEvent(string entityType, IEnumerable<QueryParameter> parameters)
         {

@@ -6,16 +6,15 @@
     using System.Threading.Tasks;
     using System.Web.Http;
 
-    using AutoResponse.Core.ApiEvents;
     using AutoResponse.Core.Mappers;
 
     public class AutoResponseResult : IHttpActionResult 
     {
         private readonly HttpRequestMessage request;
 
-        private readonly AutoResponseApiEvent apiEvent;
+        private readonly object apiEvent;
 
-        public AutoResponseResult(HttpRequestMessage request, AutoResponseApiEvent apiEvent)
+        public AutoResponseResult(HttpRequestMessage request, object apiEvent)
         {
             if (request == null)
             {

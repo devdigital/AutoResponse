@@ -48,7 +48,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiEvents\AutoResponseApiEvent.cs" />
     <Compile Include="ApiEvents\EntityCreatePermissionApiEvent.cs" />
     <Compile Include="ApiEvents\EntityCreatedApiEvent.cs" />
     <Compile Include="ApiEvents\EntityNotFoundApiEvent.cs" />

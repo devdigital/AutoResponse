@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class EntityCreatePermissionApiEvent : AutoResponseApiEvent
+    public class EntityCreatePermissionApiEvent
     {
         public EntityCreatePermissionApiEvent(string userId, string entityType)
         {
