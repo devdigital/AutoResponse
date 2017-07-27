@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/devdigital/AutoResponse/compare/v0.1.15...v0.2.0) (2017-07-27)
+
+
+### Bug Fixes
+
+* **client-tests:** added http response to exception tests ([f61b939](https://github.com/devdigital/AutoResponse/commit/f61b939))
+* **comments:** removed commented code ([6054f99](https://github.com/devdigital/AutoResponse/commit/6054f99))
+* **errors:** removed unused error types ([faf97d1](https://github.com/devdigital/AutoResponse/commit/faf97d1))
+* **nuspec:** added client nuspec file ([5e217f8](https://github.com/devdigital/AutoResponse/commit/5e217f8))
+* **tests:** fixed owin tests ([409fee1](https://github.com/devdigital/AutoResponse/commit/409fee1))
+
+
+### Features
+
+* **http-response-mapper:** added mapper from http responses to exceptions ([9cd5308](https://github.com/devdigital/AutoResponse/commit/9cd5308))
+
+
+
 <a name="0.1.15"></a>
 ## [0.1.15](https://github.com/devdigital/AutoResponse/compare/v0.1.13...v0.1.15) (2017-07-19)
 
