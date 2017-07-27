@@ -113,6 +113,7 @@
     <Compile Include="Models\UserDto.cs" />
     <Compile Include="Tests\ClientTests.cs" />
     <Compile Include="Tests\HttpFormatterTests.cs" />
+    <Compile Include="Models\TestAutoResponseResult.cs" />
     <Compile Include="Tests\WebApiActionResultTests.cs" />
     <Compile Include="Tests\WebApiExceptionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

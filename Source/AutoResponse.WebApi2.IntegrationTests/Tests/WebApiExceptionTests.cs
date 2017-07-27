@@ -112,7 +112,7 @@
 
         [Theory]
         [AutoCustomData]
-        public async Task PermissionExceptionWithMessageShouldReturnMessage(
+        public async Task PermissionExceptionWithMessageShouldReturnExpectedMessage(
             SampleServerFactory serverFactory,
             Mock<IValuesRepository> valuesRepository,
             int entityId,

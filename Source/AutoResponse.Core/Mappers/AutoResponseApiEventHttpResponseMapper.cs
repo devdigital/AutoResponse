@@ -85,7 +85,7 @@
             var resourceType = configuration.Formatter.Resource(apiEvent.EntityType);
             var resourceId = configuration.Formatter.Field(apiEvent.EntityId);
 
-            var message =
+            var message = apiEvent.Message ??
                 $"The user with identifier '{apiEvent.UserId}', does not have permission to access the {resourceType} resource with identifier '{resourceId}'";
 
             return new ResourcePermissionHttpResponse(

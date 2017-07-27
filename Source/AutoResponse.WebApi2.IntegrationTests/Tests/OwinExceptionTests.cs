@@ -28,36 +28,6 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
 
         [Theory]
         [AutoData]
-        public async Task GeneralExceptionShouldReturn500(
-            SampleServerFactory serverFactory,
-            Mock<IExceptionService> exceptionService)
-        {
-            exceptionService.Setup(s => s.Execute()).Throws(new Exception("General exception"));
-            using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
-            {
-                var response = await server.HttpClient.GetAsync("/");
-                this.output.WriteLine($"{response.StatusCode}");
-                Assert.Equal(HttpStatusCode.InternalServerError, response.StatusCode);
-            }
-        }
-
-        [Theory]
-        [AutoData]
-        public async Task GeneralExceptionShouldExceptionDetails(
-            SampleServerFactory serverFactory,
-            Mock<IExceptionService> exceptionService)
-        {
-            exceptionService.Setup(s => s.Execute()).Throws(new Exception("General exception"));
-            using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
-            {
-                var response = await server.HttpClient.GetAsync("/");
-                var content = await response.Content.ReadAsStringAsync();
-                Assert.NotNull(content);
-            }
-        }
-
-        [Theory]
-        [AutoData]
         public async Task UnauthenticatedExceptionShouldReturn401(
             SampleServerFactory serverFactory,
             Mock<IExceptionService> exceptionService)

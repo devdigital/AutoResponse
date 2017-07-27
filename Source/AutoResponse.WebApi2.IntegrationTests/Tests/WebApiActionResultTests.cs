@@ -3,11 +3,14 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
     using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
+    using System.Web.Http;
 
+    using AutoResponse.Core.ApiEvents;
     using AutoResponse.Core.Models;
     using AutoResponse.Sample.WebApi2.Factories;
     using AutoResponse.WebApi2.IntegrationTests.Attributes;
     using AutoResponse.WebApi2.IntegrationTests.Helpers;
+    using AutoResponse.WebApi2.IntegrationTests.Models;
     using AutoResponse.WebApi2.Results;
 
     using Moq;
@@ -21,8 +24,10 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
         public async Task UnauthenticatedResultShouldReturn401(
             SampleServerFactory serverFactory,
             Mock<IHttpActionResultFactory> actionResultFactory,
-            UnauthenticatedResult result)
+            HttpRequestMessage request,
+            UnauthenticatedApiEvent apiEvent)
         {
+            var result = new TestAutoResponseResult(request, apiEvent);
             actionResultFactory.Setup(f => f.Create(It.IsAny<HttpRequestMessage>())).Returns(result);
 
             using (var server = serverFactory.With<IHttpActionResultFactory>(actionResultFactory.Object).Create())
@@ -37,8 +42,10 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
         public async Task NotFoundResultShouldReturn404(
             SampleServerFactory serverFactory,
             Mock<IHttpActionResultFactory> actionResultFactory,
-            ResourceNotFoundResult result)
+            HttpRequestMessage request,
+            EntityNotFoundApiEvent apiEvent)
         {
+            var result = new TestAutoResponseResult(request, apiEvent);
             actionResultFactory.Setup(f => f.Create(It.IsAny<HttpRequestMessage>())).Returns(result);
 
             using (var server = serverFactory.With<IHttpActionResultFactory>(actionResultFactory.Object).Create())
@@ -53,11 +60,11 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
         public async Task ValidationResultShouldReturn422(
            SampleServerFactory serverFactory,
            Mock<IHttpActionResultFactory> actionResultFactory,
-           HttpRequestMessage request,
-           string message)
+           HttpRequestMessage request,     
+           EntityValidationApiEvent apiEvent)
         {
-            actionResultFactory.Setup(f => f.Create(It.IsAny<HttpRequestMessage>())).Returns(
-                new ResourceValidationResult(request, new ValidationErrorDetails(message)));
+            var result = new TestAutoResponseResult(request, apiEvent);
+            actionResultFactory.Setup(f => f.Create(It.IsAny<HttpRequestMessage>())).Returns(result);
 
             using (var server = serverFactory.With<IHttpActionResultFactory>(actionResultFactory.Object).Create())
             {
@@ -71,8 +78,10 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
         public async Task CreatePermissionResultShouldReturn403(
             SampleServerFactory serverFactory,
             Mock<IHttpActionResultFactory> actionResultFactory,
-            ResourceCreatePermissionResult result)
+            HttpRequestMessage request,
+            EntityCreatePermissionApiEvent apiEvent)
         {
+            var result = new TestAutoResponseResult(request, apiEvent);
             actionResultFactory.Setup(f => f.Create(It.IsAny<HttpRequestMessage>())).Returns(result);
 
             using (var server = serverFactory
@@ -89,8 +98,10 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
         public async Task PermissionResultShouldReturn403(
             SampleServerFactory serverFactory,
             Mock<IHttpActionResultFactory> actionResultFactory,
-            ResourcePermissionResult result)
+            HttpRequestMessage request,
+            EntityPermissionApiEvent apiEvent)
         {
+            var result = new TestAutoResponseResult(request, apiEvent);
             actionResultFactory.Setup(f => f.Create(It.IsAny<HttpRequestMessage>())).Returns(result);
 
             using (var server = serverFactory
