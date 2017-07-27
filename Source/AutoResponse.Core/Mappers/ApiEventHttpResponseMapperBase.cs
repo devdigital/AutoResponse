@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
 
-    using AutoResponse.Core.ApiEvents;
     using AutoResponse.Core.Formatters;
     using AutoResponse.Core.Responses;
 
@@ -47,16 +46,12 @@
 
             if (!this.mappers.Value.ContainsKey(apiEventType))
             {
-                throw new InvalidOperationException($"No API event to HTTP response mapper registered for API event type {apiEventType.Name}");
+                return null;
             }
 
             var mapper = this.mappers.Value[apiEventType];
-            if (mapper == null)
-            {
-                throw new InvalidOperationException($"No API event to HTTP response mapper registered for API event type {apiEventType.Name}");
-            }
 
-            return mapper.Invoke(
+            return mapper?.Invoke(
                 new ExceptionHttpResponseContext(context, this.formatter), 
                 apiEvent);
         }

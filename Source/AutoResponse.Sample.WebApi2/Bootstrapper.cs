@@ -12,6 +12,8 @@
     using Autofac.Features.ResolveAnything;
     using Autofac.Integration.WebApi;
 
+    using AutoResponse.Core.Formatters;
+    using AutoResponse.Core.Logging;
     using AutoResponse.Core.Mappers;
     using AutoResponse.Sample.Data.Repositories;
     using AutoResponse.Sample.Domain.Repositories;
@@ -59,7 +61,11 @@
             var cors = new EnableCorsAttribute("*", "*", "*");
             configuration.EnableCors(cors);
 
-            this.app.UseAutoResponse();
+            this.app.UseAutoResponse(new AutoResponseOptions
+            {
+                Logger = GetService<IAutoResponseLogger>(configuration),
+                EventHttpResponseMapper = new SampleHttpResponseMapper()
+            });
 
             // Allow easier testing of responses via browser
             this.app.Use(
@@ -77,14 +83,7 @@
             this.app.Use(
                 async (context, next) =>
                     {
-                        var exceptionService =
-                            configuration.DependencyResolver.GetService(typeof(IExceptionService)) as IExceptionService;
-
-                        if (exceptionService == null)
-                        {
-                            throw new InvalidOperationException($"No {typeof(IExceptionService).Name} registered");
-                        }
-
+                        var exceptionService = GetService<IExceptionService>(configuration);                            
                         exceptionService.Execute();                        
                         await next();
                     });
@@ -92,6 +91,19 @@
             this.app.UseAutofacMiddleware(container);
             this.app.UseAutofacWebApi(configuration);
             this.app.UseWebApi(configuration);
+        }
+
+        private static TService GetService<TService>(HttpConfiguration configuration) where TService : class
+        {
+            var service = configuration?.DependencyResolver
+                ?.GetService(typeof(TService)) as TService;
+
+            if (service == null)
+            {
+                throw new InvalidOperationException($"No {typeof(TService).Name} registered in container");
+            }
+
+            return service;
         }
 
         private static void ConfigureRouting(HttpConfiguration configuration)
@@ -113,7 +125,7 @@
 
         private IContainer ConfigureContainer(HttpConfiguration configuration)
         {
-            var builder = new ContainerBuilder();
+            var builder = new ContainerBuilder();            
 
             builder.RegisterSource(new AnyConcreteTypeNotAlreadyRegisteredSource());
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
@@ -122,7 +134,8 @@
             builder.RegisterType<DefaultValuesRepository>().As<IValuesRepository>();
             builder.RegisterType<OkActionResultFactory>().As<IHttpActionResultFactory>();
 
-            builder.RegisterType<AutoResponseApiEventHttpResponseMapper>().As<IApiEventHttpResponseMapper>();
+            builder.RegisterType<NullAutoResponseLogger>().As<IAutoResponseLogger>();            
+            builder.RegisterType<SampleHttpResponseMapper>().As<IApiEventHttpResponseMapper>();
             builder.RegisterType<WebApiContextResolver>().As<IContextResolver>();
       
             this.AdditionalRegistrations(builder);

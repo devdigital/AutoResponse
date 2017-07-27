@@ -45,22 +45,32 @@
             }
             catch (AutoResponseException exception)
             {
-                this.ConvertExceptionToHttpResponse(exception, context);
+                await this.logger.LogException(exception);
+                this.ConvertExceptionToHttpResponse(exception, exception.Event, context);
             }
             catch (Exception exception)
             {
                 await this.logger.LogException(exception);
+
+                var exceptionEvent = 
+                    exception.GetType().GetProperty("Event")?.GetValue(exception, null);
+
+                if (exceptionEvent != null)
+                {
+                    this.ConvertExceptionToHttpResponse(exception, exceptionEvent, context);
+                    return;
+                }
+
                 throw;
             }
         }
 
-        private void ConvertExceptionToHttpResponse(AutoResponseException exception, IOwinContext context)
+        private void ConvertExceptionToHttpResponse(Exception exception, object apiEvent, IOwinContext context)
         {
-            var httpResponse = this.mapper.GetHttpResponse(context: null, apiEvent: exception.Event); 
+            var httpResponse = this.mapper.GetHttpResponse(context: null, apiEvent: apiEvent); 
             if (httpResponse == null)
             {
-                throw new InvalidOperationException(
-                    $"No HTTP response registered for exception type '{exception.GetType()}");
+                throw exception;
             }
 
             this.ConvertHttpResponseToResponse(httpResponse, context);

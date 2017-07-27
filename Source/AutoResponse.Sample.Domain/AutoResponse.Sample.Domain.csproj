@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\DomainValidationApiEvent.cs" />
+    <Compile Include="Exceptions\DomainValidationException.cs" />
     <Compile Include="Repositories\IValuesRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Value.cs" />

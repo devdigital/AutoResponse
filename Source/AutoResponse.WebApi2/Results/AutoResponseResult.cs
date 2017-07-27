@@ -41,7 +41,7 @@
             var httpResponse = mapper.GetHttpResponse(this.request, this.apiEvent);
             if (httpResponse == null)
             {
-                throw new ArgumentNullException($"No http response found for api event type {this.apiEvent.GetType().Name}");
+                return null;
             }
 
             var response = this.request.CreateResponse(httpResponse.StatusCode);
