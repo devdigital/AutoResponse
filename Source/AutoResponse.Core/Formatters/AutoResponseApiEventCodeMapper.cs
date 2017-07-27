@@ -4,7 +4,6 @@ namespace AutoResponse.Core.Formatters
     using System.Collections.Generic;
 
     using AutoResponse.Core.ApiEvents;
-    using AutoResponse.Core.Exceptions;
 
     internal class AutoResponseApiEventCodeMapper : IApiEventCodeMapper
     {

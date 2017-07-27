@@ -1,10 +1,8 @@
 ﻿namespace AutoResponse.Core.Formatters
 {
-    using System;
-
     using AutoResponse.Core.ApiEvents;
 
-    public interface IHttpResponseFormatter
+    public interface IHttpResponseExceptionFormatter
     {
         string Message(string message);
 

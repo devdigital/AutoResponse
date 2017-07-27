@@ -1,7 +1,5 @@
 ﻿namespace AutoResponse.Core.Exceptions
 {
-    using System;
-
     using AutoResponse.Core.ApiEvents;
 
     public class EntityNotFoundException : AutoResponseException

@@ -1,8 +1,6 @@
 namespace AutoResponse.WebApi2.IntegrationTests.Tests
 {
-    using System;
     using System.Net;
-    using System.Net.NetworkInformation;
     using System.Threading.Tasks;
 
     using AutoResponse.Core.Exceptions;

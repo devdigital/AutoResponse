@@ -18,26 +18,33 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
 
     public class ClientTests
     {
-        [Theory(Skip = "Not implemented")]
+        [Theory]
         [AutoData]
-        public async Task EntityValidationExceptionShouldReturnKebabCaseEntityType(
+        public async Task ResourceValidationResponseShouldThrowValidationException(
             SampleServerFactory serverFactory,
             Mock<IExceptionService> exceptionService,
-            string userId,
-            string entityId,
-            string message)
+            EntityValidationException exception)
         {
-            exceptionService.Setup(s => s.Execute())
-                .Throws(
-                    new EntityValidationException(
-                        new ValidationErrorDetails(
-                            message,
-                            new ValidationError<User>(u => u.Id, ValidationErrorCode.Invalid))));
-
+            exceptionService.Setup(s => s.Execute()).Throws(exception);
             using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
             {
                 var response = await server.HttpClient.GetAsync("/");
-                Assert.Throws<EntityValidationException>(() => response.HandleErrors());
+                await Assert.ThrowsAsync<EntityValidationException>(() => response.HandleErrors());
+            }
+        }
+
+        [Theory]
+        [AutoData]
+        public async Task ResourceNotFoundResponseShouldThrowNotFoundException(
+            SampleServerFactory serverFactory,
+            Mock<IExceptionService> exceptionService,
+            EntityNotFoundException exception)
+        {
+            exceptionService.Setup(s => s.Execute()).Throws(exception);
+            using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
+            {
+                var response = await server.HttpClient.GetAsync("/");
+                await Assert.ThrowsAsync<EntityValidationException>(() => response.HandleErrors());
             }
         }
     }

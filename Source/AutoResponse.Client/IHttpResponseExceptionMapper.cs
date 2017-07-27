@@ -2,13 +2,12 @@
 {
     using System;
     using System.Net.Http;
+    using System.Threading.Tasks;
 
     public interface IHttpResponseExceptionMapper
     {
-        bool IsErrorResponse(HttpResponseMessage response);
+        Task<bool> IsErrorResponse(HttpResponseMessage response);
 
-        Exception GetException(HttpResponseMessage response);
-
-        Exception GetDefaultException(HttpResponseMessage response);
+        Task<Exception> GetException(HttpResponseMessage response);
     }
 }

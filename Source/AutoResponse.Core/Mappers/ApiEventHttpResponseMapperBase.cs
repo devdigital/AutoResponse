@@ -9,11 +9,11 @@
 
     public abstract class ApiEventHttpResponseMapperBase : IApiEventHttpResponseMapper
     {
-        private readonly IHttpResponseFormatter formatter;
+        private readonly IHttpResponseExceptionFormatter formatter;
 
-        private readonly Lazy<IDictionary<Type, Func<MappingConfiguration, AutoResponseApiEvent, IHttpResponse>>> mappers;        
+        private readonly Lazy<IDictionary<Type, Func<ExceptionHttpResponseContext, AutoResponseApiEvent, IHttpResponse>>> mappers;        
 
-        protected ApiEventHttpResponseMapperBase(IHttpResponseFormatter formatter)
+        protected ApiEventHttpResponseMapperBase(IHttpResponseExceptionFormatter formatter)
         {
             if (formatter == null)
             {
@@ -22,9 +22,9 @@
 
             this.formatter = formatter;
 
-            this.mappers = new Lazy<IDictionary<Type, Func<MappingConfiguration, AutoResponseApiEvent, IHttpResponse>>>(() =>
+            this.mappers = new Lazy<IDictionary<Type, Func<ExceptionHttpResponseContext, AutoResponseApiEvent, IHttpResponse>>>(() =>
             {
-                var mappersInstance = new Dictionary<Type, Func<MappingConfiguration, AutoResponseApiEvent, IHttpResponse>>();
+                var mappersInstance = new Dictionary<Type, Func<ExceptionHttpResponseContext, AutoResponseApiEvent, IHttpResponse>>();
                 this.ConfigureMappings(new ExceptionHttpResponseConfiguration(mappersInstance));
                 return mappersInstance;
             });
@@ -56,7 +56,9 @@
                 throw new InvalidOperationException($"No API event to HTTP response mapper registered for API event type {apiEventType.Name}");
             }
 
-            return mapper.Invoke(new MappingConfiguration(context, this.formatter), apiEvent);
+            return mapper.Invoke(
+                new ExceptionHttpResponseContext(context, this.formatter), 
+                apiEvent);
         }
     }
 }

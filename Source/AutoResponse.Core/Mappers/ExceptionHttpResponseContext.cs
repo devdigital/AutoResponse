@@ -4,9 +4,9 @@
 
     using AutoResponse.Core.Formatters;
 
-    public class MappingConfiguration
+    public class ExceptionHttpResponseContext
     {
-        public MappingConfiguration(object context, IHttpResponseFormatter formatter)
+        public ExceptionHttpResponseContext(object context, IHttpResponseExceptionFormatter formatter)
         {
             if (formatter == null)
             {
@@ -19,6 +19,6 @@
 
         public object Context { get; }
 
-        public IHttpResponseFormatter Formatter { get; }
+        public IHttpResponseExceptionFormatter Formatter { get; }
     }
 }

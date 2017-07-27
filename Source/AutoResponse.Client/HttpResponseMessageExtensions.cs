@@ -2,15 +2,16 @@
 {
     using System;
     using System.Net.Http;
+    using System.Threading.Tasks;
 
     public static class HttpResponseMessageExtensions
     {
-        public static void HandleErrors(this HttpResponseMessage response)
+        public static async Task HandleErrors(this HttpResponseMessage response)
         {
-            HandleErrors(response, new AutoResponseHttpResponseExceptionMapper());
+            await HandleErrors(response, new AutoResponseHttpResponseExceptionMapper());
         }
 
-        public static void HandleErrors(this HttpResponseMessage response, IHttpResponseExceptionMapper mapper)
+        public static async Task HandleErrors(this HttpResponseMessage response, IHttpResponseExceptionMapper mapper, bool throwOnUnhandledResponses = true)
         {
             if (response == null)
             {
@@ -22,19 +23,21 @@
                 throw new ArgumentNullException(nameof(mapper));
             }
 
-            if (mapper.IsErrorResponse(response))
+            var isErrorResponse = await mapper.IsErrorResponse(response);
+            if (isErrorResponse)
             {
-                var exception = mapper.GetException(response);
+                var exception = await mapper.GetException(response);
                 if (exception != null)
                 {
                     throw exception;
                 }
 
-                var defaultException = mapper.GetDefaultException(response);
-                if (defaultException != null)
+                if (throwOnUnhandledResponses)
                 {
-                    throw defaultException;
-                }
+                    // TODO: better exception information
+                    throw new Exception(
+                        $"There was an HTTP error with status code {response.StatusCode}");
+                } 
             }
         }
     }

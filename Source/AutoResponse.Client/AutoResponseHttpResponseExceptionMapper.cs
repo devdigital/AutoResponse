@@ -2,28 +2,63 @@
 {
     using System;
     using System.Net;
-    using System.Net.Http;
+    using System.Threading.Tasks;
 
-    public class AutoResponseHttpResponseExceptionMapper : IHttpResponseExceptionMapper
+    using AutoResponse.Core.Exceptions;
+    using AutoResponse.Core.Models;
+
+    public class AutoResponseHttpResponseExceptionMapper : AutoResponseHttpResponseExceptionMapperBase
     {
-        public bool IsErrorResponse(HttpResponseMessage response)
-        {
-            if (response == null)
-            {
-                throw new ArgumentNullException(nameof(response));
-            }
-
-            return response.StatusCode >= (HttpStatusCode)400;
+        public AutoResponseHttpResponseExceptionMapper() 
+            : base(new AutoResponseExceptionHttpResponseFormatter())
+        {            
         }
 
-        public Exception GetException(HttpResponseMessage response)
+        public AutoResponseHttpResponseExceptionMapper(IExceptionHttpResponseFormatter formatter)
+            : base(formatter)
         {
-            throw new NotImplementedException();
         }
 
-        public Exception GetDefaultException(HttpResponseMessage response)
+        protected override void ConfigureMappings(HttpResponseExceptionConfiguration configuration)
+        {   
+            // TODO: more data copying over from responses
+            // also difference between create permission response and permission response
+            configuration.AddMapping(
+                HttpStatusCode.Unauthorized,
+                (r, c) => new UnauthenticatedException());
+
+            configuration.AddMapping(
+                HttpStatusCode.Forbidden,
+                (r, c) => new EntityPermissionException(
+                    c.Formatter.Message(r.Property("message"))));
+
+            configuration.AddMapping(
+                (HttpStatusCode)422,
+                (r, c) => new EntityValidationException(
+                    new ValidationErrorDetails(
+                        c.Formatter.Message(r.Property("message")))));
+
+            configuration.AddMapping(
+                HttpStatusCode.NotFound, 
+                (r, c) => new EntityNotFoundException(
+                    c.Formatter.EntityType(r.Property("resource")), 
+                    c.Formatter.EntityProperty(r.Property("field"))));  
+            
+            configuration.AddMapping(
+                HttpStatusCode.InternalServerError,
+                (r, c) => new ServiceErrorException(
+                    new Exception(c.Formatter.Message(r.Property("message")))));
+        }
+
+        protected override Task<Exception> GetDefaultException(
+            ResponseContent responseContent, 
+            HttpResponseExceptionContext context)
         {
-            throw new NotImplementedException();
+            // TODO: exception details if include in response etc.
+            var exceptionMessage = 
+                context.Formatter.Message(responseContent.Property("message"));
+
+            return Task.FromResult(new Exception(exceptionMessage));
         }
     }
 }

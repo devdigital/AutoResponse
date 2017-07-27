@@ -13,13 +13,13 @@
         private readonly IContextResolver contextResolver;
 
         public AutoResponseApiEventHttpResponseMapper(IContextResolver contextResolver) 
-            : this(contextResolver, new AutoResponseHttpResponseFormatter())
+            : this(contextResolver, new AutoResponseExceptionHttpResponseFormatter())
         {
         }
 
         public AutoResponseApiEventHttpResponseMapper(
             IContextResolver contextResolver,
-            IHttpResponseFormatter formatter) : base(formatter)
+            IHttpResponseExceptionFormatter formatter) : base(formatter)
         {
             if (contextResolver == null)
             {
@@ -79,7 +79,7 @@
         }
 
         private IHttpResponse ToPermission(
-            MappingConfiguration configuration,
+            ExceptionHttpResponseContext configuration,
             EntityPermissionApiEvent apiEvent)
         {
             var resourceType = configuration.Formatter.Resource(apiEvent.EntityType);
@@ -94,7 +94,7 @@
         }
 
         private IHttpResponse ToCreate(
-            MappingConfiguration configuration, 
+            ExceptionHttpResponseContext configuration, 
             EntityCreatePermissionApiEvent apiEvent)
         {            
             var resource = configuration.Formatter.Resource(apiEvent.EntityType);            
@@ -109,7 +109,7 @@
         }
 
         private IHttpResponse ToNotFound(
-            MappingConfiguration configuration, 
+            ExceptionHttpResponseContext configuration, 
             EntityNotFoundApiEvent apiEvent)
         {
             var resource = configuration.Formatter.Resource(apiEvent.EntityType);

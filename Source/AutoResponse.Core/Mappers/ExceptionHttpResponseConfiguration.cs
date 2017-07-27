@@ -8,9 +8,9 @@ namespace AutoResponse.Core.Mappers
 
     public class ExceptionHttpResponseConfiguration
     {
-        private readonly IDictionary<Type, Func<MappingConfiguration, AutoResponseApiEvent, IHttpResponse>> mappers;
+        private readonly IDictionary<Type, Func<ExceptionHttpResponseContext, AutoResponseApiEvent, IHttpResponse>> mappers;
         
-        public ExceptionHttpResponseConfiguration(IDictionary<Type, Func<MappingConfiguration, AutoResponseApiEvent, IHttpResponse>> mappers)
+        public ExceptionHttpResponseConfiguration(IDictionary<Type, Func<ExceptionHttpResponseContext, AutoResponseApiEvent, IHttpResponse>> mappers)
         {   
             if (mappers == null)
             {
@@ -21,7 +21,7 @@ namespace AutoResponse.Core.Mappers
         }
 
         public void AddMapping<TApiEvent>(
-            Func<MappingConfiguration, TApiEvent, IHttpResponse> mapper) where TApiEvent : AutoResponseApiEvent
+            Func<ExceptionHttpResponseContext, TApiEvent, IHttpResponse> mapper) where TApiEvent : AutoResponseApiEvent
         {
             if (mapper == null)
             {
@@ -38,25 +38,5 @@ namespace AutoResponse.Core.Mappers
                 typeof(TApiEvent),
                 (c, e) => mapper(c, e as TApiEvent));
         }
-
-        //public void AddGenericMapping<TExceptionInterface>(
-        //    Type exceptionType,
-        //    Func<MappingConfiguration, TExceptionInterface, IHttpResponse> mapper) where TExceptionInterface : class
-        //{
-        //    if (mapper == null)
-        //    {
-        //        throw new ArgumentNullException(nameof(mapper));
-        //    }
-
-        //    if (this.mappers.ContainsKey(exceptionType))
-        //    {
-        //        throw new InvalidOperationException(
-        //            $"Exception type {exceptionType.Name} mapper already registered");
-        //    }
-
-        //    this.mappers.Add(
-        //        exceptionType,
-        //        (c, e) => mapper(c, e as TExceptionInterface));
-        //}
     }
 }
