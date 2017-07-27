@@ -60,10 +60,6 @@
     <Compile Include="Dtos\ResponseDto.cs" />
     <Compile Include="Dtos\ResponseWithExceptionDto.cs" />
     <Compile Include="Dtos\ResourceCreatedDto.cs" />
-    <Compile Include="Errors\EntityValidationError.cs" />
-    <Compile Include="Errors\EntityValidationErrorCode.cs" />
-    <Compile Include="Errors\EntityValidationErrorDetails.cs" />
-    <Compile Include="Errors\EntityValidationError{TEntity}.cs" />
     <Compile Include="Exceptions\AutoResponseException.cs" />
     <Compile Include="Exceptions\EntityCreatePermissionException.cs" />
     <Compile Include="Exceptions\EntityCreatePermissionException{TEntity}.cs" />
