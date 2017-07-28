@@ -6,9 +6,9 @@
 
     public static class HttpResponseMessageExtensions
     {
-        public static async Task HandleErrors(this HttpResponseMessage response)
+        public static async Task HandleErrors(this HttpResponseMessage response, bool throwOnUnhandledResponses = true)
         {
-            await HandleErrors(response, new AutoResponseHttpResponseExceptionMapper());
+            await HandleErrors(response, new AutoResponseHttpResponseExceptionMapper(), throwOnUnhandledResponses);
         }
 
         public static async Task HandleErrors(this HttpResponseMessage response, IHttpResponseExceptionMapper mapper, bool throwOnUnhandledResponses = true)
