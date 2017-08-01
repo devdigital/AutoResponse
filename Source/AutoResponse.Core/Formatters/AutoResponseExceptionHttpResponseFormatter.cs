@@ -13,7 +13,7 @@ namespace AutoResponse.Core.Formatters
         public AutoResponseExceptionHttpResponseFormatter()
         {
             this.postFixes = new[] { "ApiModel", "Dto" };
-            this.apiEventCodeMapper = new AutoResponseApiEventCodeMapper();
+            this.apiEventCodeMapper = new NullApiEventCodeMapper();
         }
 
         public AutoResponseExceptionHttpResponseFormatter(IApiEventCodeMapper apiEventCodeMapper)

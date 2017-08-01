@@ -12,7 +12,6 @@
     using Autofac.Features.ResolveAnything;
     using Autofac.Integration.WebApi;
 
-    using AutoResponse.Core.Formatters;
     using AutoResponse.Core.Logging;
     using AutoResponse.Core.Mappers;
     using AutoResponse.Sample.Data.Repositories;
@@ -54,7 +53,10 @@
             var container = this.ConfigureContainer(configuration);
 
             configuration.Services.Replace(typeof(IExceptionHandler), new AutoResponseExceptionHandler());
-            configuration.IncludeErrorDetailPolicy = IncludeErrorDetailPolicy.Never;
+
+            var includeFullDetails = container.Resolve<ISettingsService>().GetIncludeFullDetails();
+            configuration.IncludeErrorDetailPolicy = 
+                includeFullDetails ? IncludeErrorDetailPolicy.Always : IncludeErrorDetailPolicy.Never;
 
             configuration.Services.Add(typeof(IExceptionLogger), new DefaultExceptionLogger(null));
 
@@ -64,7 +66,7 @@
             this.app.UseAutoResponse(new AutoResponseOptions
             {
                 Logger = GetService<IAutoResponseLogger>(configuration),
-                EventHttpResponseMapper = new SampleHttpResponseMapper()
+                EventHttpResponseMapper = new SampleHttpResponseMapper(new OwinContextResolver())
             });
 
             // Allow easier testing of responses via browser
@@ -125,11 +127,12 @@
 
         private IContainer ConfigureContainer(HttpConfiguration configuration)
         {
-            var builder = new ContainerBuilder();            
+            var builder = new ContainerBuilder();
 
             builder.RegisterSource(new AnyConcreteTypeNotAlreadyRegisteredSource());
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
+            builder.RegisterType<DefaultSettingsService>().As<ISettingsService>();
             builder.RegisterType<NullExceptionService>().As<IExceptionService>();
             builder.RegisterType<DefaultValuesRepository>().As<IValuesRepository>();
             builder.RegisterType<OkActionResultFactory>().As<IHttpActionResultFactory>();

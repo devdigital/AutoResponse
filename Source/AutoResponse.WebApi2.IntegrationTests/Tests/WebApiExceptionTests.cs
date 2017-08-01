@@ -1,5 +1,6 @@
 ﻿namespace AutoResponse.WebApi2.IntegrationTests.Tests
 {
+    using System;
     using System.Net;
     using System.Threading.Tasks;
 
@@ -8,9 +9,12 @@
     using AutoResponse.Core.Models;
     using AutoResponse.Sample.Domain.Models;
     using AutoResponse.Sample.Domain.Repositories;
+    using AutoResponse.Sample.Domain.Services;
     using AutoResponse.WebApi2.IntegrationTests.Helpers;
 
     using Moq;
+
+    using Newtonsoft.Json.Linq;
 
     using Ploeh.AutoFixture.Xunit2;
 
@@ -181,6 +185,54 @@
             {
                 var response = await server.HttpClient.GetAsync($"/api/values/{entityId}");
                 Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+            }
+        }
+
+        [Theory]
+        [AutoCustomData]
+        public async Task ExceptionWithIncludeDetailsShouldReturnDetails(
+            SampleServerFactory serverFactory,
+            Mock<IValuesRepository> valuesRepository,
+            InvalidOperationException exception,
+            Mock<ISettingsService> settingsService,
+            int entityId)
+        {
+            settingsService.Setup(s => s.GetIncludeFullDetails()).Returns(true);
+            valuesRepository.Setup(r => r.GetValue(It.IsAny<int>())).Throws(exception);
+
+            using (var server = serverFactory
+                .With<ISettingsService>(settingsService.Object)
+                .With<IValuesRepository>(valuesRepository.Object)                
+                .Create())
+            {
+                var response = await server.HttpClient.GetAsync($"/api/values/{entityId}");
+                var content = await response.Content.ReadAsStringAsync();
+                var jobject = JObject.Parse(content);
+                Assert.NotNull(jobject.Property("exceptionMessage"));
+            }
+        }
+
+        [Theory]
+        [AutoCustomData]
+        public async Task ExceptionWithNotIncludeDetailsShouldNotReturnDetails(
+            SampleServerFactory serverFactory,
+            Mock<IValuesRepository> valuesRepository,
+            InvalidOperationException exception,
+            Mock<ISettingsService> settingsService,
+            int entityId)
+        {
+            settingsService.Setup(s => s.GetIncludeFullDetails()).Returns(false);
+            valuesRepository.Setup(r => r.GetValue(It.IsAny<int>())).Throws(exception);
+
+            using (var server = serverFactory
+                .With<ISettingsService>(settingsService.Object)
+                .With<IValuesRepository>(valuesRepository.Object)
+                .Create())
+            {
+                var response = await server.HttpClient.GetAsync($"/api/values/{entityId}");
+                var content = await response.Content.ReadAsStringAsync();
+                var jobject = JObject.Parse(content);
+                Assert.Null(jobject.Property("exceptionMessage"));
             }
         }
     }

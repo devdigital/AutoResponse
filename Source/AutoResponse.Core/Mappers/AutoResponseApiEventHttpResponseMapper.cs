@@ -3,7 +3,6 @@
     using System;
 
     using AutoResponse.Core.ApiEvents;
-    using AutoResponse.Core.Extensions;
     using AutoResponse.Core.Formatters;
     using AutoResponse.Core.Models;
     using AutoResponse.Core.Responses;
@@ -36,17 +35,17 @@
                     {
                         if (this.contextResolver.IncludeFullDetails(c.Context))
                         {
-                            return new ServiceErrorHttpResponse(
-                                c.Formatter.Message("A service error has occurred"),
-                                c.Formatter.ApiEventToCode(e));
+                            return
+                                new ServiceErrorWithExceptionHttpResponse(
+                                    c.Formatter.Message("A service error has occurred"),
+                                    c.Formatter.ApiEventToCode(e),
+                                    c.Formatter.Message(e.Exception.Message),
+                                    c.Formatter.Message(e.Exception.ToString()));                            
                         }
 
-                        return
-                            new ServiceErrorWithExceptionHttpResponse(
+                        return new ServiceErrorHttpResponse(
                                 c.Formatter.Message("A service error has occurred"),
-                                c.Formatter.ApiEventToCode(e),
-                                c.Formatter.Message(e.Exception.Message),
-                                c.Formatter.Message(e.Exception.ToString()));
+                                c.Formatter.ApiEventToCode(e));
                     });
 
             configuration.AddMapping<UnauthenticatedApiEvent>(

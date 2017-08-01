@@ -5,7 +5,7 @@ namespace AutoResponse.Core.Formatters
 
     using AutoResponse.Core.ApiEvents;
 
-    internal class AutoResponseApiEventCodeMapper : IApiEventCodeMapper
+    public class AutoResponseApiEventCodeMapper : IApiEventCodeMapper
     {
         private readonly Dictionary<Type, string> maps;
 

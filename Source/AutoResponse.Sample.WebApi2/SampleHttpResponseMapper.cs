@@ -5,10 +5,11 @@
     using AutoResponse.Core.Responses;
     using AutoResponse.Owin;
     using AutoResponse.Sample.Domain.Exceptions;
+    using AutoResponse.WebApi2.ExceptionHandling;
 
     public class SampleHttpResponseMapper : AutoResponseApiEventHttpResponseMapper
     {
-        public SampleHttpResponseMapper() : base(new OwinContextResolver())
+        public SampleHttpResponseMapper(IContextResolver contextResolver) : base(contextResolver)
         {            
         }
 
