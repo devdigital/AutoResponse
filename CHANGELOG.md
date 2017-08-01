@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/devdigital/AutoResponse/compare/v0.1.14...v0.4.0) (2017-08-01)
+
+
+### Bug Fixes
+
+* **apievent:** removed api event base type ([d4a6cc0](https://github.com/devdigital/AutoResponse/commit/d4a6cc0))
+* **client-tests:** added http response to exception tests ([f61b939](https://github.com/devdigital/AutoResponse/commit/f61b939))
+* **comments:** removed commented code ([6054f99](https://github.com/devdigital/AutoResponse/commit/6054f99))
+* **error-response:** code now optional ([85f2c66](https://github.com/devdigital/AutoResponse/commit/85f2c66))
+* **errors:** removed unused error types ([faf97d1](https://github.com/devdigital/AutoResponse/commit/faf97d1))
+* **exception-details:** added tests for exception details ([0de5b30](https://github.com/devdigital/AutoResponse/commit/0de5b30))
+* **nuspec:** added client nuspec file ([5e217f8](https://github.com/devdigital/AutoResponse/commit/5e217f8))
+* **permission-exception-message:** added message override to permission exception ([4cd5a22](https://github.com/devdigital/AutoResponse/commit/4cd5a22))
+* **tests:** fixed owin tests ([409fee1](https://github.com/devdigital/AutoResponse/commit/409fee1))
+* **throw-option:** added throw on unhandled responses to handleerrors ([a0bddd1](https://github.com/devdigital/AutoResponse/commit/a0bddd1))
+
+
+### Features
+
+* **domain-exceptions:** added support for domain exceptions with event property ([0f25927](https://github.com/devdigital/AutoResponse/commit/0f25927))
+* **http-response-mapper:** added mapper from http responses to exceptions ([9cd5308](https://github.com/devdigital/AutoResponse/commit/9cd5308))
+
+
+
 <a name="0.3.2"></a>
 ## [0.3.2](https://github.com/devdigital/AutoResponse/compare/v0.3.1...v0.3.2) (2017-07-28)
 
