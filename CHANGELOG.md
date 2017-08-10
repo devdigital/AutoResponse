@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.4.2"></a>
+## [0.4.2](https://github.com/devdigital/AutoResponse/compare/v0.3.2...v0.4.2) (2017-08-10)
+
+
+### Bug Fixes
+
+* **code-forwarding:** codes now rebuilt as exception codes by client ([8c3be7e](https://github.com/devdigital/AutoResponse/commit/8c3be7e))
+* **exception-details:** added tests for exception details ([0de5b30](https://github.com/devdigital/AutoResponse/commit/0de5b30))
+
+
+
 <a name="0.4.1"></a>
 ## [0.4.1](https://github.com/devdigital/AutoResponse/compare/v0.3.2...v0.4.1) (2017-08-10)
 
