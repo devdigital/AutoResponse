@@ -5,6 +5,11 @@
     public class EntityCreatePermissionException 
         : AutoResponseException
     {
+        public EntityCreatePermissionException(string code, string userId, string entityType, string entityId)
+            : base(new EntityCreatePermissionApiEvent(code, userId, entityType, entityId))
+        {
+        }
+
         public EntityCreatePermissionException(string userId, string entityType) :
             base(new EntityCreatePermissionApiEvent(userId, entityType))
         {            

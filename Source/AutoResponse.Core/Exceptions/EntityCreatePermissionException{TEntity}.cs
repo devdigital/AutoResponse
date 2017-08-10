@@ -2,6 +2,11 @@
 {
     public class EntityCreatePermissionException<TEntity> : EntityCreatePermissionException
     {
+        public EntityCreatePermissionException(string code, string userId, string entityType, string entityId) 
+            : base(code, userId, entityType, entityId)
+        {                        
+        }
+
         public EntityCreatePermissionException(string userId)
             : base(userId, typeof(TEntity).Name)
         {

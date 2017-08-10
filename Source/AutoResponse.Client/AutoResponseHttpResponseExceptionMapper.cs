@@ -21,32 +21,38 @@
 
         protected override void ConfigureMappings(HttpResponseExceptionConfiguration configuration)
         {   
-            // TODO: more data copying over from responses
-            // also difference between create permission response and permission response
+            // TODO: build entity fields from response fields
             configuration.AddMapping(
                 HttpStatusCode.Unauthorized,
                 (r, c) => new UnauthenticatedException(
+                    c.Formatter.Message(r.Property("code")),
                     c.Formatter.Message(r.Property("message"))));
 
             configuration.AddMapping(
                 HttpStatusCode.Forbidden,
                 (r, c) => new EntityPermissionException(
-                    c.Formatter.Message(r.Property("message"))));
+                    c.Formatter.Message(r.Property("code")),
+                    userId: "user",
+                    entityType: "entity",
+                    entityId: "id"));
 
             configuration.AddMapping(
                 (HttpStatusCode)422,
                 (r, c) => new EntityValidationException(
-                    new ValidationErrorDetails(
-                        c.Formatter.Message(r.Property("message")))));
+                    c.Formatter.Message(r.Property("code")),
+                    new ValidationErrorDetails(c.Formatter.Message(r.Property("message")))));
 
             configuration.AddMapping(
                 HttpStatusCode.NotFound,
                 (r, c) => new EntityNotFoundException(
-                    c.Formatter.Message(r.Property("message"))));
+                    c.Formatter.Message(r.Property("code")),
+                    entityType: "entity",
+                    entityId: "id"));
             
             configuration.AddMapping(
                 HttpStatusCode.InternalServerError,
                 (r, c) => new ServiceErrorException(
+                    c.Formatter.Message(r.Property("code")),
                     new Exception(c.Formatter.Message(r.Property("message")))));
         }
 

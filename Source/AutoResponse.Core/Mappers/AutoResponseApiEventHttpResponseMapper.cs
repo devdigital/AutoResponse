@@ -38,26 +38,26 @@
                             return
                                 new ServiceErrorWithExceptionHttpResponse(
                                     c.Formatter.Message("A service error has occurred"),
-                                    c.Formatter.ApiEventToCode(e),
+                                    c.Formatter.Code(e.Code),
                                     c.Formatter.Message(e.Exception.Message),
                                     c.Formatter.Message(e.Exception.ToString()));                            
                         }
 
                         return new ServiceErrorHttpResponse(
                                 c.Formatter.Message("A service error has occurred"),
-                                c.Formatter.ApiEventToCode(e));
+                                c.Formatter.Code(e.Code));
                     });
 
             configuration.AddMapping<UnauthenticatedApiEvent>(
                 (c, e) =>
                 new UnauthenticatedHttpResponse(
                     c.Formatter.Message(e.Message ?? "The user is not authenticated"),
-                    c.Formatter.ApiEventToCode(e)));
+                    c.Formatter.Code(e.Code)));
 
             configuration.AddMapping<EntityValidationApiEvent>(
                 (c, e) =>
                 new ResourceValidationHttpResponse(
-                    c.Formatter.ApiEventToCode(e),
+                    c.Formatter.Code(e.Code),
                     e.ErrorDetails.ToFormatted(c.Formatter)));
 
             configuration.AddMapping<EntityNotFoundApiEvent>(this.ToNotFound);
@@ -66,7 +66,7 @@
                 (c, e) =>
                 new ResourceNotFoundQueryHttpResponse(
                     $"The {c.Formatter.Resource(e.EntityType)} resource was not found with the specified parameters",
-                    c.Formatter.ApiEventToCode(e),
+                    c.Formatter.Code(e.Code),
                     c.Formatter.Resource(e.EntityType),
                     e.Parameters));
 
@@ -82,12 +82,11 @@
             var resourceType = configuration.Formatter.Resource(apiEvent.EntityType);
             var resourceId = configuration.Formatter.Field(apiEvent.EntityId);
 
-            var message = apiEvent.Message ??
-                $"The user with identifier '{apiEvent.UserId}', does not have permission to access the {resourceType} resource with identifier '{resourceId}'";
+            var message = $"The user with identifier '{apiEvent.UserId}', does not have permission to access the {resourceType} resource with identifier '{resourceId}'";
 
             return new ResourcePermissionHttpResponse(
                 message,
-                configuration.Formatter.ApiEventToCode(apiEvent));
+                configuration.Formatter.Code(apiEvent.Code));
         }
 
         private IHttpResponse ToCreatePermission(
@@ -102,7 +101,7 @@
 
             return new ResourceCreatePermissionHttpResponse(
                 configuration.Formatter.Message(message),
-                configuration.Formatter.ApiEventToCode(apiEvent));
+                configuration.Formatter.Code(apiEvent.Code));
         }
 
         private IHttpResponse ToCreate(
@@ -118,7 +117,7 @@
             // TODO: entityId is optional in the api event, but the response will always include id
             return new ResourceCreatedHttpResponse(
                 configuration.Formatter.Message(message),
-                configuration.Formatter.ApiEventToCode(apiEvent),
+                configuration.Formatter.Code(apiEvent.Code),
                 configuration.Formatter.Field(apiEvent.EntityId));
         }
 
@@ -131,7 +130,7 @@
 
             return new ResourceNotFoundHttpResponse(
                 $"The {resource} resource with identifier '{resourceId}' was not found.",
-                configuration.Formatter.ApiEventToCode(apiEvent),
+                configuration.Formatter.Code(apiEvent.Code),
                 configuration.Formatter.Resource(apiEvent.EntityType));
         }        
     }

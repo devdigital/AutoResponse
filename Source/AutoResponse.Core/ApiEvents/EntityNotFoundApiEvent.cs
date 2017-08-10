@@ -2,20 +2,15 @@ namespace AutoResponse.Core.ApiEvents
 {
     using System;
 
-    public class EntityNotFoundApiEvent
+    public class EntityNotFoundApiEvent : IAutoResponseApiEvent
     {
-        public EntityNotFoundApiEvent(string message)
+        public EntityNotFoundApiEvent(string code, string entityType, string entityId)
         {
-            if (string.IsNullOrWhiteSpace(message))
+            if (string.IsNullOrWhiteSpace(code))
             {
-                throw new ArgumentNullException(nameof(message));
+                throw new ArgumentNullException(nameof(code));
             }
 
-            this.Message = message;
-        }
-
-        public EntityNotFoundApiEvent(string entityType, string entityId)
-        {
             if (string.IsNullOrWhiteSpace(entityType))
             {
                 throw new ArgumentNullException(nameof(entityType));
@@ -26,11 +21,16 @@ namespace AutoResponse.Core.ApiEvents
                 throw new ArgumentNullException(nameof(entityId));
             }
 
+            this.Code = code;
             this.EntityType = entityType;
             this.EntityId = entityId;
         }
 
-        public string Message { get; }
+        public EntityNotFoundApiEvent(string entityType, string entityId) : this("AR404", entityType, entityId)
+        {
+        }
+
+        public string Code { get; }
 
         public string EntityType { get; }
 

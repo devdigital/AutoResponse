@@ -19,8 +19,8 @@
 
             configuration.AddMapping<DomainValidationApiEvent>(
                 (c, e) => new ResourceValidationHttpResponse(
-                    c.Formatter.ApiEventToCode(e),
-                    new ValidationErrorDetails(e.Message)));
+                    code: null,
+                    validationErrorDetails: new ValidationErrorDetails(e.Message)));
         }
     }
 }

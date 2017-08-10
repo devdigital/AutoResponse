@@ -4,10 +4,10 @@
 
     public class EntityNotFoundException : AutoResponseException
     {
-        public EntityNotFoundException(string message) 
-            : base(new EntityNotFoundApiEvent(message))
+        public EntityNotFoundException(string code, string entityType, string entityId)
+            : base(new EntityNotFoundApiEvent(code, entityType, entityId))
         {
-        }
+        }        
 
         public EntityNotFoundException(string entityType, string entityId)
             : base(new EntityNotFoundApiEvent(entityType, entityId))

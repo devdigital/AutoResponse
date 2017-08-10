@@ -6,8 +6,8 @@
 
     public class UnauthenticatedResult : AutoResponseResult
     {
-        public UnauthenticatedResult(HttpRequestMessage request)
-            : base(request, new UnauthenticatedApiEvent())
+        public UnauthenticatedResult(HttpRequestMessage request, string message)
+            : base(request, new UnauthenticatedApiEvent(message))
         {
         }
     }
