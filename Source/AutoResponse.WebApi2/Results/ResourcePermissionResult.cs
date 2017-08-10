@@ -6,11 +6,6 @@
 
     public class ResourcePermissionResult : AutoResponseResult
     {
-        public ResourcePermissionResult(HttpRequestMessage request, string message)
-            : base(request, new EntityPermissionApiEvent(message))
-        {         
-        }
-
         public ResourcePermissionResult(HttpRequestMessage request, string userId, string resourceType, string resourceId)
             : base(request, new EntityPermissionApiEvent(userId, resourceType, resourceId))
         {

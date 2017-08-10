@@ -2,20 +2,15 @@
 {
     using System;
 
-    public class EntityPermissionApiEvent
+    public class EntityPermissionApiEvent : IAutoResponseApiEvent
     {
-        public EntityPermissionApiEvent(string message)
+        public EntityPermissionApiEvent(string code, string userId, string entityType, string entityId)
         {
-            if (string.IsNullOrWhiteSpace(message))
+            if (string.IsNullOrWhiteSpace(code))
             {
-                throw new ArgumentNullException(nameof(message));
+                throw new ArgumentNullException(nameof(code));
             }
 
-            this.Message = message;
-        }
-        
-        public EntityPermissionApiEvent(string userId, string entityType, string entityId)
-        {
             if (string.IsNullOrWhiteSpace(userId))
             {
                 throw new ArgumentNullException(nameof(userId));
@@ -31,12 +26,17 @@
                 throw new ArgumentNullException(nameof(entityId));
             }
 
+            this.Code = code;
             this.UserId = userId;
             this.EntityType = entityType;
             this.EntityId = entityId;
         }
+       
+        public EntityPermissionApiEvent(string userId, string entityType, string entityId) : this("AR403", userId, entityType, entityId)
+        {         
+        }
 
-        public string Message { get; }
+        public string Code { get; }
 
         public string UserId { get; }
 

@@ -8,6 +8,6 @@
 
         string Field(string entityProperty);
 
-        string ApiEventToCode(object apiEvent);
+        string Code(string code);
     }
 }

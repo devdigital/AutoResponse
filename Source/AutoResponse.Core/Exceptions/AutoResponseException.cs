@@ -2,8 +2,6 @@
 {
     using System;
 
-    using AutoResponse.Core.ApiEvents;
-
     public class AutoResponseException : Exception
     {
         public AutoResponseException(object apiEvent)

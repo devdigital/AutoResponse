@@ -116,20 +116,21 @@
 
         [Theory]
         [AutoCustomData]
-        public async Task PermissionExceptionWithMessageShouldReturnExpectedMessage(
+        public async Task PermissionExceptionShouldReturnExpectedMessage(
             SampleServerFactory serverFactory,
             Mock<IValuesRepository> valuesRepository,
-            int entityId,
-            string message)
+            string userId,
+            string entityType,
+            int entityId)
         {
             valuesRepository.Setup(r => r.GetValue(It.IsAny<int>()))
-                .Throws(new EntityPermissionException(message));
+                .Throws(new EntityPermissionException(userId, entityType, entityId.ToString()));
 
             using (var server = serverFactory.With<IValuesRepository>(valuesRepository.Object).Create())
             {
                 var response = await server.HttpClient.GetAsync($"/api/values/{entityId}");
                 var apiModel = response.As<ErrorApiModel>();
-                Assert.Equal(message, apiModel.Message);
+                Assert.NotNull(apiModel.Message);
             }
         }
 

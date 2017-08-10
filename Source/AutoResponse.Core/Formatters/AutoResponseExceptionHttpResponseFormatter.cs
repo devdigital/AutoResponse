@@ -8,22 +8,22 @@ namespace AutoResponse.Core.Formatters
     {
         private readonly string[] postFixes;
 
-        private readonly IApiEventCodeMapper apiEventCodeMapper;
+        private readonly IApiEventCodeFormatter apiEventCodeFormatter;
 
         public AutoResponseExceptionHttpResponseFormatter()
         {
             this.postFixes = new[] { "ApiModel", "Dto" };
-            this.apiEventCodeMapper = new NullApiEventCodeMapper();
+            this.apiEventCodeFormatter = new NullApiEventCodeFormatter();
         }
 
-        public AutoResponseExceptionHttpResponseFormatter(IApiEventCodeMapper apiEventCodeMapper)
+        public AutoResponseExceptionHttpResponseFormatter(IApiEventCodeFormatter apiEventCodeFormatter)
         {
-            if (apiEventCodeMapper == null)
+            if (apiEventCodeFormatter == null)
             {
-                throw new ArgumentNullException(nameof(apiEventCodeMapper));
+                throw new ArgumentNullException(nameof(apiEventCodeFormatter));
             }
 
-            this.apiEventCodeMapper = apiEventCodeMapper;
+            this.apiEventCodeFormatter = apiEventCodeFormatter;
         }
 
         public string Message(string message)
@@ -62,9 +62,9 @@ namespace AutoResponse.Core.Formatters
                 ? null : entityProperty.Kebaberize();
         }
 
-        public string ApiEventToCode(object apiEvent)
+        public string Code(string code)
         {
-            return this.apiEventCodeMapper.GetCode(apiEvent);
+            return this.apiEventCodeFormatter.Format(code);
         }
     }
 }

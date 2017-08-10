@@ -54,6 +54,7 @@
     <Compile Include="ApiEvents\EntityNotFoundQueryApiEvent.cs" />
     <Compile Include="ApiEvents\EntityPermissionApiEvent.cs" />
     <Compile Include="ApiEvents\EntityValidationApiEvent.cs" />
+    <Compile Include="ApiEvents\IAutoResponseApiEvent.cs" />
     <Compile Include="ApiEvents\ServiceErrorApiEvent.cs" />
     <Compile Include="ApiEvents\UnauthenticatedApiEvent.cs" />
     <Compile Include="Dtos\ResponseDto.cs" />
@@ -69,9 +70,9 @@
     <Compile Include="Exceptions\EntityPermissionException.cs" />
     <Compile Include="Exceptions\EntityPermissionException{TEntity}.cs" />
     <Compile Include="Exceptions\EntityValidationException.cs" />
-    <Compile Include="Formatters\AutoResponseApiEventCodeMapper.cs" />
-    <Compile Include="Formatters\IApiEventCodeMapper.cs" />
-    <Compile Include="Formatters\NullApiEventCodeMapper.cs" />
+    <Compile Include="Formatters\AutoResponseApiEventCodeFormatter.cs" />
+    <Compile Include="Formatters\IApiEventCodeFormatter.cs" />
+    <Compile Include="Formatters\NullApiEventCodeFormatter.cs" />
     <Compile Include="Logging\IAutoResponseLogger.cs" />
     <Compile Include="Logging\NullAutoResponseLogger.cs" />
     <Compile Include="Models\QueryParameter.cs" />

@@ -4,8 +4,9 @@
 
     public class EntityPermissionException : AutoResponseException
     {
-        public EntityPermissionException(string message) : base(new EntityPermissionApiEvent(message))
-        {    
+        public EntityPermissionException(string code, string userId, string entityType, string entityId)
+            : base(new EntityPermissionApiEvent(code, userId, entityType, entityId))
+        {            
         }
 
         public EntityPermissionException(string userId, string entityType, string entityId)
