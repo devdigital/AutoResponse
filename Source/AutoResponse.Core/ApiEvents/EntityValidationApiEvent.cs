@@ -8,11 +8,6 @@ namespace AutoResponse.Core.ApiEvents
     {
         public EntityValidationApiEvent(string code, ValidationErrorDetails errorDetails)
         {
-            if (string.IsNullOrWhiteSpace(code))
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
-
             if (errorDetails == null)
             {
                 throw new ArgumentNullException(nameof(errorDetails));

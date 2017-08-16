@@ -6,11 +6,6 @@ namespace AutoResponse.Core.ApiEvents
     {
         public ServiceErrorApiEvent(string code, string message)
         {
-            if (string.IsNullOrWhiteSpace(code))
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
-
             if (string.IsNullOrWhiteSpace(nameof(message)))
             {
                 throw new ArgumentNullException(nameof(message));

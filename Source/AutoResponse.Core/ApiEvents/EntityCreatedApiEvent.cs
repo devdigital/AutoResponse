@@ -6,11 +6,6 @@ namespace AutoResponse.Core.ApiEvents
     {
         public EntityCreatedApiEvent(string code, string userId, string entityType, string entityId)
         {
-            if (string.IsNullOrWhiteSpace(code))
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
-
             if (string.IsNullOrWhiteSpace(userId))
             {
                 throw new ArgumentNullException(nameof(userId));

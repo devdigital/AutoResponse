@@ -6,11 +6,6 @@ namespace AutoResponse.Core.ApiEvents
     {
         public EntityNotFoundApiEvent(string code, string entityType, string entityId)
         {
-            if (string.IsNullOrWhiteSpace(code))
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
-
             if (string.IsNullOrWhiteSpace(entityType))
             {
                 throw new ArgumentNullException(nameof(entityType));
