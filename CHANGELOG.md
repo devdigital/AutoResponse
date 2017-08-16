@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.4.3"></a>
+## [0.4.3](https://github.com/devdigital/AutoResponse/compare/v0.4.2...v0.4.3) (2017-08-16)
+
+
+### Bug Fixes
+
+* **null-codes:** made codes optional ([b5a2c6b](https://github.com/devdigital/AutoResponse/commit/b5a2c6b))
+
+
+
 <a name="0.4.2"></a>
 ## [0.4.2](https://github.com/devdigital/AutoResponse/compare/v0.3.2...v0.4.2) (2017-08-10)
 
