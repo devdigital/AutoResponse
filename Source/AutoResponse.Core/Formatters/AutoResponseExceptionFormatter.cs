@@ -4,19 +4,19 @@ namespace AutoResponse.Core.Formatters
 
     using Humanizer;
 
-    internal class AutoResponseExceptionHttpResponseFormatter : IHttpResponseExceptionFormatter
+    internal class AutoResponseExceptionFormatter : IExceptionFormatter
     {
         private readonly string[] postFixes;
 
         private readonly IApiEventCodeFormatter apiEventCodeFormatter;
 
-        public AutoResponseExceptionHttpResponseFormatter()
+        public AutoResponseExceptionFormatter()
         {
             this.postFixes = new[] { "ApiModel", "Dto" };
             this.apiEventCodeFormatter = new NullApiEventCodeFormatter();
         }
 
-        public AutoResponseExceptionHttpResponseFormatter(IApiEventCodeFormatter apiEventCodeFormatter)
+        public AutoResponseExceptionFormatter(IApiEventCodeFormatter apiEventCodeFormatter)
         {
             if (apiEventCodeFormatter == null)
             {

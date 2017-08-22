@@ -1,6 +1,6 @@
 ﻿namespace AutoResponse.Core.Formatters
 {
-    public interface IHttpResponseExceptionFormatter
+    public interface IExceptionFormatter
     {
         string Message(string message);
 

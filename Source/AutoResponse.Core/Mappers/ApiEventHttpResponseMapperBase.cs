@@ -8,11 +8,11 @@
 
     public abstract class ApiEventHttpResponseMapperBase : IApiEventHttpResponseMapper
     {
-        private readonly IHttpResponseExceptionFormatter formatter;
+        private readonly IExceptionFormatter formatter;
 
         private readonly Lazy<IDictionary<Type, Func<ExceptionHttpResponseContext, object, IHttpResponse>>> mappers;        
 
-        protected ApiEventHttpResponseMapperBase(IHttpResponseExceptionFormatter formatter)
+        protected ApiEventHttpResponseMapperBase(IExceptionFormatter formatter)
         {
             if (formatter == null)
             {

@@ -5,14 +5,14 @@ namespace AutoResponse.Core.Responses
 
     using AutoResponse.Core.Dtos;
 
-    public class ServiceErrorWithExceptionHttpResponse : JsonHttpResponse<ResponseWithExceptionDto>
+    public class ServiceErrorWithExceptionHttpResponse : JsonHttpResponse<ErrorWithExceptionDto>
     {
         public ServiceErrorWithExceptionHttpResponse(string message, string code, string exceptionMessage, string exceptionString)
             : base(ToErrorWithException(message, code, exceptionMessage, exceptionString), HttpStatusCode.InternalServerError)
         {
         }
 
-        private static ResponseWithExceptionDto ToErrorWithException(
+        private static ErrorWithExceptionDto ToErrorWithException(
             string message,
             string code, 
             string exceptionMessage, 
@@ -33,7 +33,7 @@ namespace AutoResponse.Core.Responses
                 throw new ArgumentNullException(nameof(exceptionString));
             }
 
-            return new ResponseWithExceptionDto
+            return new ErrorWithExceptionDto
             {
                 Message = message,
                 Code = code,

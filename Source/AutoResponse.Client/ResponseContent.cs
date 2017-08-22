@@ -12,12 +12,7 @@
 
         public ResponseContent(HttpResponseMessage response, string responseContent)
         {
-            if (response == null)
-            {
-                throw new ArgumentNullException(nameof(response));
-            }
-
-            this.Response = response;
+            this.Response = response ?? throw new ArgumentNullException(nameof(response));
             this.content = responseContent;
         }
 
@@ -61,12 +56,9 @@
             {
                 var jobject = JObject.Parse(this.content);
                 var token = jobject?.Property(propertyName)?.Value;
-                if (token == null)
-                {
-                    return default(TProperty);
-                }
-
-                return token.Value<TProperty>();
+                return token == null 
+                    ? default(TProperty) 
+                    : token.Value<TProperty>();
             }
             catch (Exception)
             {

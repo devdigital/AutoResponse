@@ -8,7 +8,7 @@ namespace AutoResponse.Core.Models
     {
         public static ValidationErrorDetails ToFormatted(
             this ValidationErrorDetails errorDetails,
-            IHttpResponseExceptionFormatter formatter)
+            IExceptionFormatter formatter)
         {
             return new ValidationErrorDetails(
                 formatter.Message(errorDetails.Message),

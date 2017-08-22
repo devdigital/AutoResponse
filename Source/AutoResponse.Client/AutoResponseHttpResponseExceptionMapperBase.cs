@@ -11,11 +11,11 @@
     public abstract class AutoResponseHttpResponseExceptionMapperBase 
         : IHttpResponseExceptionMapper
     {
-        private readonly IExceptionHttpResponseFormatter formatter;
+        private readonly IHttpResponseFormatter formatter;
 
         private readonly Lazy<IDictionary<ErrorRegistration, Func<ResponseContent, HttpResponseExceptionContext, Exception>>> mappers;
 
-        protected AutoResponseHttpResponseExceptionMapperBase(IExceptionHttpResponseFormatter formatter)
+        protected AutoResponseHttpResponseExceptionMapperBase(IHttpResponseFormatter formatter)
         {
             if (formatter == null)
             {
