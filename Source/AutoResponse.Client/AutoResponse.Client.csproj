@@ -54,7 +54,7 @@
     <Compile Include="ErrorRegistration.cs" />
     <Compile Include="ErrorRegistrationEqualityComparer.cs" />
     <Compile Include="HttpResponseExceptionContext.cs" />
-    <Compile Include="IHttpResponseFormatter.cs" />
+    <Compile Include="IAutoResponseHttpResponseFormatter.cs" />
     <Compile Include="ResponseContent.cs" />
     <Compile Include="HttpResponseExceptionConfiguration.cs" />
     <Compile Include="HttpResponseMessageExtensions.cs" />

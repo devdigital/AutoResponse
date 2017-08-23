@@ -12,7 +12,12 @@
 
         public ResponseContent(HttpResponseMessage response, string responseContent)
         {
-            this.Response = response ?? throw new ArgumentNullException(nameof(response));
+            if (response == null)
+            {
+                throw new ArgumentNullException(nameof(response));
+            }
+
+            this.Response = response;
             this.content = responseContent;
         }
 

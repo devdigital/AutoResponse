@@ -45,17 +45,18 @@
         [Route("api/result")]
         public IHttpActionResult GetResult()
         {
-            var result = this.actionResultFactory.Create(this.Request);
-            return result;
+            return this.actionResultFactory.Create(this.Request);
         }
 
         [HttpGet]
         [Route("api/fail")]
         public IHttpActionResult GetFail()
         {
-            throw new Exception("There was an error", 
-                new Exception("I am an inner exception", 
-                new Exception("I am an inner inner exception")));
+            throw new Exception(
+                "There was an error", 
+                new Exception(
+                    "I am an inner exception", 
+                    new Exception("I am an inner inner exception")));
         }
 
         [HttpGet]

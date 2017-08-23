@@ -1,6 +1,6 @@
 ﻿namespace AutoResponse.Client
 {
-    public interface IHttpResponseFormatter
+    public interface IAutoResponseHttpResponseFormatter
     {
         string Message(string message);
 

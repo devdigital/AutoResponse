@@ -115,6 +115,7 @@
     <Compile Include="Tests\DomainExceptionTests.cs" />
     <Compile Include="Tests\HttpFormatterTests.cs" />
     <Compile Include="Models\TestAutoResponseResult.cs" />
+    <Compile Include="Tests\HttpResponseContentTests.cs" />
     <Compile Include="Tests\LoggerTests.cs" />
     <Compile Include="Tests\WebApiActionResultTests.cs" />
     <Compile Include="Tests\WebApiExceptionTests.cs" />

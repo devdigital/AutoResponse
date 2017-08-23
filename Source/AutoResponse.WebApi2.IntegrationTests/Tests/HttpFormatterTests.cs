@@ -4,8 +4,10 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
     using System.Threading.Tasks;
 
     using AutoResponse.Client.Models;
+    using AutoResponse.Core.Dtos;
     using AutoResponse.Core.Enums;
     using AutoResponse.Core.Exceptions;
+    using AutoResponse.Core.Formatters;
     using AutoResponse.Core.Models;
     using AutoResponse.Sample.Domain.Services;
     using AutoResponse.WebApi2.IntegrationTests.Helpers;
@@ -23,7 +25,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
     {
         [Theory]
         [AutoData]
-        public async Task EntityValidationExceptionShouldReturnKebabCaseEntityType(
+        public async Task EntityValidationExceptionShouldReturnCamelCaseEntityType(
             SampleServerFactory serverFactory,
             Mock<IExceptionService> exceptionService,
             string userId,
@@ -44,7 +46,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
 
         [Theory]
         [AutoData]
-        public async Task EntityValidationExceptionShouldReturnKebabCaseEntityProperty(
+        public async Task EntityValidationExceptionShouldReturnCamelCaseEntityProperty(
             SampleServerFactory serverFactory,
             Mock<IExceptionService> exceptionService,
             string userId,
@@ -58,7 +60,47 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
                 var response = await server.HttpClient.GetAsync("/");
                 var apiModel = response.As<ErrorDetailsApiModel<ValidationErrorApiModel>>();
                 var error = apiModel.Errors.First();
-                Assert.Equal("user-name", error.Field);
+                Assert.Equal("userName", error.Field);
+            }
+        }
+
+        [Theory]
+        [AutoData]
+        public async Task EntityValidationExceptionShouldReturnKebabCaseEntityTypeWhenConfigured(
+            SampleServerFactory serverFactory,
+            Mock<IExceptionService> exceptionService,
+            string code,
+            string entityId)
+        {
+            exceptionService.Setup(s => s.Execute()).Throws(new EntityNotFoundException(code, "EntityType", entityId));
+            using (var server = serverFactory
+                .With<IExceptionService>(exceptionService.Object)
+                .With<IAutoResponseExceptionFormatter>(new AutoResponseExceptionFormatter(useCamelCase: false))
+                .Create())
+            {
+                var response = await server.HttpClient.GetAsync("/");
+                var apiModel = response.As<ResourceNotFoundApiModel>();
+                Assert.Equal("entity-type", apiModel.Resource);
+            }
+        }
+
+        [Theory]
+        [AutoData]
+        public async Task EntityValidationExceptionShouldReturnKebabCaseEntityIdWhenConfigured(
+            SampleServerFactory serverFactory,
+            Mock<IExceptionService> exceptionService,
+            string code,
+            string entityType)
+        {
+            exceptionService.Setup(s => s.Execute()).Throws(new EntityNotFoundException(code, entityType, "EntityId"));
+            using (var server = serverFactory
+                .With<IExceptionService>(exceptionService.Object)
+                .With<IAutoResponseExceptionFormatter>(new AutoResponseExceptionFormatter(useCamelCase: false))
+                .Create())
+            {
+                var response = await server.HttpClient.GetAsync("/");
+                var apiModel = response.As<ResourceNotFoundApiModel>();
+                Assert.Equal("entity-id", apiModel.ResourceId);
             }
         }
 
@@ -121,7 +163,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
                 var response = await server.HttpClient.GetAsync("/");
                 var apiModel = response.As<ErrorDetailsApiModel<ValidationErrorApiModel>>();
                 var error = apiModel.Errors.First();
-                Assert.Equal("api-model", error.Resource);
+                Assert.Equal("apiModel", error.Resource);
             }
         }
     }

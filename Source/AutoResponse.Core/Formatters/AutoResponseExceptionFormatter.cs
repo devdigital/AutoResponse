@@ -4,26 +4,30 @@ namespace AutoResponse.Core.Formatters
 
     using Humanizer;
 
-    internal class AutoResponseExceptionFormatter : IExceptionFormatter
+    public class AutoResponseExceptionFormatter : IAutoResponseExceptionFormatter
     {
         private readonly string[] postFixes;
 
-        private readonly IApiEventCodeFormatter apiEventCodeFormatter;
+        private readonly IAutoResponseCodeFormatter autoResponseCodeFormatter;
 
-        public AutoResponseExceptionFormatter()
+        private readonly bool useCamelCase;
+
+        public AutoResponseExceptionFormatter(bool useCamelCase = true)
         {
             this.postFixes = new[] { "ApiModel", "Dto" };
-            this.apiEventCodeFormatter = new NullApiEventCodeFormatter();
+            this.autoResponseCodeFormatter = new NullAutoResponseCodeFormatter();
+            this.useCamelCase = useCamelCase;
         }
 
-        public AutoResponseExceptionFormatter(IApiEventCodeFormatter apiEventCodeFormatter)
+        public AutoResponseExceptionFormatter(IAutoResponseCodeFormatter autoResponseCodeFormatter, bool useCamelCase = true)
         {
-            if (apiEventCodeFormatter == null)
+            if (autoResponseCodeFormatter == null)
             {
-                throw new ArgumentNullException(nameof(apiEventCodeFormatter));
+                throw new ArgumentNullException(nameof(autoResponseCodeFormatter));
             }
 
-            this.apiEventCodeFormatter = apiEventCodeFormatter;
+            this.autoResponseCodeFormatter = autoResponseCodeFormatter;
+            this.useCamelCase = useCamelCase;
         }
 
         public string Message(string message)
@@ -53,18 +57,26 @@ namespace AutoResponse.Core.Formatters
                 break;
             }
 
-            return string.IsNullOrWhiteSpace(entityType) ? null : entityType.Kebaberize();
+            return string.IsNullOrWhiteSpace(entityType) ? null : ConvertCase(entityType);
         }
 
         public string Field(string entityProperty)
         {
             return string.IsNullOrWhiteSpace(entityProperty) 
-                ? null : entityProperty.Kebaberize();
+                ? null 
+                : ConvertCase(entityProperty);
         }
 
         public string Code(string code)
         {
-            return this.apiEventCodeFormatter.Format(code);
+            return this.autoResponseCodeFormatter.Format(code);
+        }
+
+        private string ConvertCase(string value)
+        {
+            return this.useCamelCase 
+                ? value?.Camelize()
+                : value?.Kebaberize();
         }
     }
 }

@@ -1,6 +1,6 @@
 namespace AutoResponse.Core.Formatters
 {
-    public interface IApiEventCodeFormatter
+    public interface IAutoResponseCodeFormatter
     {
         string Format(string code);
     }

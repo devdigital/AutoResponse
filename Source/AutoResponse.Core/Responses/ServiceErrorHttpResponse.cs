@@ -4,10 +4,10 @@ namespace AutoResponse.Core.Responses
 {
     using System.Net;
 
-    public class ServiceErrorHttpResponse : JsonHttpResponse<ErrorDto>
+    public class ServiceErrorHttpResponse : JsonHttpResponse<ErrorApiModel>
     {
         public ServiceErrorHttpResponse(string message, string code)
-            : base(new ErrorDto { Message = message, Code = code }, HttpStatusCode.InternalServerError)
+            : base(new ErrorApiModel { Message = message, Code = code }, HttpStatusCode.InternalServerError)
         {
         }        
     }

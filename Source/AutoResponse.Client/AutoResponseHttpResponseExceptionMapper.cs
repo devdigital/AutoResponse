@@ -1,15 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using AutoResponse.Core.Dtos;
-using AutoResponse.Core.Enums;
-
-namespace AutoResponse.Client
+﻿namespace AutoResponse.Client
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using System.Threading.Tasks;
 
+    using AutoResponse.Core.Dtos;
+    using AutoResponse.Core.Enums;
     using AutoResponse.Core.Exceptions;
     using AutoResponse.Core.Models;
 
@@ -20,7 +18,7 @@ namespace AutoResponse.Client
         {            
         }
 
-        public AutoResponseHttpResponseExceptionMapper(IHttpResponseFormatter formatter)
+        public AutoResponseHttpResponseExceptionMapper(IAutoResponseHttpResponseFormatter formatter)
             : base(formatter)
         {
         }
@@ -49,16 +47,21 @@ namespace AutoResponse.Client
                     c.Formatter.EntityType(r.Property("resource")),
                     c.Formatter.EntityType(r.Property("resourceId"))));
 
-            configuration.AddMapping(
-                (HttpStatusCode)422,
-                (r, c) => new EntityValidationException(
-                    c.Formatter.Code(r.Property("code")),
-                    new ValidationErrorDetails(c.Formatter.Message(r.Property("message")),
-                    r.Property<IEnumerable<ValidationErrorDto>>("errors").Select(e => new ValidationError(
-                        c.Formatter.EntityType(e.Resource),
-                        c.Formatter.EntityProperty(e.Field),
-                        ToValidationErrorCode(e.Code),
-                        c.Formatter.Message(e.Message))))));
+            configuration.AddMapping((HttpStatusCode)422,
+                (r, c) =>
+                    {
+                        var errorsResponse = r.Property<IEnumerable<ValidationErrorDto>>("errors");
+                        var errors = errorsResponse?.Select(e => new ValidationError(
+                            resource: c.Formatter.EntityType(e.Resource),
+                            field: c.Formatter.EntityProperty(e.Field),
+                            code: ToValidationErrorCode(e.Code),
+                            errorMessage: c.Formatter.Message(e.Message))) ?? Enumerable.Empty<ValidationError>();
+                        
+                        var errorDetails = new ValidationErrorDetails(c.Formatter.Message(r.Property("message")), errors);
+                        return new EntityValidationException(
+                            code: c.Formatter.Code(r.Property("code")),
+                            errorDetails: errorDetails);
+                    });
 
             configuration.AddMapping(
                 HttpStatusCode.NotFound, "AR404",
@@ -83,7 +86,8 @@ namespace AutoResponse.Client
 
         private static ValidationErrorCode ToValidationErrorCode(string code)
         {
-            return Enum.TryParse(code, ignoreCase: true, result: out ValidationErrorCode result) ? result : ValidationErrorCode.None;
+            ValidationErrorCode result;
+            return Enum.TryParse(code, ignoreCase: true, result: out result) ? result : ValidationErrorCode.None;
         }
 
         protected override Task<Exception> GetDefaultException(

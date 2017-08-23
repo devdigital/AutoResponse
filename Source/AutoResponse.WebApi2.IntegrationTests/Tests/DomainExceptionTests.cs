@@ -3,7 +3,6 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
     using System.Net;
     using System.Threading.Tasks;
 
-    using AutoResponse.Core.Exceptions;
     using AutoResponse.Sample.Domain.Exceptions;
     using AutoResponse.Sample.Domain.Repositories;
     using AutoResponse.Sample.Domain.Services;

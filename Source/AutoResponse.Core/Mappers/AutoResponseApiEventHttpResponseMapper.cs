@@ -18,9 +18,14 @@
 
         public AutoResponseApiEventHttpResponseMapper(
             IContextResolver contextResolver,
-            IExceptionFormatter formatter) : base(formatter)
+            IAutoResponseExceptionFormatter formatter) : base(formatter)
         {
-            this.contextResolver = contextResolver ?? throw new ArgumentNullException(nameof(contextResolver));
+            if (contextResolver == null)
+            {
+                throw new ArgumentNullException(nameof(contextResolver));
+            }
+
+            this.contextResolver = contextResolver;
         }
 
         protected override void ConfigureMappings(ExceptionHttpResponseConfiguration configuration)

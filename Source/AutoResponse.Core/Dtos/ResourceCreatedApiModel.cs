@@ -1,6 +1,6 @@
 namespace AutoResponse.Core.Dtos
 {
-    public class ResourceCreatedDto : ErrorDto
+    public class ResourceCreatedApiModel : ErrorApiModel
     {
         public string Id { get; set; }
     }

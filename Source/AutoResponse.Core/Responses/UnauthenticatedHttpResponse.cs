@@ -4,10 +4,10 @@ namespace AutoResponse.Core.Responses
 {
     using System.Net;
 
-    public class UnauthenticatedHttpResponse : JsonHttpResponse<ErrorDto>
+    public class UnauthenticatedHttpResponse : JsonHttpResponse<ErrorApiModel>
     {
         public UnauthenticatedHttpResponse(string message, string code)
-            : base(new ErrorDto { Message = message, Code =  code }, HttpStatusCode.Unauthorized)
+            : base(new ErrorApiModel { Message = message, Code =  code }, HttpStatusCode.Unauthorized)
         {
         }
     }

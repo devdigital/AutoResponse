@@ -4,11 +4,16 @@
 
     public class HttpResponseExceptionContext
     {
-        public HttpResponseExceptionContext(IHttpResponseFormatter formatter)
+        public HttpResponseExceptionContext(IAutoResponseHttpResponseFormatter formatter)
         {
-            this.Formatter = formatter ?? throw new ArgumentNullException(nameof(formatter));
+            if (formatter == null)
+            {
+                throw new ArgumentNullException(nameof(formatter));
+            }
+
+            this.Formatter = formatter;
         }
 
-        public IHttpResponseFormatter Formatter { get; }
+        public IAutoResponseHttpResponseFormatter Formatter { get; }
     }
 }
