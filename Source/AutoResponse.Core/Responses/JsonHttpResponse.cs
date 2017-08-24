@@ -9,7 +9,7 @@ namespace AutoResponse.Core.Responses
 
     public abstract class JsonHttpResponse<TData> : IHttpResponse
     {
-        public JsonHttpResponse(TData data, HttpStatusCode statusCode, IDictionary<string, string[]> headers = null)
+        protected JsonHttpResponse(TData data, HttpStatusCode statusCode, IDictionary<string, string[]> headers = null)
         {
             this.StatusCode = statusCode;
             this.Headers = headers ?? new Dictionary<string, string[]>();

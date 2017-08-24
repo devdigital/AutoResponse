@@ -4,7 +4,7 @@
 
     using AutoResponse.Core.ApiEvents;
 
-    public class ServiceErrorException : AutoResponseException
+    public class ServiceErrorException : AutoResponseException<ServiceErrorApiEvent>
     {
         public ServiceErrorException(string code, string message)
             : base(new ServiceErrorApiEvent(code, message))

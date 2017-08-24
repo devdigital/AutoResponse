@@ -48,13 +48,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoResponseExceptionHttpResponseFormatter.cs" />
+    <Compile Include="AutoResponseHttpResponseFormatter.cs" />
     <Compile Include="AutoResponseHttpResponseExceptionMapper.cs" />
     <Compile Include="AutoResponseHttpResponseExceptionMapperBase.cs" />
     <Compile Include="ErrorRegistration.cs" />
     <Compile Include="ErrorRegistrationEqualityComparer.cs" />
     <Compile Include="HttpResponseExceptionContext.cs" />
-    <Compile Include="IExceptionHttpResponseFormatter.cs" />
+    <Compile Include="IAutoResponseHttpResponseFormatter.cs" />
     <Compile Include="ResponseContent.cs" />
     <Compile Include="HttpResponseExceptionConfiguration.cs" />
     <Compile Include="HttpResponseMessageExtensions.cs" />

@@ -1,9 +1,12 @@
 namespace AutoResponse.WebApi2.IntegrationTests.Tests
 {
+    using System;
+    using System.Net;
     using System.Threading.Tasks;
 
-    using AutoResponse.Client;
+    using AutoResponse.Core.Dtos;
     using AutoResponse.Core.Exceptions;
+    using AutoResponse.Sample.Domain.Exceptions;
     using AutoResponse.Sample.Domain.Services;
     using AutoResponse.WebApi2.IntegrationTests.Helpers;
 
@@ -11,28 +14,15 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
 
     using Ploeh.AutoFixture.Xunit2;
 
+    using WebApiTestServer;
+
     using Xunit;
 
-    public class ClientTests
+    public class HttpResponseContentTests
     {
         [Theory]
         [AutoData]
-        public async Task ResourceValidationResponseShouldThrowValidationException(
-            SampleServerFactory serverFactory,
-            Mock<IExceptionService> exceptionService,
-            EntityValidationException exception)
-        {
-            exceptionService.Setup(s => s.Execute()).Throws(exception);
-            using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
-            {
-                var response = await server.HttpClient.GetAsync("/");
-                await Assert.ThrowsAsync<EntityValidationException>(() => response.HandleErrors());
-            }
-        }
-
-        [Theory]
-        [AutoData]
-        public async Task ResourceNotFoundResponseShouldThrowNotFoundException(
+        public async Task EntityNotFoundExceptionShouldReturnResourceNotFoundApiModel(
             SampleServerFactory serverFactory,
             Mock<IExceptionService> exceptionService,
             EntityNotFoundException exception)
@@ -41,52 +31,58 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
             using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
             {
                 var response = await server.HttpClient.GetAsync("/");
-                await Assert.ThrowsAsync<EntityNotFoundException>(() => response.HandleErrors());
+                var apiModel = response.As<ResourceNotFoundApiModel>();
+                Assert.NotNull(apiModel);
             }
         }
 
         [Theory]
         [AutoData]
-        public async Task ResourcePermissionResponseShouldThrowPermissionException(
+        public async Task EntityNotFoundExceptionShouldReturnExpectedCode(
             SampleServerFactory serverFactory,
             Mock<IExceptionService> exceptionService,
-            EntityPermissionException exception)
+            EntityNotFoundException exception)
         {
             exceptionService.Setup(s => s.Execute()).Throws(exception);
             using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
             {
                 var response = await server.HttpClient.GetAsync("/");
-                await Assert.ThrowsAsync<EntityPermissionException>(() => response.HandleErrors());
+                var apiModel = response.As<ResourceNotFoundApiModel>();
+                Assert.Equal("AR404", apiModel.Code);
             }
         }
 
         [Theory]
         [AutoData]
-        public async Task UnauthenticatedResponseShouldThrowUnauthenticatedException(
+        public async Task EntityNotFoundExceptionShouldReturnResourceAsCamelCase(
             SampleServerFactory serverFactory,
             Mock<IExceptionService> exceptionService,
-            UnauthenticatedException exception)
+            string code,
+            string entityId)
         {
-            exceptionService.Setup(s => s.Execute()).Throws(exception);
+            exceptionService.Setup(s => s.Execute()).Throws(new EntityNotFoundException(code, "EntityType", entityId));
             using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
             {
                 var response = await server.HttpClient.GetAsync("/");
-                await Assert.ThrowsAsync<UnauthenticatedException>(() => response.HandleErrors());
+                var apiModel = response.As<ResourceNotFoundApiModel>();
+                Assert.Equal("entityType", apiModel.Resource);
             }
         }
 
         [Theory]
         [AutoData]
-        public async Task ServiceErrorResponseShouldThrowServiceErrorException(
+        public async Task EntityNotFoundExceptionShouldReturnResourceIdAsCamelCase(
             SampleServerFactory serverFactory,
             Mock<IExceptionService> exceptionService,
-            ServiceErrorException exception)
+            string code,
+            string entityType)
         {
-            exceptionService.Setup(s => s.Execute()).Throws(exception);
+            exceptionService.Setup(s => s.Execute()).Throws(new EntityNotFoundException(code, entityType, "EntityId"));
             using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
             {
                 var response = await server.HttpClient.GetAsync("/");
-                await Assert.ThrowsAsync<ServiceErrorException>(() => response.HandleErrors());
+                var apiModel = response.As<ResourceNotFoundApiModel>();
+                Assert.Equal("entityId", apiModel.ResourceId);
             }
         }
     }

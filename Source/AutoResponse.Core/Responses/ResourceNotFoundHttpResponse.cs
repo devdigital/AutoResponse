@@ -1,36 +1,14 @@
 namespace AutoResponse.Core.Responses
 {
-    using System.Collections.Generic;
     using System.Net;
 
     using AutoResponse.Core.Dtos;
 
-    public class ResourceNotFoundHttpResponse : JsonHttpResponse<ValidationResponseDetailsDto>
+    public class ResourceNotFoundHttpResponse : JsonHttpResponse<ResourceNotFoundApiModel>
     {      
-        public ResourceNotFoundHttpResponse(string message, string code, string resourceType)
-            : base(ToValidationErrorDetails(message, code, resourceType), HttpStatusCode.NotFound)
+        public ResourceNotFoundHttpResponse(string message, string code, string resource, string resourceId)
+            : base(new ResourceNotFoundApiModel { Message = message, Code = code, Resource = resource, ResourceId = resourceId }, HttpStatusCode.NotFound)
         {
-        }
-
-        private static ValidationResponseDetailsDto ToValidationErrorDetails(
-            string message,
-            string code,
-            string resourceType)
-        {
-            return new ValidationResponseDetailsDto
-            {
-                Message = message,
-                Code = code,
-                Errors = new List<ValidationErrorDto>
-                {
-                    new ValidationErrorDto
-                    {
-                        Resource = resourceType,
-                        Field = "id",
-                        Code = "invalid"
-                    }
-                }
-            };
         }
     }
 }

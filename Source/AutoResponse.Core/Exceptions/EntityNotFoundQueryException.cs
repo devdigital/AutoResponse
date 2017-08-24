@@ -5,7 +5,7 @@
     using AutoResponse.Core.ApiEvents;
     using AutoResponse.Core.Models;
 
-    public class EntityNotFoundQueryException : AutoResponseException
+    public class EntityNotFoundQueryException : AutoResponseException<EntityNotFoundQueryApiEvent>
     {
         public EntityNotFoundQueryException(string code, string entityType, IEnumerable<QueryParameter> parameters)
             : base(new EntityNotFoundQueryApiEvent(code, entityType, parameters))

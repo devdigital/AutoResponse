@@ -1,6 +1,6 @@
 namespace AutoResponse.Core.Dtos
 {
-    public class ResponseWithExceptionDto : ResponseDto
+    public class ErrorWithExceptionApiModel : ErrorApiModel
     {     
         // TODO: add exception type
         public string ExceptionMessage { get; set; }

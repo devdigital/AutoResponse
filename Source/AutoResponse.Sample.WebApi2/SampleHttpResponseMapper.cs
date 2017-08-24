@@ -1,5 +1,6 @@
 ﻿namespace AutoResponse.Sample.WebApi2
 {
+    using AutoResponse.Core.Formatters;
     using AutoResponse.Core.Mappers;
     using AutoResponse.Core.Models;
     using AutoResponse.Core.Responses;
@@ -9,7 +10,7 @@
 
     public class SampleHttpResponseMapper : AutoResponseApiEventHttpResponseMapper
     {
-        public SampleHttpResponseMapper(IContextResolver contextResolver) : base(contextResolver)
+        public SampleHttpResponseMapper(IContextResolver contextResolver, IAutoResponseExceptionFormatter formatter) : base(contextResolver, formatter)
         {            
         }
 

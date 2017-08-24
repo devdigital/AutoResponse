@@ -3,7 +3,7 @@
     using AutoResponse.Core.ApiEvents;
     using AutoResponse.Core.Models;
 
-    public class EntityValidationException : AutoResponseException
+    public class EntityValidationException : AutoResponseException<EntityValidationApiEvent>
     {
         public EntityValidationException(string code, ValidationErrorDetails errorDetails)
             : base(new EntityValidationApiEvent(code, errorDetails))

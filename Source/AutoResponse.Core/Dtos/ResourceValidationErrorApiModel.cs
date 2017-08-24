@@ -1,6 +1,6 @@
 namespace AutoResponse.Core.Dtos
 {
-    public class ValidationErrorDto
+    public class ResourceValidationErrorApiModel
     {
         public string Resource { get; set; }
 
