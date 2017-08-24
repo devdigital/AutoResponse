@@ -16,11 +16,15 @@ namespace AutoResponse.Owin
         {
             var defaultMapper = new AutoResponseApiEventHttpResponseMapper(new OwinContextResolver());
             var defaultLogger = new NullAutoResponseLogger();
+            var defaultDomainResultPropertyName = "Event";
 
             var mapper = options.EventHttpResponseMapper ?? defaultMapper;
             var logger = options.Logger ?? defaultLogger;
+            var domainResultPropertyName = string.IsNullOrWhiteSpace(options.DomainResultPropertyName)
+                ? defaultDomainResultPropertyName
+                : options.DomainResultPropertyName;
 
-            appBuilder.Use<AutoResponseExceptionMiddleware>(mapper, logger);
+            appBuilder.Use<AutoResponseExceptionMiddleware>(mapper, logger, domainResultPropertyName);
         }
     }
 }

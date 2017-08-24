@@ -33,6 +33,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentAssertions, Version=4.19.3.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentAssertions.4.19.3\lib\net45\FluentAssertions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FluentAssertions.Core, Version=4.19.3.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentAssertions.4.19.3\lib\net45\FluentAssertions.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
       <Private>True</Private>
@@ -111,7 +119,11 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserApiModel.cs" />
     <Compile Include="Models\UserDto.cs" />
-    <Compile Include="Tests\ClientTests.cs" />
+    <Compile Include="Tests\ClientTests\ClientResourceNotFoundTests.cs" />
+    <Compile Include="Tests\ClientTests\ClientResourcePermissionTests.cs" />
+    <Compile Include="Tests\ClientTests\ClientResourceValidationTests.cs" />
+    <Compile Include="Tests\ClientTests\ClientServiceErrorTests.cs" />
+    <Compile Include="Tests\ClientTests\ClientUnauthenticatedTests.cs" />
     <Compile Include="Tests\DomainExceptionTests.cs" />
     <Compile Include="Tests\HttpFormatterTests.cs" />
     <Compile Include="Models\TestAutoResponseResult.cs" />
@@ -150,6 +162,7 @@
       <Name>AutoResponse.WebApi2</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

@@ -122,7 +122,6 @@
                 ? $"The user with identifier '{apiEvent.UserId}', created a {resource} resource"
                 : $"The user with identifier '{apiEvent.UserId}', created a {resource} resource with resource identifier '{configuration.Formatter.Field(apiEvent.EntityId)}'";
 
-            // TODO: entityId is optional in the api event, but the response will always include id
             return new ResourceCreatedHttpResponse(
                 configuration.Formatter.Message(message),
                 configuration.Formatter.Code(apiEvent.Code),

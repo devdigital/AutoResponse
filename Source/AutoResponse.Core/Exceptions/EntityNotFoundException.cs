@@ -2,7 +2,7 @@
 {
     using AutoResponse.Core.ApiEvents;
 
-    public class EntityNotFoundException : AutoResponseException
+    public class EntityNotFoundException : AutoResponseException<EntityNotFoundApiEvent>
     {
         public EntityNotFoundException(string code, string entityType, string entityId)
             : base(new EntityNotFoundApiEvent(code, entityType, entityId))

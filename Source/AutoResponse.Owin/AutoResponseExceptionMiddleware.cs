@@ -17,10 +17,13 @@
 
         private readonly IAutoResponseLogger logger;
 
+        private readonly string domainResultPropertyName;
+
         public AutoResponseExceptionMiddleware(
             OwinMiddleware next, 
             IApiEventHttpResponseMapper mapper,
-            IAutoResponseLogger logger)
+            IAutoResponseLogger logger,
+            string domainResultPropertyName)
             : base(next)
         {
             if (mapper == null)
@@ -33,8 +36,14 @@
                 throw new ArgumentNullException(nameof(logger));
             }
 
+            if (string.IsNullOrWhiteSpace(domainResultPropertyName))
+            {
+                throw new ArgumentNullException(nameof(domainResultPropertyName));
+            }
+
             this.mapper = mapper;
             this.logger = logger;
+            this.domainResultPropertyName = domainResultPropertyName;
         }
 
         public override async Task Invoke(IOwinContext context)
@@ -46,14 +55,14 @@
             catch (AutoResponseException exception)
             {
                 await this.logger.LogException(exception);
-                this.ConvertExceptionToHttpResponse(exception, exception.Event, context);
+                this.ConvertExceptionToHttpResponse(exception, exception.EventObject, context);
             }
             catch (Exception exception)
             {
                 await this.logger.LogException(exception);
 
                 var exceptionEvent = 
-                    exception.GetType().GetProperty("Event")?.GetValue(exception, null);
+                    exception.GetType().GetProperty(this.domainResultPropertyName)?.GetValue(exception, null);
 
                 if (exceptionEvent != null)
                 {

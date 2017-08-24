@@ -32,7 +32,8 @@
                     c.Formatter.Message(r.Property("message"))));
 
             configuration.AddMapping(
-                HttpStatusCode.Forbidden, "AR403",
+                HttpStatusCode.Forbidden,
+                "AR403",
                 (r, c) => new EntityPermissionException(
                     c.Formatter.Code(r.Property("code")),
                     userId: c.Formatter.EntityProperty(r.Property("userId")),
@@ -40,17 +41,19 @@
                     entityId: c.Formatter.EntityProperty(r.Property("resourceId"))));
 
             configuration.AddMapping(
-                HttpStatusCode.Forbidden, "AR403C",
+                HttpStatusCode.Forbidden, 
+                "AR403C",
                 (r, c) => new EntityCreatePermissionException(
                     c.Formatter.Code(r.Property("code")),
                     c.Formatter.EntityProperty(r.Property("userId")),
                     c.Formatter.EntityType(r.Property("resource")),
                     c.Formatter.EntityType(r.Property("resourceId"))));
 
-            configuration.AddMapping((HttpStatusCode)422,
+            configuration.AddMapping(
+                (HttpStatusCode)422,
                 (r, c) =>
                     {
-                        var errorsResponse = r.Property<IEnumerable<ValidationErrorDto>>("errors");
+                        var errorsResponse = r.Property<List<ResourceValidationErrorApiModel>>("errors");
                         var errors = errorsResponse?.Select(e => new ValidationError(
                             resource: c.Formatter.EntityType(e.Resource),
                             field: c.Formatter.EntityProperty(e.Field),
@@ -64,14 +67,16 @@
                     });
 
             configuration.AddMapping(
-                HttpStatusCode.NotFound, "AR404",
+                HttpStatusCode.NotFound, 
+                "AR404",
                 (r, c) => new EntityNotFoundException(
                     c.Formatter.Code(r.Property("code")),
                     entityType: c.Formatter.EntityType(r.Property("resource")),
                     entityId: c.Formatter.EntityProperty(r.Property("resourceId"))));
             
             configuration.AddMapping(
-                HttpStatusCode.NotFound, "AR404Q",
+                HttpStatusCode.NotFound, 
+                "AR404Q",
                 (r, c) => new EntityNotFoundQueryException(
                     c.Formatter.Code(r.Property("code")),
                     c.Formatter.EntityType(r.Property("resource")),

@@ -2,9 +2,14 @@
 {
     using System;
 
-    public class AutoResponseException : Exception
+    public abstract class AutoResponseException : Exception
     {
-        public AutoResponseException(object apiEvent)
+        public abstract object EventObject { get; }
+    }
+
+    public abstract class AutoResponseException<TEvent> : AutoResponseException
+    {
+        protected AutoResponseException(TEvent apiEvent)
         {
             if (apiEvent == null)
             {
@@ -14,6 +19,8 @@
             this.Event = apiEvent;
         }
 
-        public object Event { get; }
+        public TEvent Event { get; }
+
+        public override object EventObject => this.Event;
     }
 }

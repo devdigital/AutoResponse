@@ -6,7 +6,7 @@ namespace AutoResponse.Core.Responses
     using AutoResponse.Core.Extensions;
     using AutoResponse.Core.Models;
 
-    public class ResourceValidationHttpResponse : JsonHttpResponse<ValidationErrorDetailsApiModel>
+    public class ResourceValidationHttpResponse : JsonHttpResponse<ResourceValidationApiModel>
     {
         public ResourceValidationHttpResponse(string code, ValidationErrorDetails validationErrorDetails)
             : base(validationErrorDetails.ToDto(code), (HttpStatusCode)422)

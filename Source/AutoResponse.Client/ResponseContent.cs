@@ -10,6 +10,8 @@
     {
         private readonly string content;
 
+        private readonly Lazy<JObject> json;
+
         public ResponseContent(HttpResponseMessage response, string responseContent)
         {
             if (response == null)
@@ -19,6 +21,7 @@
 
             this.Response = response;
             this.content = responseContent;
+            this.json = new Lazy<JObject>(() => JObject.Parse(this.content));
         }
 
         public HttpResponseMessage Response { get; }
@@ -59,11 +62,10 @@
 
             try
             {
-                var jobject = JObject.Parse(this.content);
-                var token = jobject?.Property(propertyName)?.Value;
-                return token == null 
-                    ? default(TProperty) 
-                    : token.Value<TProperty>();
+                var token = this.json?.Value?.Property(propertyName)?.Value;
+                return token == null
+                    ? default(TProperty)
+                    : token.ToObject<TProperty>();
             }
             catch (Exception)
             {
