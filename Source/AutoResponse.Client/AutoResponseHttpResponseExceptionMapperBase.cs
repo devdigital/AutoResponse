@@ -33,7 +33,8 @@
             });
         }
 
-        protected abstract void ConfigureMappings(HttpResponseExceptionConfiguration configuration);        
+        protected abstract void ConfigureMappings(
+            HttpResponseExceptionConfiguration configuration);
 
         public Task<bool> IsErrorResponse(HttpResponseMessage response)
         {
@@ -61,21 +62,24 @@
                 errorCode = null;
             }
 
-            // Search for both response code and error code match first
-            var exactRegistration = new ErrorRegistration(statusCode, errorCode);            
-            if (this.mappers.Value.ContainsKey(exactRegistration))
+            if (!string.IsNullOrWhiteSpace(errorCode))
             {
-                var mapper = this.mappers.Value[exactRegistration];
-                if (mapper == null)
+                // Search for both response code and error code match first
+                var exactRegistration = new ErrorRegistration(statusCode, errorCode);
+                if (this.mappers.Value.ContainsKey(exactRegistration))
                 {
-                    return await this.GetDefaultException(
+                    var mapper = this.mappers.Value[exactRegistration];
+                    if (mapper == null)
+                    {
+                        return await this.GetDefaultException(
+                            new ResponseContent(response, responseContent),
+                            new HttpResponseExceptionContext(this.formatter));
+                    }
+
+                    return mapper.Invoke(
                         new ResponseContent(response, responseContent),
                         new HttpResponseExceptionContext(this.formatter));
                 }
-
-                return mapper.Invoke(
-                    new ResponseContent(response, responseContent),
-                    new HttpResponseExceptionContext(this.formatter));
             }
 
             // If no status code, error code match, then look for status code, null error code                       
