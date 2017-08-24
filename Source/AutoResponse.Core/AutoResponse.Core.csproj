@@ -91,7 +91,6 @@
     <Compile Include="Mappers\IApiEventHttpResponseMapper.cs" />
     <Compile Include="Mappers\ExceptionHttpResponseContext.cs" />
     <Compile Include="Models\ValidationErrorDetailsExtensions.cs" />
-    <Compile Include="Responses\ErrorHttpResponse.cs" />
     <Compile Include="Responses\IHttpResponse.cs" />
     <Compile Include="Responses\JsonHttpResponse.cs" />
     <Compile Include="Models\ValidationError.cs" />

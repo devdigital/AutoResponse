@@ -20,8 +20,7 @@
     using AutoResponse.Sample.Domain.Services;
     using AutoResponse.Sample.WebApi2.Factories;
     using AutoResponse.WebApi2.ExceptionHandling;
-    using AutoResponse.WebApi2.Logging;
-
+    
     using global::Owin;
 
     using Newtonsoft.Json.Serialization;
@@ -58,8 +57,6 @@
             var includeFullDetails = container.Resolve<ISettingsService>().GetIncludeFullDetails();
             configuration.IncludeErrorDetailPolicy = 
                 includeFullDetails ? IncludeErrorDetailPolicy.Always : IncludeErrorDetailPolicy.Never;
-
-            configuration.Services.Add(typeof(IExceptionLogger), new DefaultExceptionLogger(null));
 
             var cors = new EnableCorsAttribute("*", "*", "*");
             configuration.EnableCors(cors);
