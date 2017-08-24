@@ -116,9 +116,11 @@
     <Compile Include="Helpers\AutoInjectBuilderCustomization.cs" />
     <Compile Include="Attributes\AutoMoqDataAttribute.cs" />
     <Compile Include="Models\ApiModel.cs" />
+    <Compile Include="Models\TestHttpResponseExceptionMapper.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserApiModel.cs" />
     <Compile Include="Models\UserDto.cs" />
+    <Compile Include="Tests\ApiEventHttpResponseMapperTests.cs" />
     <Compile Include="Tests\ClientTests\ClientResourceNotFoundTests.cs" />
     <Compile Include="Tests\ClientTests\ClientResourcePermissionTests.cs" />
     <Compile Include="Tests\ClientTests\ClientResourceValidationTests.cs" />
@@ -128,7 +130,10 @@
     <Compile Include="Tests\HttpFormatterTests.cs" />
     <Compile Include="Models\TestAutoResponseResult.cs" />
     <Compile Include="Tests\HttpResponseContentTests.cs" />
+    <Compile Include="Tests\HttpResponseExceptionMapperTests.cs" />
+    <Compile Include="Builders\HttpResponseMessageBuilder.cs" />
     <Compile Include="Tests\LoggerTests.cs" />
+    <Compile Include="Models\TestApiEventHttpResponseMapper.cs" />
     <Compile Include="Tests\WebApiActionResultTests.cs" />
     <Compile Include="Tests\WebApiExceptionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
