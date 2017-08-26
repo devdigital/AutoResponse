@@ -2,10 +2,8 @@
 {
     using System.Collections.Generic;
 
-    public class ErrorDetailsApiModel<TError>
-    {
-        public string Message { get; set; }
-
-        public IEnumerable<TError> Errors { get; set; }
+    public class ErrorDetailsApiModel : ErrorApiModel
+    {        
+        public IEnumerable<ValidationErrorApiModel> Errors { get; set; }
     }
 }

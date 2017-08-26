@@ -38,7 +38,7 @@
 
             if (apiEvent == null)
             {
-                apiEvent = new ServiceErrorApiEvent(context.Exception);
+                apiEvent = new UnhandledErrorApiEvent(context.Exception);
             }
              
             context.Result = new AutoResponseResult(context.Request, apiEvent);

@@ -11,8 +11,8 @@
         {            
         }
 
-        public ServiceErrorException(string code, Exception exception)
-            : base(new ServiceErrorApiEvent(code, exception))
+        public ServiceErrorException(string code, string message, Exception exception)
+            : base(new ServiceErrorApiEvent(code, message, exception))
         {            
         }
 
@@ -21,8 +21,8 @@
         {            
         }
 
-        public ServiceErrorException(Exception exception) 
-            : base(new ServiceErrorApiEvent(exception))
+        public ServiceErrorException(string message, Exception exception) 
+            : base(new ServiceErrorApiEvent(message, exception))
         {            
         }
     }

@@ -15,11 +15,16 @@ namespace AutoResponse.Core.ApiEvents
             this.Message = message;
         }
 
-        public ServiceErrorApiEvent(string code, Exception exception)
+        public ServiceErrorApiEvent(string code, string message, Exception exception)
         {
             if (string.IsNullOrWhiteSpace(code))
             {
                 throw new ArgumentNullException(nameof(code));
+            }
+
+            if (string.IsNullOrWhiteSpace(message))
+            {
+                throw new ArgumentNullException(nameof(message));
             }
 
             if (exception == null)
@@ -35,7 +40,7 @@ namespace AutoResponse.Core.ApiEvents
         {            
         }
 
-        public ServiceErrorApiEvent(Exception exception) : this("AR500", exception)
+        public ServiceErrorApiEvent(string message, Exception exception) : this("AR500", message, exception)
         {
         }
 
@@ -43,6 +48,6 @@ namespace AutoResponse.Core.ApiEvents
 
         public string Message { get; }
 
-        public Exception Exception { get; }        
+        public Exception Exception { get; }
     }
 }

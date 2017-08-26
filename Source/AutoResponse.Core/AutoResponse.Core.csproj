@@ -57,6 +57,7 @@
     <Compile Include="ApiEvents\IAutoResponseApiEvent.cs" />
     <Compile Include="ApiEvents\ServiceErrorApiEvent.cs" />
     <Compile Include="ApiEvents\UnauthenticatedApiEvent.cs" />
+    <Compile Include="ApiEvents\UnhandledErrorApiEvent.cs" />
     <Compile Include="Dtos\ResponseDto.cs" />
     <Compile Include="Dtos\ResponseWithExceptionDto.cs" />
     <Compile Include="Dtos\ResourceCreatedDto.cs" />
@@ -70,7 +71,6 @@
     <Compile Include="Exceptions\EntityPermissionException.cs" />
     <Compile Include="Exceptions\EntityPermissionException{TEntity}.cs" />
     <Compile Include="Exceptions\EntityValidationException.cs" />
-    <Compile Include="Formatters\AutoResponseApiEventCodeFormatter.cs" />
     <Compile Include="Formatters\IApiEventCodeFormatter.cs" />
     <Compile Include="Formatters\NullApiEventCodeFormatter.cs" />
     <Compile Include="Logging\IAutoResponseLogger.cs" />

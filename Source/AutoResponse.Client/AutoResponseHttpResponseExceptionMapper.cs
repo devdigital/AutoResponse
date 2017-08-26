@@ -20,8 +20,7 @@
         }
 
         protected override void ConfigureMappings(HttpResponseExceptionConfiguration configuration)
-        {   
-            // TODO: build entity fields from response fields
+        {
             configuration.AddMapping(
                 HttpStatusCode.Unauthorized,
                 (r, c) => new UnauthenticatedException(

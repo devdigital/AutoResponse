@@ -30,22 +30,40 @@
 
         protected override void ConfigureMappings(ExceptionHttpResponseConfiguration configuration)
         {
+            configuration.AddMapping<UnhandledErrorApiEvent>(
+                (c, e) =>
+                {
+                    if (this.contextResolver.IncludeFullDetails(c.Context))
+                    {
+                        return new ServiceErrorWithExceptionHttpResponse(
+                            c.Formatter.Message("A service error has occurred."),
+                            c.Formatter.Code(e.Code),
+                            c.Formatter.Message(e.Exception.GetType().FullName),
+                            c.Formatter.Message(e.Exception.Message),
+                            c.Formatter.Message(e.Exception.ToString()));
+                    }
+
+                    return new ServiceErrorHttpResponse(
+                        c.Formatter.Message("A service error has occurred."),
+                        c.Formatter.Code(e.Code));
+                });
+
             configuration.AddMapping<ServiceErrorApiEvent>(
                 (c, e) =>
                     {
                         if (this.contextResolver.IncludeFullDetails(c.Context))
                         {
-                            return
-                                new ServiceErrorWithExceptionHttpResponse(
-                                    c.Formatter.Message("A service error has occurred"),
-                                    c.Formatter.Code(e.Code),
-                                    c.Formatter.Message(e.Exception.Message),
-                                    c.Formatter.Message(e.Exception.ToString()));                            
+                            return new ServiceErrorWithExceptionHttpResponse(
+                                c.Formatter.Message(e.Message),
+                                c.Formatter.Code(e.Code),
+                                c.Formatter.Message(e.Exception.GetType().FullName),
+                                c.Formatter.Message(e.Exception.Message),
+                                c.Formatter.Message(e.Exception.ToString()));                       
                         }
 
                         return new ServiceErrorHttpResponse(
-                                c.Formatter.Message("A service error has occurred"),
-                                c.Formatter.Code(e.Code));
+                            c.Formatter.Message(e.Message),
+                            c.Formatter.Code(e.Code));
                     });
 
             configuration.AddMapping<UnauthenticatedApiEvent>(
@@ -114,7 +132,6 @@
                 ? $"The user with identifier '{apiEvent.UserId}', created a {resource} resource"
                 : $"The user with identifier '{apiEvent.UserId}', created a {resource} resource with resource identifier '{configuration.Formatter.Field(apiEvent.EntityId)}'";
 
-            // TODO: entityId is optional in the api event, but the response will always include id
             return new ResourceCreatedHttpResponse(
                 configuration.Formatter.Message(message),
                 configuration.Formatter.Code(apiEvent.Code),

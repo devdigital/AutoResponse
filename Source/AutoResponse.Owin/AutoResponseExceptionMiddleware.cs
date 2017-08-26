@@ -1,4 +1,6 @@
-﻿namespace AutoResponse.Owin
+﻿using AutoResponse.Core.ApiEvents;
+
+namespace AutoResponse.Owin
 {
     using System;
     using System.Net;
@@ -61,7 +63,10 @@
                     return;
                 }
 
-                throw;
+                this.ConvertExceptionToHttpResponse(
+                    exception,
+                    new UnhandledErrorApiEvent(exception), 
+                    context);                
             }
         }
 

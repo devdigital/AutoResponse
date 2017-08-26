@@ -36,7 +36,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
             using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
             {
                 var response = await server.HttpClient.GetAsync("/");
-                var apiModel = response.As<ErrorDetailsApiModel<ValidationErrorApiModel>>();
+                var apiModel = response.As<ErrorDetailsApiModel>();
                 var error = apiModel.Errors.First();
                 Assert.Equal("user", error.Resource);
             }
@@ -56,7 +56,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
             using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
             {
                 var response = await server.HttpClient.GetAsync("/");
-                var apiModel = response.As<ErrorDetailsApiModel<ValidationErrorApiModel>>();
+                var apiModel = response.As<ErrorDetailsApiModel>();
                 var error = apiModel.Errors.First();
                 Assert.Equal("user-name", error.Field);
             }
@@ -77,7 +77,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
             using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
             {
                 var response = await server.HttpClient.GetAsync("/");
-                var apiModel = response.As<ErrorDetailsApiModel<ValidationErrorApiModel>>();
+                var apiModel = response.As<ErrorDetailsApiModel>();
                 var error = apiModel.Errors.First();
                 Assert.Equal("user", error.Resource);
             }
@@ -98,7 +98,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
             using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
             {
                 var response = await server.HttpClient.GetAsync("/");
-                var apiModel = response.As<ErrorDetailsApiModel<ValidationErrorApiModel>>();
+                var apiModel = response.As<ErrorDetailsApiModel>();
                 var error = apiModel.Errors.First();
                 Assert.Equal("user", error.Resource);
             }
@@ -119,7 +119,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
             using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
             {
                 var response = await server.HttpClient.GetAsync("/");
-                var apiModel = response.As<ErrorDetailsApiModel<ValidationErrorApiModel>>();
+                var apiModel = response.As<ErrorDetailsApiModel>();
                 var error = apiModel.Errors.First();
                 Assert.Equal("api-model", error.Resource);
             }
