@@ -4,11 +4,11 @@ namespace AutoResponse.Core.Responses
 
     using AutoResponse.Core.Dtos;
 
-    public class ResourceCreatedHttpResponse : JsonHttpResponse<ResourceCreatedDto>
+    public class ResourceCreatedHttpResponse : JsonHttpResponse<ResourceCreatedApiModel>
     {
         // TODO: location header
         public ResourceCreatedHttpResponse(string message, string code, string resourceId)
-            : base(new ResourceCreatedDto { Message = message, Code = code, Id = resourceId }, HttpStatusCode.Created)
+            : base(new ResourceCreatedApiModel { Message = message, Code = code, Id = resourceId }, HttpStatusCode.Created)
         {
         }
     }

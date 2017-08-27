@@ -1,11 +1,13 @@
+using AutoResponse.Core.Dtos;
+
 namespace AutoResponse.Core.Responses
 {
     using System.Net;
 
-    public class ServiceErrorHttpResponse : ErrorHttpResponse
+    public class ServiceErrorHttpResponse : JsonHttpResponse<ErrorApiModel>
     {
         public ServiceErrorHttpResponse(string message, string code)
-            : base(message, code, HttpStatusCode.InternalServerError)
+            : base(new ErrorApiModel { Message = message, Code = code }, HttpStatusCode.InternalServerError)
         {
         }        
     }

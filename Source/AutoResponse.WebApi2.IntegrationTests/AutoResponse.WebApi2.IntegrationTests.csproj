@@ -33,6 +33,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FluentAssertions, Version=4.19.3.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentAssertions.4.19.3\lib\net45\FluentAssertions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FluentAssertions.Core, Version=4.19.3.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentAssertions.4.19.3\lib\net45\FluentAssertions.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
       <Private>True</Private>
@@ -109,16 +117,27 @@
     <Compile Include="Attributes\AutoMoqDataAttribute.cs" />
     <Compile Include="Helpers\TestSettingsService.cs" />
     <Compile Include="Models\ApiModel.cs" />
+    <Compile Include="Models\TestHttpResponseExceptionMapper.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserApiModel.cs" />
     <Compile Include="Models\UserDto.cs" />
-    <Compile Include="Tests\ClientTests.cs" />
+    <Compile Include="Tests\ApiEventHttpResponseMapperTests.cs" />
+    <Compile Include="Tests\ClientTests\ClientResourceNotFoundTests.cs" />
+    <Compile Include="Tests\ClientTests\ClientResourcePermissionTests.cs" />
+    <Compile Include="Tests\ClientTests\ClientResourceValidationTests.cs" />
+    <Compile Include="Tests\ClientTests\ClientServiceErrorTests.cs" />
+    <Compile Include="Tests\ClientTests\ClientUnauthenticatedTests.cs" />
+    <Compile Include="Tests\ClientTests\ClientUnhandledErrorTests.cs" />
     <Compile Include="Tests\DomainExceptionTests.cs" />
     <Compile Include="Tests\HttpFormatterTests.cs" />
     <Compile Include="Models\TestAutoResponseResult.cs" />
+    <Compile Include="Tests\HttpResponseContentTests.cs" />
+    <Compile Include="Tests\HttpResponseExceptionMapperTests.cs" />
+    <Compile Include="Builders\HttpResponseMessageBuilder.cs" />
     <Compile Include="Tests\LoggerTests.cs" />
     <Compile Include="Tests\ServiceErrorTests.cs" />
     <Compile Include="Tests\UnhandledExceptionTests.cs" />
+    <Compile Include="Models\TestApiEventHttpResponseMapper.cs" />
     <Compile Include="Tests\WebApiActionResultTests.cs" />
     <Compile Include="Tests\WebApiExceptionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -136,7 +155,7 @@
       <Name>AutoResponse.Client</Name>
     </ProjectReference>
     <ProjectReference Include="..\AutoResponse.Core\AutoResponse.Core.csproj">
-      <Project>{E6AF0AC3-119C-43B3-8BFE-AAD23A37365D}</Project>
+      <Project>{e6af0ac3-119c-43b3-8bfe-aad23a37365d}</Project>
       <Name>AutoResponse.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\AutoResponse.Sample.Domain\AutoResponse.Sample.Domain.csproj">
@@ -152,6 +171,7 @@
       <Name>AutoResponse.WebApi2</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

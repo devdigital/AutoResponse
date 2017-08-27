@@ -24,6 +24,8 @@ namespace AutoResponse.Client
                 () => response.Content.ReadAsStringAsync().Result);
         }
 
+        private readonly Lazy<JObject> json;
+
         public ResponseContent(HttpResponseMessage response, string responseContent)
         {
             if (response == null)
@@ -32,8 +34,14 @@ namespace AutoResponse.Client
             }
 
             this.Response = response;
+
             this.responseContent = new Lazy<string>(
                 () => responseContent);
+
+            this.json = new Lazy<JObject>(
+                () => string.IsNullOrWhiteSpace(responseContent) 
+                    ? null 
+                    : JObject.Parse(this.responseContent.Value));
         }
 
         public HttpResponseMessage Response { get; }
@@ -76,11 +84,10 @@ namespace AutoResponse.Client
 
             try
             {
-                var jobject = JObject.Parse(content);
-                var token = jobject?.Property(propertyName)?.Value;
+                var token = this.json?.Value?.Property(propertyName)?.Value;
                 return token == null
-                    ? default(TProperty) 
-                    : token.Value<TProperty>();
+                    ? default(TProperty)
+                    : token.ToObject<TProperty>();
             }
             catch (Exception)
             {

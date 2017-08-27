@@ -10,18 +10,18 @@ namespace AutoResponse.Core.Extensions
 
     internal static class ValidationErrorDetailsExtensions
     {
-        public static ValidationResponseDetailsDto ToDto(this ValidationErrorDetails validationErrorDetails, string code)
+        public static ResourceValidationApiModel ToDto(this ValidationErrorDetails validationErrorDetails, string code)
         {
             if (validationErrorDetails == null)
             {
                 throw new ArgumentNullException(nameof(validationErrorDetails));
             }
 
-            return new ValidationResponseDetailsDto
+            return new ResourceValidationApiModel
             {
                 Message = validationErrorDetails.Message,
                 Code = code,
-                Errors = validationErrorDetails.Errors.Select(e => new ValidationErrorDto
+                Errors = validationErrorDetails.Errors.Select(e => new ResourceValidationErrorApiModel
                 {
                     Message = e.Message,
                     Resource = e.Resource,

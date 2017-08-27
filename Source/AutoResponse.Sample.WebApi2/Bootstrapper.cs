@@ -12,6 +12,7 @@
     using Autofac.Features.ResolveAnything;
     using Autofac.Integration.WebApi;
 
+    using AutoResponse.Core.Formatters;
     using AutoResponse.Core.Logging;
     using AutoResponse.Core.Mappers;
     using AutoResponse.Sample.Data.Repositories;
@@ -19,8 +20,7 @@
     using AutoResponse.Sample.Domain.Services;
     using AutoResponse.Sample.WebApi2.Factories;
     using AutoResponse.WebApi2.ExceptionHandling;
-    using AutoResponse.WebApi2.Logging;
-
+    
     using global::Owin;
 
     using Newtonsoft.Json.Serialization;
@@ -58,15 +58,15 @@
             configuration.IncludeErrorDetailPolicy = 
                 includeFullDetails ? IncludeErrorDetailPolicy.Always : IncludeErrorDetailPolicy.Never;
 
-            configuration.Services.Add(typeof(IExceptionLogger), new DefaultExceptionLogger(null));
-
             var cors = new EnableCorsAttribute("*", "*", "*");
             configuration.EnableCors(cors);
 
             this.app.UseAutoResponse(new AutoResponseOptions
             {
                 Logger = GetService<IAutoResponseLogger>(configuration),
-                EventHttpResponseMapper = new SampleHttpResponseMapper(new OwinContextResolver())
+                EventHttpResponseMapper = new SampleHttpResponseMapper(
+                    new OwinContextResolver(), 
+                    GetService<IAutoResponseExceptionFormatter>(configuration))
             });
 
             // Allow easier testing of responses via browser
@@ -137,7 +137,8 @@
             builder.RegisterType<DefaultValuesRepository>().As<IValuesRepository>();
             builder.RegisterType<OkActionResultFactory>().As<IHttpActionResultFactory>();
 
-            builder.RegisterType<NullAutoResponseLogger>().As<IAutoResponseLogger>();            
+            builder.RegisterType<NullAutoResponseLogger>().As<IAutoResponseLogger>();
+            builder.RegisterType<AutoResponseExceptionFormatter>().As<IAutoResponseExceptionFormatter>();
             builder.RegisterType<SampleHttpResponseMapper>().As<IApiEventHttpResponseMapper>();
             builder.RegisterType<WebApiContextResolver>().As<IContextResolver>();
       

@@ -4,13 +4,13 @@ namespace AutoResponse.Core.Exceptions
 {
     using System;
 
-    public class AutoResponseException : Exception
+    public abstract class AutoResponseException : Exception
     {
-        public AutoResponseException(string message, IAutoResponseApiEvent apiEvent) : base(message)
+        protected AutoResponseException(string message, IAutoResponseApiEvent apiEvent) : base(message)
         {
             if (string.IsNullOrWhiteSpace(message))
             {
-                
+
                 throw new ArgumentNullException(nameof(message));
             }
 
@@ -19,9 +19,9 @@ namespace AutoResponse.Core.Exceptions
                 throw new ArgumentNullException(nameof(apiEvent));
             }
 
-            this.Event = apiEvent;
+            this.EventObject = apiEvent;
         }
 
-        public IAutoResponseApiEvent Event { get; }
+        public object EventObject { get; }
     }
 }

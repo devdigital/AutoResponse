@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.5.0"></a>
+# [0.5.0](https://github.com/devdigital/AutoResponse/compare/v0.4.3...v0.5.0) (2017-08-24)
+
+
+### Bug Fixes
+
+* **remove-logging:** removed unused logging ([3bc0da5](https://github.com/devdigital/AutoResponse/commit/3bc0da5))
+
+
+### Features
+
+* **structured-mapping:** adds structured data to responses ([0368330](https://github.com/devdigital/AutoResponse/commit/0368330))
+
+
+
 <a name="0.4.3"></a>
 ## [0.4.3](https://github.com/devdigital/AutoResponse/compare/v0.4.2...v0.4.3) (2017-08-16)
 

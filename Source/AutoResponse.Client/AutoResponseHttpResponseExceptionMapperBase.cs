@@ -11,11 +11,11 @@
     public abstract class AutoResponseHttpResponseExceptionMapperBase 
         : IHttpResponseExceptionMapper
     {
-        private readonly IExceptionHttpResponseFormatter formatter;
+        private readonly IAutoResponseHttpResponseFormatter formatter;
 
         private readonly Lazy<IDictionary<ErrorRegistration, Func<ResponseContent, HttpResponseExceptionContext, Exception>>> mappers;
 
-        protected AutoResponseHttpResponseExceptionMapperBase(IExceptionHttpResponseFormatter formatter)
+        protected AutoResponseHttpResponseExceptionMapperBase(IAutoResponseHttpResponseFormatter formatter)
         {
             if (formatter == null)
             {
@@ -33,7 +33,8 @@
             });
         }
 
-        protected abstract void ConfigureMappings(HttpResponseExceptionConfiguration configuration);        
+        protected abstract void ConfigureMappings(
+            HttpResponseExceptionConfiguration configuration);
 
         public Task<bool> IsErrorResponse(HttpResponseMessage response)
         {
@@ -47,35 +48,51 @@
 
         public async Task<Exception> GetException(HttpResponseMessage response)
         {
+            if (response == null)
+            {
+                throw new ArgumentNullException(nameof(response));
+            }
+
             var statusCode = response.StatusCode;
-            var responseContent = await response.Content.ReadAsStringAsync();
-            string errorCode;
+            string errorCode = null;
+            string responseContent = null;
 
-            try
+            if (response.Content != null)
             {
-                var jobject = JObject.Parse(responseContent);
-                errorCode = jobject?.Property("code")?.Value?.Value<string>();
-            }
-            catch (Exception)
-            {
-                errorCode = null;
-            }
+                responseContent = await response.Content.ReadAsStringAsync();
 
-            // Search for both response code and error code match first
-            var exactRegistration = new ErrorRegistration(statusCode, errorCode);            
-            if (this.mappers.Value.ContainsKey(exactRegistration))
-            {
-                var mapper = this.mappers.Value[exactRegistration];
-                if (mapper == null)
+                if (!string.IsNullOrWhiteSpace(responseContent))
                 {
-                    return await this.GetDefaultException(
+                    try
+                    {
+                        var jobject = JObject.Parse(responseContent);
+                        errorCode = jobject?.Property("code")?.Value?.Value<string>();
+                    }
+                    catch (Exception)
+                    {
+                        errorCode = null;
+                    }
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(errorCode))
+            {
+                // Search for both response code and error code match first
+                var exactRegistration = new ErrorRegistration(statusCode, errorCode);
+                if (this.mappers.Value.ContainsKey(exactRegistration))
+                {
+                    var mapper = this.mappers.Value[exactRegistration];
+                    if (mapper == null)
+                    {
+                        return await this.GetDefaultException(
+                            new ResponseContent(response, responseContent),
+                            new HttpResponseExceptionContext(this.formatter));
+                    }
+
+                    return mapper.Invoke(
                         new ResponseContent(response, responseContent),
                         new HttpResponseExceptionContext(this.formatter));
                 }
-
-                return mapper.Invoke(
-                    new ResponseContent(response, responseContent),
-                    new HttpResponseExceptionContext(this.formatter));
             }
 
             // If no status code, error code match, then look for status code, null error code                       

@@ -30,7 +30,7 @@
             this.apiEvent = apiEvent;
         }
 
-        public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
+        public async Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
         {
             var mapper = this.GetMapper();
             if (mapper == null)
@@ -38,7 +38,7 @@
                 throw new InvalidOperationException($"No {typeof(IApiEventHttpResponseMapper).Name} registered in dependency resolver");
             }
 
-            var httpResponse = mapper.GetHttpResponse(this.request, this.apiEvent);
+            var httpResponse = await mapper.GetHttpResponse(this.request, this.apiEvent);
             if (httpResponse == null)
             {
                 return null;
@@ -56,7 +56,7 @@
                 httpResponse.Encoding,
                 httpResponse.ContentType);
 
-            return Task.FromResult(response);
+            return response;
         }
 
         protected virtual IApiEventHttpResponseMapper GetMapper()

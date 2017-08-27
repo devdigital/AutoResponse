@@ -19,10 +19,13 @@ namespace AutoResponse.Owin
 
         private readonly IAutoResponseLogger logger;
 
+        private readonly string domainResultPropertyName;
+
         public AutoResponseExceptionMiddleware(
             OwinMiddleware next, 
             IApiEventHttpResponseMapper mapper,
-            IAutoResponseLogger logger)
+            IAutoResponseLogger logger,
+            string domainResultPropertyName)
             : base(next)
         {
             if (mapper == null)
@@ -35,8 +38,14 @@ namespace AutoResponse.Owin
                 throw new ArgumentNullException(nameof(logger));
             }
 
+            if (string.IsNullOrWhiteSpace(domainResultPropertyName))
+            {
+                throw new ArgumentNullException(nameof(domainResultPropertyName));
+            }
+
             this.mapper = mapper;
             this.logger = logger;
+            this.domainResultPropertyName = domainResultPropertyName;
         }
 
         public override async Task Invoke(IOwinContext context)
@@ -48,31 +57,34 @@ namespace AutoResponse.Owin
             catch (AutoResponseException exception)
             {
                 await this.logger.LogException(exception);
-                this.ConvertExceptionToHttpResponse(exception, exception.Event, context);
+                await this.ConvertExceptionToHttpResponse(exception, exception.EventObject, context);
             }
             catch (Exception exception)
             {
                 await this.logger.LogException(exception);
 
                 var exceptionEvent = 
-                    exception.GetType().GetProperty("Event")?.GetValue(exception, null);
+                    exception.GetType().GetProperty(this.domainResultPropertyName)?.GetValue(exception, null);
 
                 if (exceptionEvent != null)
                 {
-                    this.ConvertExceptionToHttpResponse(exception, exceptionEvent, context);
+                    await this.ConvertExceptionToHttpResponse(exception, exceptionEvent, context);
                     return;
                 }
 
-                this.ConvertExceptionToHttpResponse(
+                await this.ConvertExceptionToHttpResponse(
                     exception,
                     new UnhandledErrorApiEvent(exception), 
                     context);                
             }
         }
 
-        private void ConvertExceptionToHttpResponse(Exception exception, object apiEvent, IOwinContext context)
+        private async Task ConvertExceptionToHttpResponse(Exception exception, object apiEvent, IOwinContext context)
         {
-            var httpResponse = this.mapper.GetHttpResponse(context: null, apiEvent: apiEvent); 
+            var httpResponse = await this.mapper.GetHttpResponse(
+                context: null,
+                apiEvent: apiEvent);
+            
             if (httpResponse == null)
             {
                 throw exception;

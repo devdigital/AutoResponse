@@ -5,7 +5,7 @@ namespace AutoResponse.Core.Responses
 
     using AutoResponse.Core.Dtos;
 
-    public class ServiceErrorWithExceptionHttpResponse : JsonHttpResponse<ResponseWithExceptionDto>
+    public class ServiceErrorWithExceptionHttpResponse : JsonHttpResponse<ErrorWithExceptionApiModel>
     {
         public ServiceErrorWithExceptionHttpResponse(string message, string code, string exceptionType, string exceptionMessage, string exceptionString)
             : base(ToErrorWithException(message, code, exceptionType, exceptionMessage, exceptionString), 
@@ -13,7 +13,7 @@ namespace AutoResponse.Core.Responses
         {
         }
 
-        private static ResponseWithExceptionDto ToErrorWithException(
+        private static ErrorWithExceptionApiModel ToErrorWithException(
             string message,
             string code,
             string exceptionType,
@@ -40,7 +40,7 @@ namespace AutoResponse.Core.Responses
                 throw new ArgumentNullException(nameof(exceptionString));
             }
 
-            return new ResponseWithExceptionDto
+            return new ErrorWithExceptionApiModel
             {
                 Message = message,
                 Code = code,

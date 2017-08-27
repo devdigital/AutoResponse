@@ -2,7 +2,7 @@
 {
     using AutoResponse.Core.ApiEvents;
 
-    public class UnauthenticatedException : AutoResponseException
+    public class UnauthenticatedException : AutoResponseException<UnauthenticatedApiEvent>
     {
         public UnauthenticatedException(string code, string message)
             : base(message, new UnauthenticatedApiEvent(code, message))

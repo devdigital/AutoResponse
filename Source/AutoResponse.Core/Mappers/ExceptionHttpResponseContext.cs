@@ -6,7 +6,7 @@
 
     public class ExceptionHttpResponseContext
     {
-        public ExceptionHttpResponseContext(object context, IHttpResponseExceptionFormatter formatter)
+        public ExceptionHttpResponseContext(object context, IAutoResponseExceptionFormatter formatter)
         {
             if (formatter == null)
             {
@@ -19,6 +19,6 @@
 
         public object Context { get; }
 
-        public IHttpResponseExceptionFormatter Formatter { get; }
+        public IAutoResponseExceptionFormatter Formatter { get; }
     }
 }

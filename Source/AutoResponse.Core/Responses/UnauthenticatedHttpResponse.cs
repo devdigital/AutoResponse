@@ -1,11 +1,13 @@
+using AutoResponse.Core.Dtos;
+
 namespace AutoResponse.Core.Responses
 {
     using System.Net;
 
-    public class UnauthenticatedHttpResponse : ErrorHttpResponse
+    public class UnauthenticatedHttpResponse : JsonHttpResponse<ErrorApiModel>
     {
         public UnauthenticatedHttpResponse(string message, string code)
-            : base(message, code, HttpStatusCode.Unauthorized)
+            : base(new ErrorApiModel { Message = message, Code =  code }, HttpStatusCode.Unauthorized)
         {
         }
     }

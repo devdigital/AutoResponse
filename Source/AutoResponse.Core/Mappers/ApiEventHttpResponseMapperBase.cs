@@ -1,4 +1,6 @@
-﻿namespace AutoResponse.Core.Mappers
+﻿using System.Threading.Tasks;
+
+namespace AutoResponse.Core.Mappers
 {
     using System;
     using System.Collections.Generic;
@@ -8,11 +10,11 @@
 
     public abstract class ApiEventHttpResponseMapperBase : IApiEventHttpResponseMapper
     {
-        private readonly IHttpResponseExceptionFormatter formatter;
+        private readonly IAutoResponseExceptionFormatter formatter;
 
         private readonly Lazy<IDictionary<Type, Func<ExceptionHttpResponseContext, object, IHttpResponse>>> mappers;        
 
-        protected ApiEventHttpResponseMapperBase(IHttpResponseExceptionFormatter formatter)
+        protected ApiEventHttpResponseMapperBase(IAutoResponseExceptionFormatter formatter)
         {
             if (formatter == null)
             {
@@ -31,7 +33,7 @@
 
         protected abstract void ConfigureMappings(ExceptionHttpResponseConfiguration configuration);
 
-        public IHttpResponse GetHttpResponse(object context, object apiEvent)
+        public Task<IHttpResponse> GetHttpResponse(object context, object apiEvent)
         {
             if (apiEvent == null)
             {
@@ -46,14 +48,15 @@
 
             if (!this.mappers.Value.ContainsKey(apiEventType))
             {
-                return null;
+                return Task.FromResult<IHttpResponse>(null);
             }
 
             var mapper = this.mappers.Value[apiEventType];
-
-            return mapper?.Invoke(
+            var httpResponse = mapper?.Invoke(
                 new ExceptionHttpResponseContext(context, this.formatter), 
                 apiEvent);
+
+            return Task.FromResult(httpResponse);
         }
     }
 }

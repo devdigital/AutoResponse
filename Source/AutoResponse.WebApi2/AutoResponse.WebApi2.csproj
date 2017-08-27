@@ -62,21 +62,6 @@
     <Compile Include="Extensions\ModelStateExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
-    <Compile Include="Instrumentation\CallLoggingCompleteEvent.cs" />
-    <Compile Include="Instrumentation\CallLoggingStartingEvent.cs" />
-    <Compile Include="Instrumentation\IHaveStructuredLog.cs" />
-    <Compile Include="Instrumentation\StructuredMessage.cs" />
-    <Compile Include="Logging\DefaultExceptionLogger.cs" />
-    <Compile Include="Logging\IEventLogger.cs" />
-    <Compile Include="Logging\IEventLoggerFactory.cs" />
-    <Compile Include="Logging\ILogger.cs" />
-    <Compile Include="Logging\ILoggerFactory.cs" />
-    <Compile Include="Logging\LoggerConfigurationExtensions.cs" />
-    <Compile Include="Logging\LoggingSettings.cs" />
-    <Compile Include="Logging\NullEventLogger.cs" />
-    <Compile Include="Logging\NullEventLoggerFactory.cs" />
-    <Compile Include="Logging\NullLogger.cs" />
-    <Compile Include="Logging\NullLoggerFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Results\AutoResponseResult.cs" />
     <Compile Include="Results\UnauthenticatedResult.cs" />
@@ -97,7 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AutoResponse.Core\AutoResponse.Core.csproj">
-      <Project>{E6AF0AC3-119C-43B3-8BFE-AAD23A37365D}</Project>
+      <Project>{e6af0ac3-119c-43b3-8bfe-aad23a37365d}</Project>
       <Name>AutoResponse.Core</Name>
     </ProjectReference>
   </ItemGroup>

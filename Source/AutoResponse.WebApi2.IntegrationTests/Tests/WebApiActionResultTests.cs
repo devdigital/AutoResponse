@@ -3,15 +3,12 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
     using System.Net;
     using System.Net.Http;
     using System.Threading.Tasks;
-    using System.Web.Http;
 
     using AutoResponse.Core.ApiEvents;
-    using AutoResponse.Core.Models;
     using AutoResponse.Sample.WebApi2.Factories;
     using AutoResponse.WebApi2.IntegrationTests.Attributes;
     using AutoResponse.WebApi2.IntegrationTests.Helpers;
     using AutoResponse.WebApi2.IntegrationTests.Models;
-    using AutoResponse.WebApi2.Results;
 
     using Moq;
 

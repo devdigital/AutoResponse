@@ -24,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -132,7 +133,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="DefaultExceptionLogger.cs" />
     <Compile Include="Factories\IHttpActionResultFactory.cs" />
     <Compile Include="Factories\OkActionResultFactory.cs" />
     <Compile Include="Models\ValueApiModel.cs" />
@@ -144,7 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AutoResponse.Core\AutoResponse.Core.csproj">
-      <Project>{E6AF0AC3-119C-43B3-8BFE-AAD23A37365D}</Project>
+      <Project>{e6af0ac3-119c-43b3-8bfe-aad23a37365d}</Project>
       <Name>AutoResponse.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\AutoResponse.Owin\AutoResponse.Owin.csproj">

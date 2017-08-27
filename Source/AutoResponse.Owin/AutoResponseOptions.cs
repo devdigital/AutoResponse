@@ -8,5 +8,7 @@ namespace AutoResponse.Owin
         public IApiEventHttpResponseMapper EventHttpResponseMapper { get; set; }
 
         public IAutoResponseLogger Logger { get; set; }
+
+        public string DomainResultPropertyName { get; set; }
     }
 }

@@ -3,7 +3,7 @@
     using AutoResponse.Core.ApiEvents;
 
     public class EntityCreatePermissionException 
-        : AutoResponseException
+        : AutoResponseException<EntityCreatePermissionApiEvent>
     {
         public EntityCreatePermissionException(string code, string userId, string entityType, string entityId)
             : base($"The user {userId} does not have permmission to create entity type {entityType} with entity id {entityId}", new EntityCreatePermissionApiEvent(code, userId, entityType, entityId))
