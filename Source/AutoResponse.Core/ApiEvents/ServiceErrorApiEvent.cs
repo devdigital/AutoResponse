@@ -33,6 +33,7 @@ namespace AutoResponse.Core.ApiEvents
             }
 
             this.Code = code;
+            this.Message = message;
             this.Exception = exception;
         }
 

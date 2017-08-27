@@ -1,4 +1,6 @@
-﻿namespace AutoResponse.Core.Exceptions
+﻿using System.Linq;
+
+namespace AutoResponse.Core.Exceptions
 {
     using System.Collections.Generic;
 
@@ -8,13 +10,22 @@
     public class EntityNotFoundQueryException : AutoResponseException
     {
         public EntityNotFoundQueryException(string code, string entityType, IEnumerable<QueryParameter> parameters)
-            : base(new EntityNotFoundQueryApiEvent(code, entityType, parameters))
+            : base(ToMessage(entityType, parameters), new EntityNotFoundQueryApiEvent(code, entityType, parameters))
+        {            
+        }        
+
+        public EntityNotFoundQueryException(string entityType, IEnumerable<QueryParameter> parameters)
+            : base(ToMessage(entityType, parameters), new EntityNotFoundQueryApiEvent(entityType, parameters))
         {            
         }
 
-        public EntityNotFoundQueryException(string entityType, IEnumerable<QueryParameter> parameters)
-            : base(new EntityNotFoundQueryApiEvent(entityType, parameters))
-        {            
-        }        
+        private static string ToMessage(string entityType, IEnumerable<QueryParameter> parameters)
+        {
+            var keyValuePairs = parameters.Select(p => string.IsNullOrWhiteSpace(p.Value) 
+                ? p.Key 
+                : $"{p.Key} = {p.Value}");
+
+            return $"The entity {entityType} was not found with parameters {string.Join(",", keyValuePairs)}";
+        }
     }
 }

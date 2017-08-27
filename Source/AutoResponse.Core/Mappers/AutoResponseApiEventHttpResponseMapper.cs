@@ -53,6 +53,13 @@
                     {
                         if (this.contextResolver.IncludeFullDetails(c.Context))
                         {
+                            if (e.Exception == null)
+                            {
+                                return new ServiceErrorHttpResponse(
+                                    c.Formatter.Message(e.Message),
+                                    c.Formatter.Code(e.Code));
+                            }
+
                             return new ServiceErrorWithExceptionHttpResponse(
                                 c.Formatter.Message(e.Message),
                                 c.Formatter.Code(e.Code),

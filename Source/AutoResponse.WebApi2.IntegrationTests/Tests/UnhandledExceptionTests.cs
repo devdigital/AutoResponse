@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AutoResponse.Client;
 using AutoResponse.Client.Models;
-using AutoResponse.Core.Exceptions;
 using AutoResponse.Sample.Domain.Repositories;
 using AutoResponse.Sample.Domain.Services;
 using AutoResponse.WebApi2.IntegrationTests.Helpers;
@@ -17,7 +15,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
     {
         [Theory]
         [AutoData]
-        public async Task UnhandledExceptionDoesNotExposeMessage(
+        public async Task DoesNotExposeMessage(
             SampleServerFactory serverFactory,
             Mock<IExceptionService> exceptionService,
             NotImplementedException exception)
@@ -33,7 +31,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
 
         [Theory]
         [AutoData]
-        public async Task UnhandledExceptionWithIncludeDetailsIncludesExceptionMessage(
+        public async Task WithIncludeDetailsIncludesExceptionMessage(
             SampleServerFactory serverFactory,
             Mock<IValuesRepository> valuesRepository,
             NotImplementedException exception,
@@ -55,7 +53,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
 
         [Theory]
         [AutoData]
-        public async Task UnhandledExceptionWithoutIncludeDetailsDoesNotIncludeExceptionMessage(
+        public async Task WithoutIncludeDetailsDoesNotIncludeExceptionMessage(
             SampleServerFactory serverFactory,
             Mock<IValuesRepository> valuesRepository,
             NotImplementedException exception,
@@ -76,7 +74,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
 
         [Theory]
         [AutoData]
-        public async Task UnhandledExceptionWithIncludeDetailsIncludesExceptionType(
+        public async Task WithIncludeDetailsIncludesExceptionType(
             SampleServerFactory serverFactory,
             Mock<IValuesRepository> valuesRepository,
             NotImplementedException exception,
@@ -98,7 +96,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
 
         [Theory]
         [AutoData]
-        public async Task UnhandledExceptionWithoutIncludeDetailsDoesNotIncludeExceptionType(
+        public async Task WithoutIncludeDetailsDoesNotIncludeExceptionType(
             SampleServerFactory serverFactory,
             Mock<IValuesRepository> valuesRepository,
             NotImplementedException exception,
@@ -119,7 +117,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
 
         [Theory]
         [AutoData]
-        public async Task UnhandledExceptionWithIncludeDetailsIncludesExceptionString(
+        public async Task WithIncludeDetailsIncludesExceptionString(
             SampleServerFactory serverFactory,
             Mock<IValuesRepository> valuesRepository,
             NotImplementedException exception,
@@ -141,7 +139,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
 
         [Theory]
         [AutoData]
-        public async Task UnhandledExceptionWithoutIncludeDetailsDoesNotIncludeExceptionString(
+        public async Task WithoutIncludeDetailsDoesNotIncludeExceptionString(
             SampleServerFactory serverFactory,
             Mock<IValuesRepository> valuesRepository,
             NotImplementedException exception,

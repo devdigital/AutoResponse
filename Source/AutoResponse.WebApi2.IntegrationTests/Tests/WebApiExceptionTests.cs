@@ -195,14 +195,12 @@
             SampleServerFactory serverFactory,
             Mock<IValuesRepository> valuesRepository,
             InvalidOperationException exception,
-            Mock<ISettingsService> settingsService,
             int entityId)
         {
-            settingsService.Setup(s => s.GetIncludeFullDetails()).Returns(true);
             valuesRepository.Setup(r => r.GetValue(It.IsAny<int>())).Throws(exception);
 
             using (var server = serverFactory
-                .With<ISettingsService>(settingsService.Object)
+                .WithIncludeFullDetails()
                 .With<IValuesRepository>(valuesRepository.Object)                
                 .Create())
             {
@@ -219,14 +217,11 @@
             SampleServerFactory serverFactory,
             Mock<IValuesRepository> valuesRepository,
             InvalidOperationException exception,
-            Mock<ISettingsService> settingsService,
             int entityId)
         {
-            settingsService.Setup(s => s.GetIncludeFullDetails()).Returns(false);
             valuesRepository.Setup(r => r.GetValue(It.IsAny<int>())).Throws(exception);
 
             using (var server = serverFactory
-                .With<ISettingsService>(settingsService.Object)
                 .With<IValuesRepository>(valuesRepository.Object)
                 .Create())
             {

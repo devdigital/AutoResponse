@@ -4,7 +4,7 @@
 
     public class DomainValidationException : Exception
     {
-        public DomainValidationException(string message)
+        public DomainValidationException(string message) : base(message)
         {
             this.Event = new DomainValidationApiEvent(message);
         }

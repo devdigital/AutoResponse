@@ -5,12 +5,12 @@
     public class EntityNotFoundException : AutoResponseException
     {
         public EntityNotFoundException(string code, string entityType, string entityId)
-            : base(new EntityNotFoundApiEvent(code, entityType, entityId))
+            : base($"The entity {entityType} was not found with entity id {entityId}", new EntityNotFoundApiEvent(code, entityType, entityId))
         {
         }        
 
         public EntityNotFoundException(string entityType, string entityId)
-            : base(new EntityNotFoundApiEvent(entityType, entityId))
+            : base($"The entity {entityType} was not found with entity id {entityId}", new EntityNotFoundApiEvent(entityType, entityId))
         {            
         }     
     }
