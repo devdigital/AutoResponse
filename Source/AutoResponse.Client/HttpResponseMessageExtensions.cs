@@ -6,12 +6,21 @@
 
     public static class HttpResponseMessageExtensions
     {
-        public static async Task HandleErrors(this HttpResponseMessage response, bool throwOnUnhandledResponses = true)
+        public static async Task HandleErrors(this HttpResponseMessage response)
         {
-            await HandleErrors(response, new AutoResponseHttpResponseExceptionMapper(), throwOnUnhandledResponses);
+            await HandleErrors(response, new AutoResponseHttpResponseExceptionMapper(), new NullUnhandledResponseHandler());
+        }
+        public static async Task HandleErrors(this HttpResponseMessage response, IUnhandledResponseHandler unhandledResponseHandler)
+        {
+            await HandleErrors(response, new AutoResponseHttpResponseExceptionMapper(), unhandledResponseHandler);
         }
 
-        public static async Task HandleErrors(this HttpResponseMessage response, IHttpResponseExceptionMapper mapper, bool throwOnUnhandledResponses = true)
+        public static async Task HandleErrors(this HttpResponseMessage response, IHttpResponseExceptionMapper mapper)
+        {
+            await HandleErrors(response, mapper, new NullUnhandledResponseHandler());
+        }
+
+        public static async Task HandleErrors(this HttpResponseMessage response, IHttpResponseExceptionMapper mapper, IUnhandledResponseHandler unhandledResponseHandler)
         {
             if (response == null)
             {
@@ -23,6 +32,11 @@
                 throw new ArgumentNullException(nameof(mapper));
             }
 
+            if (unhandledResponseHandler == null)
+            {
+                throw new ArgumentNullException(nameof(unhandledResponseHandler));
+            }
+
             var isErrorResponse = await mapper.IsErrorResponse(response);
             if (isErrorResponse)
             {
@@ -32,12 +46,8 @@
                     throw exception;
                 }
 
-                if (throwOnUnhandledResponses)
-                {
-                    // TODO: better exception information
-                    throw new Exception(
-                        $"There was an HTTP error with status code {response.StatusCode}");
-                } 
+                await unhandledResponseHandler.Handle(
+                    new ResponseContent(response));
             }
         }
     }

@@ -1,4 +1,6 @@
-﻿namespace AutoResponse.Client
+﻿using System.Threading.Tasks;
+
+namespace AutoResponse.Client
 {
     using System;
     using System.Net.Http;
@@ -8,7 +10,19 @@
 
     public class ResponseContent
     {
-        private readonly string content;
+        private readonly Lazy<string> responseContent;
+
+        public ResponseContent(HttpResponseMessage response)
+        {
+            if (response == null)
+            {
+                throw new ArgumentNullException(nameof(response));
+            }
+
+            this.Response = response;
+            this.responseContent = new Lazy<string>(
+                () => response.Content.ReadAsStringAsync().Result);
+        }
 
         public ResponseContent(HttpResponseMessage response, string responseContent)
         {
@@ -18,21 +32,23 @@
             }
 
             this.Response = response;
-            this.content = responseContent;
+            this.responseContent = new Lazy<string>(
+                () => responseContent);
         }
 
         public HttpResponseMessage Response { get; }
 
         public TData As<TData>() where TData : class
         {
-            if (string.IsNullOrWhiteSpace(this.content))
+            var content = this.responseContent.Value;
+            if (string.IsNullOrWhiteSpace(content))
             {
                 return default(TData);
             }
 
             try
             {
-                return JsonConvert.DeserializeObject<TData>(this.content);
+                return JsonConvert.DeserializeObject<TData>(content);
             }
             catch (Exception)
             {
@@ -52,21 +68,19 @@
                 throw new ArgumentNullException(propertyName);
             }
 
-            if (string.IsNullOrWhiteSpace(this.content))
+            var content = this.responseContent.Value;
+            if (string.IsNullOrWhiteSpace(content))
             {
                 return default(TProperty);
             }
 
             try
             {
-                var jobject = JObject.Parse(this.content);
+                var jobject = JObject.Parse(content);
                 var token = jobject?.Property(propertyName)?.Value;
-                if (token == null)
-                {
-                    return default(TProperty);
-                }
-
-                return token.Value<TProperty>();
+                return token == null
+                    ? default(TProperty) 
+                    : token.Value<TProperty>();
             }
             catch (Exception)
             {
@@ -76,7 +90,7 @@
 
         public string AsString()
         {
-            return this.content;
+            return this.responseContent.Value;
         }
     }
 }

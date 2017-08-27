@@ -55,7 +55,9 @@
     <Compile Include="ErrorRegistrationEqualityComparer.cs" />
     <Compile Include="HttpResponseExceptionContext.cs" />
     <Compile Include="IExceptionHttpResponseFormatter.cs" />
+    <Compile Include="IUnhandledResponseHandler.cs" />
     <Compile Include="Models\ErrorWithExceptionDetailsApiModel.cs" />
+    <Compile Include="NullUnhandledResponseHandler.cs" />
     <Compile Include="ResponseContent.cs" />
     <Compile Include="HttpResponseExceptionConfiguration.cs" />
     <Compile Include="HttpResponseMessageExtensions.cs" />

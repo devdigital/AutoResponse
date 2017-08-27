@@ -9,7 +9,6 @@
     using AutoResponse.Core.Models;
     using AutoResponse.Sample.Domain.Models;
     using AutoResponse.Sample.Domain.Repositories;
-    using AutoResponse.Sample.Domain.Services;
     using AutoResponse.WebApi2.IntegrationTests.Helpers;
 
     using Moq;
