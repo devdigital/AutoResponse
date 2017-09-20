@@ -85,7 +85,7 @@
 
             var message = $"The user with identifier '{apiEvent.UserId}', does not have permission to access the {resource} resource with identifier '{resourceId}'";
 
-            return new ResourcePermissionHttpResponse(
+            return new ResourceAccessPermissionHttpResponse(
                 message,
                 configuration.Formatter.Code(apiEvent.Code),
                 userId,

@@ -98,12 +98,13 @@
     <Compile Include="Models\ValidationError{TResource}.cs" />
     <Compile Include="Responses\ResourceCreatedHttpResponse.cs" />
     <Compile Include="Responses\ResourceNotFoundQueryHttpResponse.cs" />
+    <Compile Include="Responses\ResourcePermissionHttpResponse.cs" />
     <Compile Include="Responses\ServiceErrorWithExceptionHttpResponse.cs" />
     <Compile Include="Responses\UnauthenticatedHttpResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Responses\ResourceCreatePermissionHttpResponse.cs" />
     <Compile Include="Responses\ResourceNotFoundHttpResponse.cs" />
-    <Compile Include="Responses\ResourcePermissionHttpResponse.cs" />
+    <Compile Include="Responses\ResourceAccessPermissionHttpResponse.cs" />
     <Compile Include="Responses\ResourceValidationHttpResponse.cs" />
     <Compile Include="Dtos\ResourceValidationApiModel.cs" />
     <Compile Include="Dtos\ResourceValidationErrorApiModel.cs" />
