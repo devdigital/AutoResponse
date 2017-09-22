@@ -8,12 +8,12 @@
     public class EntityNotFoundQueryException : AutoResponseException<EntityNotFoundQueryApiEvent>
     {
         public EntityNotFoundQueryException(string code, string entityType, IEnumerable<QueryParameter> parameters)
-            : base(new EntityNotFoundQueryApiEvent(code, entityType, parameters))
+            : base($"The {entityType} entity with the provided parameters was not found.", new EntityNotFoundQueryApiEvent(code, entityType, parameters))
         {            
         }
 
         public EntityNotFoundQueryException(string entityType, IEnumerable<QueryParameter> parameters)
-            : base(new EntityNotFoundQueryApiEvent(entityType, parameters))
+            : base($"The {entityType} entity with the provided parameters was not found.", new EntityNotFoundQueryApiEvent(entityType, parameters))
         {            
         }        
     }

@@ -65,6 +65,7 @@
     <Compile Include="Dtos\ResourceNotFoundQueryApiModel.cs" />
     <Compile Include="Dtos\ResourcePermissionApiModel.cs" />
     <Compile Include="Exceptions\AutoResponseException.cs" />
+    <Compile Include="Exceptions\AutoResponseException{TEvent}.cs" />
     <Compile Include="Exceptions\EntityCreatePermissionException.cs" />
     <Compile Include="Exceptions\EntityCreatePermissionException{TEntity}.cs" />
     <Compile Include="Exceptions\EntityNotFoundException.cs" />

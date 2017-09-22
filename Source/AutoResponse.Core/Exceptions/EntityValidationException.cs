@@ -6,12 +6,12 @@
     public class EntityValidationException : AutoResponseException<EntityValidationApiEvent>
     {
         public EntityValidationException(string code, ValidationErrorDetails errorDetails)
-            : base(new EntityValidationApiEvent(code, errorDetails))
+            : base(errorDetails.Message, new EntityValidationApiEvent(code, errorDetails))
         {            
         }
 
         public EntityValidationException(ValidationErrorDetails errorDetails) 
-            : base(new EntityValidationApiEvent(errorDetails))
+            : base(errorDetails.Message, new EntityValidationApiEvent(errorDetails))
         {
         }
     }

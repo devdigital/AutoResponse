@@ -4,23 +4,14 @@
 
     public abstract class AutoResponseException : Exception
     {
-        public abstract object EventObject { get; }
-    }
-
-    public abstract class AutoResponseException<TEvent> : AutoResponseException
-    {
-        protected AutoResponseException(TEvent apiEvent)
+        protected AutoResponseException(string message) : base(message)
         {
-            if (apiEvent == null)
+            if (string.IsNullOrWhiteSpace(message))
             {
-                throw new ArgumentNullException(nameof(apiEvent));
+                throw new ArgumentNullException(nameof(message));
             }
-
-            this.Event = apiEvent;
         }
 
-        public TEvent Event { get; }
-
-        public override object EventObject => this.Event;
+        public abstract object EventObject { get; }
     }
 }

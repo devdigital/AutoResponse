@@ -5,12 +5,12 @@
     public class UnauthenticatedException : AutoResponseException<UnauthenticatedApiEvent>
     {
         public UnauthenticatedException(string code, string message)
-            : base(new UnauthenticatedApiEvent(code, message))
+            : base(message, new UnauthenticatedApiEvent(code, message))
         {            
         }
 
         public UnauthenticatedException(string message)
-            : base(new UnauthenticatedApiEvent(message))
+            : base(message, new UnauthenticatedApiEvent(message))
         {
         }
     }

@@ -7,22 +7,22 @@
     public class ServiceErrorException : AutoResponseException<ServiceErrorApiEvent>
     {
         public ServiceErrorException(string code, string message)
-            : base(new ServiceErrorApiEvent(code, message))
+            : base(message, new ServiceErrorApiEvent(code, message))
         {            
         }
 
         public ServiceErrorException(string code, Exception exception)
-            : base(new ServiceErrorApiEvent(code, exception))
+            : base(exception.Message, new ServiceErrorApiEvent(code, exception))
         {            
         }
 
         public ServiceErrorException(string message)
-            : base(new ServiceErrorApiEvent(message))
+            : base(message, new ServiceErrorApiEvent(message))
         {            
         }
 
         public ServiceErrorException(Exception exception) 
-            : base(new ServiceErrorApiEvent(exception))
+            : base(exception.Message, new ServiceErrorApiEvent(exception))
         {            
         }
     }

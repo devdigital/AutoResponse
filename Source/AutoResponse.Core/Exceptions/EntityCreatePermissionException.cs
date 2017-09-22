@@ -6,17 +6,17 @@
         : AutoResponseException<EntityCreatePermissionApiEvent>
     {
         public EntityCreatePermissionException(string code, string userId, string entityType, string entityId)
-            : base(new EntityCreatePermissionApiEvent(code, userId, entityType, entityId))
+            : base($"The user with identifier '{userId}', does not have permission to create a {entityType} entity.", new EntityCreatePermissionApiEvent(code, userId, entityType, entityId))
         {
         }
 
         public EntityCreatePermissionException(string userId, string entityType) :
-            base(new EntityCreatePermissionApiEvent(userId, entityType))
+            base($"The user with identifier '{userId}', does not have permission to create a {entityType} entity.", new EntityCreatePermissionApiEvent(userId, entityType))
         {            
         }
 
         public EntityCreatePermissionException(string userId, string entityType, string entityId)
-            : base(new EntityCreatePermissionApiEvent(userId, entityType, entityId))
+            : base($"The user with identifier '{userId}', does not have permission to create a {entityType} entity.", new EntityCreatePermissionApiEvent(userId, entityType, entityId))
         {
         }
     }
