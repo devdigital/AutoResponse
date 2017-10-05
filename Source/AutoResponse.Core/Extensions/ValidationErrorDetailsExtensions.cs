@@ -1,3 +1,5 @@
+using System.Net;
+
 namespace AutoResponse.Core.Extensions
 {
     using System;

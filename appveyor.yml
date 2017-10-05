@@ -1,30 +1,20 @@
 version: '{build}'
-platform: Any CPU
-configuration: Release
-init:
-  # For tagged releases, use tag name as version
-  - ps: >-
-      if ($env:APPVEYOR_REPO_TAG -eq "true")
-      {
-        $versionNumber = $($env:APPVEYOR_REPO_TAG_NAME.TrimStart("v"))
-        Write-Host "Setting build version to $versionNumber"
-        Update-AppveyorBuild -Version "$versionNumber"
-      }
 pull_requests:
   do_not_increment_build_number: true
-image: Visual Studio 2015
-install:
-  - appveyor DownloadFile https://dist.nuget.org/win-x86-commandline/v4.0.0/nuget.exe
-before_build:
-  - cd Source && nuget restore
+image: Visual Studio 2017
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
 build:
   publish_nuget: true
-assembly_info:
-  patch: true
-  file: AssemblyInfo.*
-  assembly_version: "{version}"
-  assembly_file_version: "{version}"
-  assembly_informational_version: "{version}"
+build_script:
+- ps: .\build.ps1
+test: off
+artifacts:
+- path: '**\artifacts\*.nupkg'
+  name: NuGet
 nuget:
   disable_publish_on_pr: true
 deploy:
