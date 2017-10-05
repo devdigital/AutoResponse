@@ -1,4 +1,5 @@
 ﻿using AutoResponse.AspNetCore;
+using AutoResponse.Core.Mappers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +20,9 @@ namespace AutoResponse.Sample.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddSingleton<IApiEventHttpResponseMapper>(new AutoResponseApiEventHttpResponseMapper(
+                new AspNetCoreContextResolver()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

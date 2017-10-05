@@ -20,12 +20,7 @@
             IContextResolver contextResolver,
             IAutoResponseExceptionFormatter formatter) : base(formatter)
         {
-            if (contextResolver == null)
-            {
-                throw new ArgumentNullException(nameof(contextResolver));
-            }
-
-            this.contextResolver = contextResolver;
+            this.contextResolver = contextResolver ?? throw new ArgumentNullException(nameof(contextResolver));
         }
 
         protected override void ConfigureMappings(ExceptionHttpResponseConfiguration configuration)

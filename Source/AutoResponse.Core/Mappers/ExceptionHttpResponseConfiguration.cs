@@ -10,13 +10,8 @@ namespace AutoResponse.Core.Mappers
         private readonly IDictionary<Type, Func<ExceptionHttpResponseContext, object, IHttpResponse>> mappings;
         
         public ExceptionHttpResponseConfiguration(IDictionary<Type, Func<ExceptionHttpResponseContext, object, IHttpResponse>> mappings)
-        {   
-            if (mappings == null)
-            {
-                throw new ArgumentNullException(nameof(mappings));
-            }
-
-            this.mappings = mappings;
+        {
+            this.mappings = mappings ?? throw new ArgumentNullException(nameof(mappings));
         }
 
         public void AddMapping<TApiEvent>(
