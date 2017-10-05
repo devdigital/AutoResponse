@@ -4,3 +4,5 @@ obj
 packages
 node_modules
 *.user
+/tools
+/artifacts
