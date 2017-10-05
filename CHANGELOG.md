@@ -10,13 +10,6 @@ All notable changes to this project will be documented in this file. See [standa
 
 * adds dotnetcore support ([b240300](https://github.com/devdigital/AutoResponse/commit/b240300))
 
-
-
-<a name="0.6.2"></a>
-## [0.6.2](https://github.com/devdigital/AutoResponse/compare/v0.6.1...v0.6.2) (2017-10-05)
-
-
-
 <a name="0.6.1"></a>
 ## [0.6.1](https://github.com/devdigital/AutoResponse/compare/v0.6.0...v0.6.1) (2017-09-22)
 
