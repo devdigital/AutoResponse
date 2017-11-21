@@ -12,6 +12,8 @@ var buildNumber = packageJson.Property("version").Value;
 
 var artifactsDirectory = Directory("./artifacts");
 
+var solution = "./Source/AutoResponse.sln";
+
 var net45Projects = new List<string>
 {
   "./Source/AutoResponse.Owin/AutoResponse.Owin.csproj",
@@ -34,6 +36,12 @@ Task("Clean")
 
 Task("Restore")
     .IsDependentOn("Clean")
+    .Does(() => {
+      NuGetRestore(solution);
+    });
+
+Task("RestoreCore")
+    .IsDependentOn("Restore")
     .Does(() =>
     {
         foreach(var project in netCoreProjects)
@@ -46,14 +54,10 @@ Task("Build")
     .IsDependentOn("Restore")
     .Does(() =>
     {
-        var solutions = GetFiles("**/*.sln");
-        foreach(var solution in solutions)
-        {
-            Information("Building solution " + solution);
-            DotNetBuild(
-                solution.ToString(),
-                settings => settings.SetConfiguration(configuration));
-        }
+      Information("Building solution " + solution);
+      DotNetBuild(
+          solution.ToString(),
+          settings => settings.SetConfiguration(configuration));
     });
 
 Task("Test")
