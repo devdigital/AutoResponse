@@ -1,4 +1,6 @@
-﻿namespace AutoResponse.WebApi2.IntegrationTests.Tests
+﻿using AutoFixture.Xunit2;
+
+namespace AutoResponse.WebApi2.IntegrationTests.Tests
 {
     using System;
     using System.Net;
@@ -9,8 +11,6 @@
     using AutoResponse.Core.Exceptions;
     using AutoResponse.WebApi2.IntegrationTests.Builders;
     using AutoResponse.WebApi2.IntegrationTests.Models;
-
-    using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
 

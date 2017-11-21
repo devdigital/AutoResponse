@@ -1,3 +1,5 @@
+using AutoFixture.Xunit2;
+
 namespace AutoResponse.WebApi2.IntegrationTests.Tests
 {
     using System.Linq;
@@ -14,8 +16,6 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
     using AutoResponse.WebApi2.IntegrationTests.Models;
 
     using Moq;
-
-    using Ploeh.AutoFixture.Xunit2;
 
     using WebApiTestServer;
 

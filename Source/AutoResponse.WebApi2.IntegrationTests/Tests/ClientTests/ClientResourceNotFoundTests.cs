@@ -1,3 +1,6 @@
+using AutoFixture.Xunit2;
+using AutoResponse.Client;
+
 namespace AutoResponse.WebApi2.IntegrationTests.Tests.ClientTests
 {
     using System.Threading.Tasks;
@@ -8,8 +11,6 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests.ClientTests
     using AutoResponse.WebApi2.IntegrationTests.Helpers;
 
     using Moq;
-
-    using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
 

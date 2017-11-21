@@ -1,3 +1,5 @@
+using AutoFixture.Xunit2;
+
 namespace AutoResponse.WebApi2.IntegrationTests.Tests.ClientTests
 {
     using System.Collections.Generic;
@@ -13,8 +15,6 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests.ClientTests
     using FluentAssertions;
 
     using Moq;
-
-    using Ploeh.AutoFixture.Xunit2;
 
     using Xunit;
 
