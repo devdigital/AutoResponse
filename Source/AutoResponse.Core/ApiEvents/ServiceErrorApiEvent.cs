@@ -17,11 +17,6 @@ namespace AutoResponse.Core.ApiEvents
 
         public ServiceErrorApiEvent(string code, Exception exception)
         {
-            if (string.IsNullOrWhiteSpace(code))
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
-
             if (exception == null)
             {
                 throw new ArgumentNullException(nameof(exception));
