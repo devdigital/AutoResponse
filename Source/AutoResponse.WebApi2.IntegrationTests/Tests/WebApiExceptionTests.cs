@@ -1,4 +1,6 @@
-﻿namespace AutoResponse.WebApi2.IntegrationTests.Tests
+﻿using AutoFixture.Xunit2;
+
+namespace AutoResponse.WebApi2.IntegrationTests.Tests
 {
     using System;
     using System.Net;
@@ -15,8 +17,6 @@
     using Moq;
 
     using Newtonsoft.Json.Linq;
-
-    using Ploeh.AutoFixture.Xunit2;
 
     using WebApiTestServer;
 

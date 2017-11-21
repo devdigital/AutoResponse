@@ -1,9 +1,9 @@
+using AutoFixture.Kernel;
+
 namespace AutoResponse.WebApi2.IntegrationTests.Helpers
 {
     using System;
     using System.Reflection;
-
-    using Ploeh.AutoFixture.Kernel;
 
     internal class AutoInjectBuilder : ISpecimenBuilder
     {

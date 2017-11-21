@@ -1,29 +1,21 @@
+using AutoFixture.Xunit2;
+using AutoResponse.Core.Exceptions;
+using AutoResponse.Core.Models;
+
 namespace AutoResponse.WebApi2.IntegrationTests.Tests
 {
     using System.Net;
     using System.Threading.Tasks;
 
-    using AutoResponse.Core.Exceptions;
-    using AutoResponse.Core.Models;
     using AutoResponse.Sample.Domain.Services;
     using AutoResponse.WebApi2.IntegrationTests.Helpers;
 
     using Moq;
 
-    using Ploeh.AutoFixture.Xunit2;
-
     using Xunit;
-    using Xunit.Abstractions;
 
     public class OwinExceptionTests
     {
-        private readonly ITestOutputHelper output;
-
-        public OwinExceptionTests(ITestOutputHelper output)
-        {
-            this.output = output;
-        }
-
         [Theory]
         [AutoData]
         public async Task UnauthenticatedExceptionShouldReturn401(
@@ -83,7 +75,6 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
                 Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
             }
         }
-
 
         [Theory]
         [AutoData]

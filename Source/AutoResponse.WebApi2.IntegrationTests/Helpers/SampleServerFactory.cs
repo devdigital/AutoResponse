@@ -2,7 +2,7 @@
 {
     using WebApiTestServer;
 
-    public class SampleServerFactory : TestServerFactory
+    public class SampleServerFactory : TestServerFactory<SampleServerFactory>
     {
         public SampleServerFactory() : base(new SampleTestStartup())
         {
