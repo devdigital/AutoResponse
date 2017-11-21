@@ -12,7 +12,14 @@ var buildNumber = packageJson.Property("version").Value;
 
 var artifactsDirectory = Directory("./artifacts");
 
-var projects = new List<string>
+var net45Projects = new List<string>
+{
+  "./Source/AutoResponse.Owin/AutoResponse.Owin.csproj",
+  "./Source/AutoResponse.WebApi2/AutoResponse.WebApi2.csproj",
+  "./Source/AutoResponse.WebApi2.Autofac/AutoResponse.WebApi2.Autofac.csproj"
+};
+
+var netCoreProjects = new List<string>
 {
   "./Source/AutoResponse.Core/AutoResponse.Core.csproj",
   "./Source/AutoResponse.Client/AutoResponse.Client.csproj",
@@ -29,7 +36,7 @@ Task("Restore")
     .IsDependentOn("Clean")
     .Does(() =>
     {
-        foreach(var project in projects)
+        foreach(var project in netCoreProjects)
         {
           DotNetCoreRestore(project);
         }
@@ -43,12 +50,9 @@ Task("Build")
         foreach(var solution in solutions)
         {
             Information("Building solution " + solution);
-            DotNetCoreBuild(
+            DotNetBuild(
                 solution.ToString(),
-                new DotNetCoreBuildSettings()
-                {
-                    Configuration = configuration,
-                });
+                settings => settings.SetConfiguration(configuration));
         }
     });
 
@@ -76,12 +80,31 @@ Task("Test")
 
 Task("Pack")
     .IsDependentOn("Build")
+    .Does(() => {
+      var version = buildNumber.ToString();
+      foreach (var project in net45Projects)
+      {
+        Information("Packing dotnet45 project " + project);
+        var nuspecPath = project.Replace(".csproj", ".nuspec");
+        NuGetPack(
+          nuspecPath,
+          new NuGetPackSettings()
+          {
+            Version = version,
+            OutputDirectory = artifactsDirectory
+          }
+        );
+      }
+    });
+
+Task("PackCore")
+    .IsDependentOn("Pack")
     .Does(() =>
     {
         var version = buildNumber.ToString();
-        foreach (var project in projects)
+        foreach (var project in netCoreProjects)
         {
-            Information("Packing project " + project);
+            Information("Packing dotnetcore project " + project);
             DotNetCorePack(
                 project.ToString(),
                 new DotNetCorePackSettings()
@@ -95,6 +118,6 @@ Task("Pack")
     });
 
 Task("Default")
-    .IsDependentOn("Pack");
+    .IsDependentOn("PackCore");
 
 RunTarget(target);
