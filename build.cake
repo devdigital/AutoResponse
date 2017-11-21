@@ -14,7 +14,7 @@ var artifactsDirectory = Directory("./artifacts");
 
 var solution = "./Source/AutoResponse.sln";
 
-var net45Projects = new List<string>
+var net46Projects = new List<string>
 {
   "./Source/AutoResponse.Owin/AutoResponse.Owin.csproj",
   "./Source/AutoResponse.WebApi2/AutoResponse.WebApi2.csproj",
@@ -86,9 +86,9 @@ Task("Pack")
     .IsDependentOn("Build")
     .Does(() => {
       var version = buildNumber.ToString();
-      foreach (var project in net45Projects)
+      foreach (var project in net46Projects)
       {
-        Information("Packing dotnet45 project " + project);
+        Information("Packing dotnet46 project " + project);
         var nuspecPath = project.Replace(".csproj", ".nuspec");
         NuGetPack(
           nuspecPath,
