@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+    <metadata>
+        <id>AutoResponse.WebApi2.Autofac</id>
+        <version>$version$</version>
+        <authors>DevDigital</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Provides standard Web API 2 responses.</description>
+        <dependencies>
+            <group targetFramework=".NETFramework4.5">
+            		<dependency id="AutoResponse.WebApi2" version="$version$" />
+            		<dependency id="Autofac.WebApi2.Owin" version="4.0.0" />
+            </group>
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="bin\Release\AutoResponse.WebApi2.Autofac.dll" target="lib\net45\AutoResponse.WebApi2.Autofac.dll" />
+    </files>
+</package>
