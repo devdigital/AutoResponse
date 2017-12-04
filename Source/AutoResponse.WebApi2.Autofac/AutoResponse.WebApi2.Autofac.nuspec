@@ -14,6 +14,6 @@
         </dependencies>
     </metadata>
     <files>
-        <file src="bin\Release\AutoResponse.WebApi2.Autofac.dll" target="lib\net462\AutoResponse.WebApi2.Autofac.dll" />        
+        <file src="bin\Release\AutoResponse.WebApi2.Autofac.dll" target="lib\net462\AutoResponse.WebApi2.Autofac.dll" />
     </files>
 </package>
