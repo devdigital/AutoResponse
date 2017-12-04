@@ -19,18 +19,8 @@
             IValuesRepository valuesRepository,
             IHttpActionResultFactory actionResultFactory)
         {
-            if (valuesRepository == null)
-            {
-                throw new ArgumentNullException(nameof(valuesRepository));
-            }
-
-            if (actionResultFactory == null)
-            {
-                throw new ArgumentNullException(nameof(actionResultFactory));
-            }
-
-            this.valuesRepository = valuesRepository;
-            this.actionResultFactory = actionResultFactory;
+            this.valuesRepository = valuesRepository ?? throw new ArgumentNullException(nameof(valuesRepository));
+            this.actionResultFactory = actionResultFactory ?? throw new ArgumentNullException(nameof(actionResultFactory));
         }
 
         [HttpGet]

@@ -4,9 +4,7 @@
     using AutoResponse.Core.Mappers;
     using AutoResponse.Core.Models;
     using AutoResponse.Core.Responses;
-    using AutoResponse.Owin;
     using AutoResponse.Sample.Domain.Exceptions;
-    using AutoResponse.WebApi2.ExceptionHandling;
 
     public class SampleHttpResponseMapper : AutoResponseApiEventHttpResponseMapper
     {
