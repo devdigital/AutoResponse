@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+    <metadata>
+        <id>AutoResponse.Client</id>
+        <version>0.0.0</version>
+        <authors>DevDigital</authors>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>Create standardised responses for .NET RESTful APIs.</description>
+        <dependencies>            
+          <dependency id="AutoResponse.Core" version="$version$" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="bin\Release\AutoResponse.Client.dll" target="lib\net462\AutoResponse.Client.dll" />
+        <file src="bin\Release\netstandard2.0\AutoResponse.Client.dll" target="lib\netcore\AutoResponse.Client.dll" />
+    </files>
+</package>
