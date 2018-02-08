@@ -15,6 +15,9 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+    <!-- See https://github.com/dotnet/standard/issues/481 -->
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -78,8 +81,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
@@ -89,6 +93,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="WebApiTestServer, Version=0.4.2.0, Culture=neutral, processorArchitecture=MSIL">
@@ -143,14 +149,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AutoResponse.Client\AutoResponse.Client.csproj">
-      <Project>{00712C05-2367-422E-87C8-25893AEB3044}</Project>
-      <Name>AutoResponse.Client</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\AutoResponse.Core\AutoResponse.Core.csproj">
-      <Project>{E6AF0AC3-119C-43B3-8BFE-AAD23A37365D}</Project>
-      <Name>AutoResponse.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\AutoResponse.Sample.Domain\AutoResponse.Sample.Domain.csproj">
       <Project>{EB2F99CE-922E-49A4-8429-7EE957C15032}</Project>
       <Name>AutoResponse.Sample.Domain</Name>
