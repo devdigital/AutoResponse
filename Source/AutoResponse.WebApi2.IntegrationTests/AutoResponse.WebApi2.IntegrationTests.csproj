@@ -149,6 +149,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AutoResponse.Client\AutoResponse.Client.csproj">
+      <Project>{b198b463-e467-4e89-8eab-03ed7c7a4d98}</Project>
+      <Name>AutoResponse.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoResponse.Core\AutoResponse.Core.csproj">
+      <Project>{f95120e0-8265-4973-b058-225332608fca}</Project>
+      <Name>AutoResponse.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AutoResponse.Sample.Domain\AutoResponse.Sample.Domain.csproj">
       <Project>{EB2F99CE-922E-49A4-8429-7EE957C15032}</Project>
       <Name>AutoResponse.Sample.Domain</Name>
