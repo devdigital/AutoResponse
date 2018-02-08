@@ -1,21 +1,21 @@
-#addin "Cake.FileHelpers"
-#addin nuget:?package=Newtonsoft.Json&version=9.0.1
+#load "nuget:?package=Cake.Mix&version=0.13.0"
 
 var target = Argument("Target", "Default");
 var configuration = Argument("Configuration", "Release");
 
 Information("Running target " + target + " in configuration " + configuration);
 
-var packageJsonText = FileReadText("./package.json");
-var packageJson = Newtonsoft.Json.Linq.JObject.Parse(packageJsonText);
-var buildNumber = packageJson.Property("version").Value;
+var packageJson = new PackageJson(Context, "./package.json");
+var buildNumber = packageJson.GetVersion();
 
 var artifactsDirectory = Directory("./artifacts");
 
 var solution = "./Source/AutoResponse.sln";
 
-var net46Projects = new List<string>
+var net46AndMultiTargetProjects = new List<string>
 {
+  "./Source/AutoResponse.Core/AutoResponse.Core.csproj",
+  "./Source/AutoResponse.Client/AutoResponse.Client.csproj",
   "./Source/AutoResponse.Owin/AutoResponse.Owin.csproj",
   "./Source/AutoResponse.WebApi2/AutoResponse.WebApi2.csproj",
   "./Source/AutoResponse.WebApi2.Autofac/AutoResponse.WebApi2.Autofac.csproj"
@@ -23,8 +23,6 @@ var net46Projects = new List<string>
 
 var netCoreProjects = new List<string>
 {
-  "./Source/AutoResponse.Core/AutoResponse.Core.csproj",
-  "./Source/AutoResponse.Client/AutoResponse.Client.csproj",
   "./Source/AutoResponse.AspNetCore/AutoResponse.AspNetCore.csproj"
 };
 
@@ -50,14 +48,19 @@ Task("RestoreCore")
         }
     });
 
+// Build .NET 4.x and multi-target projects
 Task("Build")
     .IsDependentOn("Restore")
     .Does(() =>
     {
-      Information("Building solution " + solution);
-      DotNetBuild(
-          solution.ToString(),
-          settings => settings.SetConfiguration(configuration));
+      var buildCommand = new DotNetBuildBuilder(Context)
+        .WithProjects(net46AndMultiTargetProjects)
+        .WithConfiguration(configuration)      
+        .WithBuildPlatform(MSBuildPlatform.Automatic)
+        .WithParameter("Platform", "AnyCPU")
+        .Build();
+        
+      buildCommand.Execute();
     });
 
 Task("Test")
@@ -72,23 +75,20 @@ Task("Test")
                 project.ToString(),
                 new DotNetCoreTestSettings()
                 {
-                    // Currently not possible? https://github.com/dotnet/cli/issues/3114
-                    // ArgumentCustomization = args => args
-                    //     .Append("-xml")
-                    //     .Append(artifactsDirectory.Path.CombineWithFilePath(project.GetFilenameWithoutExtension()).FullPath + ".xml"),
                     Configuration = configuration,
                     NoBuild = true
                 });
         }
     });
 
+// Pack .NET 4.x and multi-target projects
 Task("Pack")
     .IsDependentOn("Build")
     .Does(() => {
       var version = buildNumber.ToString();
-      foreach (var project in net46Projects)
+      foreach (var project in net46AndMultiTargetProjects)
       {
-        Information("Packing dotnet46 project " + project);
+        Information("Packing project " + project);
         var nuspecPath = project.Replace(".csproj", ".nuspec");
         NuGetPack(
           nuspecPath,
