@@ -91,7 +91,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests.ClientTests
                 catch (EntityValidationException exception)
                 {
                     var errors = exception.Event?.ErrorDetails?.Errors;
-                    errors.ShouldBeEquivalentTo(expectedErrors);
+                    errors.Should().BeEquivalentTo(expectedErrors);
                 }
             }
         }

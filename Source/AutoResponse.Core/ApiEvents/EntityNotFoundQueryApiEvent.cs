@@ -14,14 +14,9 @@ namespace AutoResponse.Core.ApiEvents
                 throw new ArgumentNullException(nameof(entityType));
             }
 
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
             this.Code = code;
             this.EntityType = entityType;
-            this.Parameters = parameters;
+            this.Parameters = parameters ?? throw new ArgumentNullException(nameof(parameters));
         }
 
         public EntityNotFoundQueryApiEvent(string entityType, IEnumerable<QueryParameter> parameters) : this("AR404Q", entityType, parameters)

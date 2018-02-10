@@ -17,13 +17,8 @@ namespace AutoResponse.Core.ApiEvents
 
         public ServiceErrorApiEvent(string code, Exception exception)
         {
-            if (exception == null)
-            {
-                throw new ArgumentNullException(nameof(exception));
-            }
-
             this.Code = code;
-            this.Exception = exception;
+            this.Exception = exception ?? throw new ArgumentNullException(nameof(exception));
         }
 
         public ServiceErrorApiEvent(string message) : this("AR500", message)

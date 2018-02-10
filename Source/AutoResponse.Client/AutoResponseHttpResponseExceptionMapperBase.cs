@@ -17,12 +17,7 @@
 
         protected AutoResponseHttpResponseExceptionMapperBase(IAutoResponseHttpResponseFormatter formatter)
         {
-            if (formatter == null)
-            {
-                throw new ArgumentNullException(nameof(formatter));
-            }
-
-            this.formatter = formatter;
+            this.formatter = formatter ?? throw new ArgumentNullException(nameof(formatter));
 
             this.mappers = new Lazy<IDictionary<ErrorRegistration, Func<ResponseContent, HttpResponseExceptionContext, Exception>>>(() =>
             {

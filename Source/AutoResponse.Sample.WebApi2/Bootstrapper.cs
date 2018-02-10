@@ -35,12 +35,7 @@
 
         public Bootstrapper(IAppBuilder app, Registrations registrations = null)
         {
-            if (app == null)
-            {
-                throw new ArgumentNullException(nameof(app));
-            }
-
-            this.app = app;
+            this.app = app ?? throw new ArgumentNullException(nameof(app));
             this.registrations = registrations;
         }
 
@@ -97,10 +92,8 @@
 
         private static TService GetService<TService>(HttpConfiguration configuration) where TService : class
         {
-            var service = configuration?.DependencyResolver
-                ?.GetService(typeof(TService)) as TService;
-
-            if (service == null)
+            if (!(configuration?.DependencyResolver
+                ?.GetService(typeof(TService)) is TService service))
             {
                 throw new InvalidOperationException($"No {typeof(TService).Name} registered in container");
             }

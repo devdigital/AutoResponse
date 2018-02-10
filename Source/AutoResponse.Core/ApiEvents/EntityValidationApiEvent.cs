@@ -8,13 +8,8 @@ namespace AutoResponse.Core.ApiEvents
     {
         public EntityValidationApiEvent(string code, ValidationErrorDetails errorDetails)
         {
-            if (errorDetails == null)
-            {
-                throw new ArgumentNullException(nameof(errorDetails));
-            }
-
             this.Code = code;
-            this.ErrorDetails = errorDetails;
+            this.ErrorDetails = errorDetails ?? throw new ArgumentNullException(nameof(errorDetails));
         }
 
         public EntityValidationApiEvent(ValidationErrorDetails errorDetails) : this("AR422", errorDetails)
