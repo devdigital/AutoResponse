@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.9.0"></a>
+# [0.9.0](https://github.com/devdigital/AutoResponse/compare/v0.8.2...v0.9.0) (2018-02-10)
+
+
+### Features
+
+* multi-target core and client ([086e90d](https://github.com/devdigital/AutoResponse/commit/086e90d))
+
+
+
 <a name="0.8.2"></a>
 ## [0.8.2](https://github.com/devdigital/AutoResponse/compare/v0.8.1...v0.8.2) (2017-11-21)
 
