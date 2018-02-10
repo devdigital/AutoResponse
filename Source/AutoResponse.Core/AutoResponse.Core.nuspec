@@ -12,7 +12,7 @@
         </dependencies>
     </metadata>
     <files>
-        <file src="bin\Release\AutoResponse.Core.dll" target="lib\net462\AutoResponse.Core.dll" />
+        <file src="bin\Release\net462\AutoResponse.Core.dll" target="lib\net462\AutoResponse.Core.dll" />
         <file src="bin\Release\netstandard2.0\AutoResponse.Core.dll" target="lib\netcore\AutoResponse.Core.dll" />
     </files>
 </package>
