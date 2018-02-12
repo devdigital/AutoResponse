@@ -48,9 +48,20 @@ Task("RestoreCore")
         }
     });
 
+Task("UpdateAssemblyInfos")
+    .IsDependentOn("RestoreCore")
+    .Does(() => {
+        var command = new AssemblyInfoUpdaterBuilder(Context)
+        .WithFileGlob("./Source/**/AssemblyInfo.cs")
+        .WithVersion(buildNumber.ToString())
+        .Build();
+
+        command.Execute();
+    });
+
 // Build .NET 4.x and multi-target projects
 Task("Build")
-    .IsDependentOn("Restore")
+    .IsDependentOn("UpdateAssemblyInfos")
     .Does(() =>
     {
       var buildCommand = new DotNetBuildBuilder(Context)
@@ -83,7 +94,7 @@ Task("Test")
 
 // Pack .NET 4.x and multi-target projects
 Task("Pack")
-    .IsDependentOn("Build")
+    .IsDependentOn("Test")
     .Does(() => {
       var version = buildNumber.ToString();
       foreach (var project in net46AndMultiTargetProjects)
@@ -101,7 +112,8 @@ Task("Pack")
       }
     });
 
-Task("PackCore")
+// Build and pack .NET Core projects
+Task("BuildAndPackCore")
     .IsDependentOn("Pack")
     .Does(() =>
     {
@@ -122,6 +134,6 @@ Task("PackCore")
     });
 
 Task("Default")
-    .IsDependentOn("PackCore");
+    .IsDependentOn("BuildAndPackCore");
 
 RunTarget(target);

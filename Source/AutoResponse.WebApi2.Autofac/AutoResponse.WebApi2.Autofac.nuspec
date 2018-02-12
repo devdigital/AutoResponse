@@ -8,8 +8,9 @@
         <description>Create standardised responses for .NET RESTful APIs.</description>
         <dependencies>
             <group targetFramework=".NETFramework4.6.2">
-            		<dependency id="AutoResponse.WebApi2" version="$version$" />
-            		<dependency id="Autofac.WebApi2.Owin" version="4.0.0" />
+                <dependency id="AutoResponse.WebApi2" version="$version$" />
+                <dependency id="Autofac.WebApi2.Owin" version="4.0.0" />
+                <dependency id="Autofac.WebApi2" version="4.1.0" />
             </group>
         </dependencies>
     </metadata>
