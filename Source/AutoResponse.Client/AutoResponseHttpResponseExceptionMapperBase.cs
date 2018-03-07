@@ -66,7 +66,9 @@
                     var mapper = this.mappers.Value[exactRegistration];
                     if (mapper == null)
                     {
+                        var requestBody = await GetContent(response.RequestMessage?.Content);
                         return await this.GetDefaultException(
+                            new RequestContent(response.RequestMessage, requestBody), 
                             new ResponseContent(response, responseContent),
                             new HttpResponseExceptionContext(this.formatter));
                     }
@@ -84,7 +86,9 @@
                 var mapper = this.mappers.Value[statusCodeMatchRegistration];
                 if (mapper == null)
                 {
+                    var requestBody = await GetContent(response.RequestMessage?.Content);
                     return await this.GetDefaultException(
+                        new RequestContent(response.RequestMessage, requestBody), 
                         new ResponseContent(response, responseContent),
                         new HttpResponseExceptionContext(this.formatter));
                 }
@@ -93,14 +97,27 @@
                     new ResponseContent(response, responseContent),
                     new HttpResponseExceptionContext(this.formatter));
             }
-        
+
+            var body = await GetContent(response.RequestMessage?.Content);
             return await this.GetDefaultException(
+                new RequestContent(response.RequestMessage, body),
                 new ResponseContent(response, responseContent),
                 new HttpResponseExceptionContext(this.formatter));
         }
 
         protected abstract Task<Exception> GetDefaultException(
+            RequestContent requestContent,
             ResponseContent responseContent, 
             HttpResponseExceptionContext context);
+
+        private async Task<string> GetContent(HttpContent content)
+        {
+            if (content == null)
+            {
+                return null;
+            }
+
+            return await content.ReadAsStringAsync();
+        }
     }
 }

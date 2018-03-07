@@ -1,4 +1,6 @@
-﻿namespace AutoResponse.Client
+﻿using System.Text;
+
+namespace AutoResponse.Client
 {
     using System;
     using System.Net.Http;
@@ -14,12 +16,7 @@
 
         public ResponseContent(HttpResponseMessage response, string responseContent)
         {
-            if (response == null)
-            {
-                throw new ArgumentNullException(nameof(response));
-            }
-
-            this.Response = response;
+            this.Response = response ?? throw new ArgumentNullException(nameof(response));
             this.content = responseContent;
             this.json = new Lazy<JObject>(() => JObject.Parse(this.content));
         }
@@ -76,6 +73,14 @@
         public string AsString()
         {
             return this.content;
+        }
+
+        public override string ToString()
+        {
+            var stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine($"Status Code: {this.Response.StatusCode}");
+            stringBuilder.AppendLine($"Body: {this.AsString()}");
+            return stringBuilder.ToString();
         }
     }
 }

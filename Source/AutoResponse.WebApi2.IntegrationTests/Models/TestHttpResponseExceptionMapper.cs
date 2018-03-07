@@ -27,7 +27,10 @@ namespace AutoResponse.WebApi2.IntegrationTests.Models
             this.configure(configuration);
         }
 
-        protected override Task<Exception> GetDefaultException(ResponseContent responseContent, HttpResponseExceptionContext context)
+        protected override Task<Exception> GetDefaultException(
+            RequestContent requestContent,
+            ResponseContent responseContent, 
+            HttpResponseExceptionContext context)
         {
             return Task.FromResult(this.DefaultException);
         }

@@ -4,5 +4,7 @@ obj
 packages
 node_modules
 *.user
-/tools
 /artifacts
+.vscode
+tools/*
+!tools/packages.config
