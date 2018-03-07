@@ -1,4 +1,6 @@
-﻿namespace AutoResponse.Client
+﻿using System.Text;
+
+namespace AutoResponse.Client
 {
     using System;
     using System.Collections.Generic;
@@ -96,13 +98,18 @@
         }
 
         protected override Task<Exception> GetDefaultException(
+            RequestContent requestContent,
             ResponseContent responseContent, 
             HttpResponseExceptionContext context)
         {
-            // TODO: exception details if include in response etc.
-            var exceptionMessage = 
-                context.Formatter.Message(responseContent.Property("message"));
-
+            var stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine("There was an unexpected response.");
+            stringBuilder.AppendLine("Response:");
+            stringBuilder.AppendLine(responseContent.ToString());
+            stringBuilder.AppendLine("Request:");
+            stringBuilder.AppendLine(requestContent.ToString());
+        
+            var exceptionMessage = context.Formatter.Message(stringBuilder.ToString());
             return Task.FromResult(new Exception(exceptionMessage));
         }
     }
