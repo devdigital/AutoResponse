@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.10.0"></a>
+# [0.10.0](https://github.com/devdigital/AutoResponse/compare/v0.9.1...v0.10.0) (2018-03-07)
+
+
+### Features
+
+* update unhandled response exception message ([b8dc670](https://github.com/devdigital/AutoResponse/commit/b8dc670))
+
+
+
 <a name="0.9.1"></a>
 ## [0.9.1](https://github.com/devdigital/AutoResponse/compare/v0.9.0...v0.9.1) (2018-02-12)
 
