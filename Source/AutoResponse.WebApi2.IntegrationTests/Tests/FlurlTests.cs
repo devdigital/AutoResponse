@@ -16,15 +16,17 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
     {
         [Theory]
         [AutoData]
-        public async Task GetNotFoundHandlesError(string body)
+        public async Task GetNotFoundHandlesError(string message)
         {
             using (var httpTest = new HttpTest())
             {
-                httpTest.RespondWith(body: body, status: 404);
+                httpTest.RespondWithJson(body: new { message }, status: 404);
 
                 try
                 {
-                    var response = await "http://localhost".GetJsonAsync();
+                    var response = await "http://localhost"
+                        .PostJsonAsync(new { message })
+                        .ReceiveJson();
                 }
                 catch (FlurlHttpException exception)
                 {
