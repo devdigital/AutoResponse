@@ -1,6 +1,6 @@
 {
   "name": "AutoResponse",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "main": "index.js",
   "repository": "https://github.com/devdigital/AutoResponse.git",
   "author": "devdigital <devdigital.cloud@gmail.com>",

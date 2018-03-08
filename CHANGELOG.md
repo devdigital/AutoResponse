@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.10.1"></a>
+## [0.10.1](https://github.com/devdigital/AutoResponse/compare/v0.10.0...v0.10.1) (2018-03-08)
+
+
+### Bug Fixes
+
+* Add exception handling around request content read (#20) ([3b31247](https://github.com/devdigital/AutoResponse/commit/3b31247))
+
+
+
 <a name="0.10.0"></a>
 # [0.10.0](https://github.com/devdigital/AutoResponse/compare/v0.9.1...v0.10.0) (2018-03-07)
 
