@@ -79,7 +79,7 @@ namespace AutoResponse.Client
         {
             var stringBuilder = new StringBuilder();
             stringBuilder.AppendLine($"Status Code: {this.Response.StatusCode}");
-            stringBuilder.AppendLine($"Body: {this.AsString()}");
+            stringBuilder.AppendLine($"Body: {this.AsString() ?? "<unknown>"}");
             return stringBuilder.ToString();
         }
     }
