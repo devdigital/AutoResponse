@@ -117,7 +117,14 @@
                 return null;
             }
 
-            return await content.ReadAsStringAsync();
+            try
+            {
+                return await content.ReadAsStringAsync();
+            }
+            catch
+            {
+                return null;
+            }            
         }
     }
 }

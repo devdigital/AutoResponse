@@ -27,7 +27,7 @@ namespace AutoResponse.Client
             var stringBuilder = new StringBuilder();
             stringBuilder.AppendLine($"Uri: {this.Request.RequestUri}");
             stringBuilder.AppendLine($"Method: {this.Request.Method.Method}");
-            stringBuilder.AppendLine($"Body: {this.Body}");
+            stringBuilder.AppendLine($"Body: {this.Body ?? "<unknown>"}");
             return stringBuilder.ToString();
         }
     }

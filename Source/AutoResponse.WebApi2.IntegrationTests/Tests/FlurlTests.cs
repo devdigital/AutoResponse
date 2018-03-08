@@ -8,6 +8,8 @@ using Xunit;
 
 namespace AutoResponse.WebApi2.IntegrationTests.Tests
 {
+    using System;
+
     // ReSharper disable StyleCop.SA1600
     #pragma warning disable SA1600
     #pragma warning disable 1591
@@ -36,15 +38,17 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
                         throw;
                     }
 
-                    await response.HandleErrors(
-                        throwOnUnhandledResponses: false);
+                    var throwException = await Assert.ThrowsAsync<Exception>(() => response.HandleErrors(throwOnUnhandledResponses: false));
+                    Assert.True(throwException.Message.Contains("Request"));
                 }
             }
         }
 
         [Theory]
         [AutoData]
-        public async Task GetNotFoundTestServerHandlesError(SampleServerFactory serverFactory)
+        public async Task GetNotFoundTestServerHandlesErrorMessageContainsRequest(
+            SampleServerFactory serverFactory,
+            string uri)
         {
             using (var server = serverFactory.Create())
             {
@@ -57,7 +61,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
 
                     try
                     {
-                        var json = await flurlClient.Request("foo").GetJsonAsync();
+                        var json = await flurlClient.Request(uri).GetJsonAsync();
                     }
                     catch (FlurlHttpException exception)
                     {
@@ -67,12 +71,11 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
                             throw;
                         }
 
-                        await response.HandleErrors(
-                            throwOnUnhandledResponses: false);
+                        var throwException = await Assert.ThrowsAsync<Exception>(() => response.HandleErrors(throwOnUnhandledResponses: false));
+                        Assert.True(throwException.Message.Contains("Request"));
                     }
                 }                
             }
         }
-
     }
 }
