@@ -1,3 +1,7 @@
+// <copyright file="ExceptionHttpResponseConfiguration.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
+
 namespace AutoResponse.Core.Mappers
 {
     using System;
@@ -5,17 +9,30 @@ namespace AutoResponse.Core.Mappers
 
     using AutoResponse.Core.Responses;
 
+    /// <summary>
+    /// Exception HTTP response configuration.
+    /// </summary>
     public class ExceptionHttpResponseConfiguration
     {
         private readonly IDictionary<Type, Func<ExceptionHttpResponseContext, object, IHttpResponse>> mappings;
-        
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExceptionHttpResponseConfiguration"/> class.
+        /// </summary>
+        /// <param name="mappings">The mappings.</param>
         public ExceptionHttpResponseConfiguration(IDictionary<Type, Func<ExceptionHttpResponseContext, object, IHttpResponse>> mappings)
         {
             this.mappings = mappings ?? throw new ArgumentNullException(nameof(mappings));
         }
 
+        /// <summary>
+        /// Adds a mapping.
+        /// </summary>
+        /// <typeparam name="TApiEvent">The type of the API event.</typeparam>
+        /// <param name="mapping">The mapping.</param>
         public void AddMapping<TApiEvent>(
-            Func<ExceptionHttpResponseContext, TApiEvent, IHttpResponse> mapping) where TApiEvent : class
+            Func<ExceptionHttpResponseContext, TApiEvent, IHttpResponse> mapping)
+            where TApiEvent : class
         {
             if (mapping == null)
             {
@@ -33,6 +50,11 @@ namespace AutoResponse.Core.Mappers
                 (c, e) => mapping(c, e as TApiEvent));
         }
 
+        /// <summary>
+        /// Updates a mapping.
+        /// </summary>
+        /// <typeparam name="TApiEvent">The type of the API event.</typeparam>
+        /// <param name="mapping">The mapping.</param>
         public void UpdateMapping<TApiEvent>(Func<ExceptionHttpResponseContext, TApiEvent, IHttpResponse> mapping)
             where TApiEvent : class
         {
@@ -50,6 +72,10 @@ namespace AutoResponse.Core.Mappers
             this.mappings[typeof(TApiEvent)] = (c, e) => mapping(c, e as TApiEvent);
         }
 
+        /// <summary>
+        /// Removes a mapping.
+        /// </summary>
+        /// <typeparam name="TApiEvent">The type of the API event.</typeparam>
         public void RemoveMapping<TApiEvent>()
         {
             if (!this.mappings.ContainsKey(typeof(TApiEvent)))

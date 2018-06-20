@@ -1,9 +1,17 @@
-﻿namespace AutoResponse.Client
+﻿// <copyright file="ErrorRegistrationEqualityComparer.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
+
+namespace AutoResponse.Client
 {
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Error registration equality comparer.
+    /// </summary>
     internal class ErrorRegistrationEqualityComparer : IEqualityComparer<ErrorRegistration>
     {
+        /// <inheritdoc />
         public bool Equals(ErrorRegistration x, ErrorRegistration y)
         {
             if (x == null && y == null)
@@ -34,6 +42,7 @@
             return x.ErrorCode.Equals(y.ErrorCode);
         }
 
+        /// <inheritdoc />
         public int GetHashCode(ErrorRegistration errorRegistration)
         {
             if (errorRegistration == null)

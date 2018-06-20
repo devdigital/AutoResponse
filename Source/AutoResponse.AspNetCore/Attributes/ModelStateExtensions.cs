@@ -1,13 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using AutoResponse.Core.Enums;
-using AutoResponse.Core.Models;
-using Humanizer;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿// <copyright file="ModelStateExtensions.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
 
 namespace AutoResponse.AspNetCore.Attributes
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using AutoResponse.Core.Enums;
+    using AutoResponse.Core.Models;
+    using Humanizer;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
+
     /// <summary>
     /// Model state extensions.
     /// </summary>

@@ -1,16 +1,20 @@
-﻿using AutoFixture.Xunit2;
+﻿// <copyright file="ApiEventHttpResponseMapperTests.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
 
 namespace AutoResponse.WebApi2.IntegrationTests.Tests
 {
     using System;
-    using System.Threading.Tasks;
-
+    using AutoFixture.Xunit2;
     using AutoResponse.Core.ApiEvents;
     using AutoResponse.Core.Mappers;
     using AutoResponse.Core.Responses;
     using AutoResponse.WebApi2.IntegrationTests.Models;
-
     using Xunit;
+
+    // ReSharper disable StyleCop.SA1600
+    #pragma warning disable SA1600
+    #pragma warning disable 1591
 
     public class ApiEventHttpResponseMapperTests
     {
@@ -24,7 +28,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
                 configuration =>
                     {
                         configuration.AddMapping<ServiceErrorApiEvent>(
-                            (e, c) => httpResponse);                        
+                            (e, c) => httpResponse);
                     });
 
             var mapper = new TestApiEventHttpResponseMapper(addMappings);

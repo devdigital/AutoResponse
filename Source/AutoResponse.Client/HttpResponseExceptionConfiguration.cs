@@ -1,34 +1,51 @@
-﻿namespace AutoResponse.Client
+﻿// <copyright file="HttpResponseExceptionConfiguration.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
+
+namespace AutoResponse.Client
 {
     using System;
     using System.Collections.Generic;
     using System.Net;
 
+    /// <summary>
+    /// HTTP response exception configuration.
+    /// </summary>
     public class HttpResponseExceptionConfiguration
     {
-        private readonly IDictionary<ErrorRegistration, 
+        private readonly IDictionary<ErrorRegistration,
             Func<ResponseContent, HttpResponseExceptionContext, Exception>> mappings;
 
-        public HttpResponseExceptionConfiguration(IDictionary<ErrorRegistration, 
-            Func<ResponseContent, HttpResponseExceptionContext, Exception>> mappings)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HttpResponseExceptionConfiguration"/> class.
+        /// </summary>
+        /// <param name="mappings">The mappings.</param>
+        public HttpResponseExceptionConfiguration(
+            IDictionary<ErrorRegistration, Func<ResponseContent, HttpResponseExceptionContext, Exception>> mappings)
         {
-            if (mappings == null)
-            {
-                throw new ArgumentNullException(nameof(mappings));
-            }
-
-            this.mappings = mappings;
+            this.mappings = mappings ?? throw new ArgumentNullException(nameof(mappings));
         }
 
+        /// <summary>
+        /// Adds a mapping.
+        /// </summary>
+        /// <param name="statusCode">The status code.</param>
+        /// <param name="mapping">The mapping.</param>
         public void AddMapping(
-            HttpStatusCode statusCode, 
+            HttpStatusCode statusCode,
             Func<ResponseContent, HttpResponseExceptionContext, Exception> mapping)
         {
             this.AddMapping(statusCode, null, mapping);
         }
 
+        /// <summary>
+        /// Adds a mapping.
+        /// </summary>
+        /// <param name="statusCode">The status code.</param>
+        /// <param name="errorCode">The error code.</param>
+        /// <param name="mapping">The mapping.</param>
         public void AddMapping(
-            HttpStatusCode statusCode, 
+            HttpStatusCode statusCode,
             string errorCode,
             Func<ResponseContent, HttpResponseExceptionContext, Exception> mapping)
         {
@@ -47,6 +64,11 @@
             this.mappings.Add(errorRegistration, mapping);
         }
 
+        /// <summary>
+        /// Updates a mapping.
+        /// </summary>
+        /// <param name="statusCode">The status code.</param>
+        /// <param name="mapping">The mapping.</param>
         public void UpdateMapping(
             HttpStatusCode statusCode,
             Func<ResponseContent, HttpResponseExceptionContext, Exception> mapping)
@@ -54,6 +76,12 @@
             this.UpdateMapping(statusCode, null, mapping);
         }
 
+        /// <summary>
+        /// Updates a mapping.
+        /// </summary>
+        /// <param name="statusCode">The status code.</param>
+        /// <param name="errorCode">The error code.</param>
+        /// <param name="mapping">The mapping.</param>
         public void UpdateMapping(
             HttpStatusCode statusCode,
             string errorCode,
@@ -70,11 +98,20 @@
             this.mappings[registration] = mapping;
         }
 
+        /// <summary>
+        /// Removes a mapping.
+        /// </summary>
+        /// <param name="statusCode">The status code.</param>
         public void RemoveMapping(HttpStatusCode statusCode)
         {
             this.RemoveMapping(statusCode, null);
         }
 
+        /// <summary>
+        /// Removes a mapping.
+        /// </summary>
+        /// <param name="statusCode">The status code.</param>
+        /// <param name="errorCode">The error code.</param>
         public void RemoveMapping(HttpStatusCode statusCode, string errorCode)
         {
             var registration = new ErrorRegistration(statusCode, errorCode);

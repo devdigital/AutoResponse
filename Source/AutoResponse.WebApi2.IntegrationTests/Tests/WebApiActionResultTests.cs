@@ -1,3 +1,7 @@
+// <copyright file="WebApiActionResultTests.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
+
 namespace AutoResponse.WebApi2.IntegrationTests.Tests
 {
     using System.Net;
@@ -13,6 +17,10 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
     using Moq;
 
     using Xunit;
+
+    // ReSharper disable StyleCop.SA1600
+    #pragma warning disable SA1600
+    #pragma warning disable 1591
 
     public class WebApiActionResultTests
     {
@@ -57,7 +65,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
         public async Task ValidationResultShouldReturn422(
            SampleServerFactory serverFactory,
            Mock<IHttpActionResultFactory> actionResultFactory,
-           HttpRequestMessage request,     
+           HttpRequestMessage request,
            EntityValidationApiEvent apiEvent)
         {
             var result = new TestAutoResponseResult(request, apiEvent);

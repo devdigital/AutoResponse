@@ -1,10 +1,12 @@
-using AutoFixture.Xunit2;
+// <copyright file="HttpFormatterTests.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
 
 namespace AutoResponse.WebApi2.IntegrationTests.Tests
 {
     using System.Linq;
     using System.Threading.Tasks;
-
+    using AutoFixture.Xunit2;
     using AutoResponse.Client.Models;
     using AutoResponse.Core.Dtos;
     using AutoResponse.Core.Enums;
@@ -14,12 +16,13 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
     using AutoResponse.Sample.Domain.Services;
     using AutoResponse.WebApi2.IntegrationTests.Helpers;
     using AutoResponse.WebApi2.IntegrationTests.Models;
-
     using Moq;
-
     using WebApiTestServer;
-
     using Xunit;
+
+    // ReSharper disable StyleCop.SA1600
+    #pragma warning disable SA1600
+    #pragma warning disable 1591
 
     public class HttpFormatterTests
     {

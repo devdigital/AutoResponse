@@ -1,30 +1,32 @@
-using AutoFixture.Kernel;
+// <copyright file="AutoInjectBuilder.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
 
 namespace AutoResponse.WebApi2.IntegrationTests.Helpers
 {
     using System;
     using System.Reflection;
+    using AutoFixture.Kernel;
 
+    /// <summary>
+    /// Auto inject builder.
+    /// </summary>
+    /// <seealso cref="AutoFixture.Kernel.ISpecimenBuilder" />
     internal class AutoInjectBuilder : ISpecimenBuilder
     {
+        /// <inheritdoc />
         public object Create(object request, ISpecimenContext context)
         {
-            var parameterInfo = request as ParameterInfo;
-            if (parameterInfo != null)
+            if (request is ParameterInfo parameterInfo)
             {
-                return this.HandleParameterInfo(parameterInfo);
+                return HandleParameterInfo(parameterInfo);
             }
 
             var propertyInfo = request as PropertyInfo;
-            if (propertyInfo != null)
-            {
-                return this.HandlePropertyInfo(propertyInfo, context);
-            }
+            return propertyInfo != null ? HandlePropertyInfo(propertyInfo, context) : new NoSpecimen();
+        }
 
-            return new NoSpecimen();
-        }        
-
-        private object HandleParameterInfo(ParameterInfo pi)
+        private static object HandleParameterInfo(ParameterInfo pi)
         {
             if (pi.ParameterType.IsEnum)
             {
@@ -35,7 +37,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Helpers
             return new NoSpecimen();
         }
 
-        private object HandlePropertyInfo(PropertyInfo propertyInfo, ISpecimenContext context)
+        private static object HandlePropertyInfo(PropertyInfo propertyInfo, ISpecimenContext context)
         {
             return new NoSpecimen();
         }

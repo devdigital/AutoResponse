@@ -1,11 +1,13 @@
-﻿using AutoFixture.Xunit2;
+﻿// <copyright file="WebApiExceptionTests.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
 
 namespace AutoResponse.WebApi2.IntegrationTests.Tests
 {
     using System;
     using System.Net;
     using System.Threading.Tasks;
-
+    using AutoFixture.Xunit2;
     using AutoResponse.Client.Models;
     using AutoResponse.Core.Exceptions;
     using AutoResponse.Core.Models;
@@ -13,14 +15,14 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
     using AutoResponse.Sample.Domain.Repositories;
     using AutoResponse.Sample.Domain.Services;
     using AutoResponse.WebApi2.IntegrationTests.Helpers;
-
     using Moq;
-
     using Newtonsoft.Json.Linq;
-
     using WebApiTestServer;
-
     using Xunit;
+
+    // ReSharper disable StyleCop.SA1600
+    #pragma warning disable SA1600
+    #pragma warning disable 1591
 
     public class WebApiExceptionTests
     {
@@ -63,7 +65,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
         [Theory]
         [AutoData]
         public async Task NotFoundExceptionGenericShouldReturn404(
-            SampleServerFactory serverFactory, 
+            SampleServerFactory serverFactory,
             Mock<IValuesRepository> valuesRepository,
             int entityId)
         {
@@ -203,7 +205,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
 
             using (var server = serverFactory
                 .With<ISettingsService>(settingsService.Object)
-                .With<IValuesRepository>(valuesRepository.Object)                
+                .With<IValuesRepository>(valuesRepository.Object)
                 .Create())
             {
                 var response = await server.HttpClient.GetAsync($"/api/values/{entityId}");

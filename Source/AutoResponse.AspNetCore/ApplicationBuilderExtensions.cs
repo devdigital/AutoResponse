@@ -1,16 +1,32 @@
-using AutoResponse.Core.Logging;
-using AutoResponse.Core.Mappers;
-using Microsoft.AspNetCore.Builder;
+// <copyright file="ApplicationBuilderExtensions.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
 
 namespace AutoResponse.AspNetCore
 {
-    public static class IApplicationBuilderExtensions
+    using AutoResponse.Core.Logging;
+    using AutoResponse.Core.Mappers;
+    using Microsoft.AspNetCore.Builder;
+
+    /// <summary>
+    /// Application builder extensions.
+    /// </summary>
+    public static class ApplicationBuilderExtensions
     {
+        /// <summary>
+        /// Use AutoResponse.
+        /// </summary>
+        /// <param name="applicationBuilder">The application builder.</param>
         public static void UseAutoResponse(this IApplicationBuilder applicationBuilder)
-        {   
-            UseAutoResponse(applicationBuilder, new AutoResponseOptions());            
+        {
+            UseAutoResponse(applicationBuilder, new AutoResponseOptions());
         }
 
+        /// <summary>
+        /// Use AutoResponse with options.
+        /// </summary>
+        /// <param name="applicationBuilder">The application builder.</param>
+        /// <param name="options">The options.</param>
         public static void UseAutoResponse(this IApplicationBuilder applicationBuilder, AutoResponseOptions options)
         {
             var defaultMapper = new AutoResponseApiEventHttpResponseMapper(

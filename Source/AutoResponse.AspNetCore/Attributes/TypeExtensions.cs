@@ -1,8 +1,12 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿// <copyright file="TypeExtensions.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
 
 namespace AutoResponse.AspNetCore.Attributes
 {
+    using System;
+    using Newtonsoft.Json;
+
     /// <summary>
     /// Type extensions.
     /// </summary>

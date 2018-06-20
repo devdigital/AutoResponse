@@ -1,4 +1,8 @@
-﻿namespace AutoResponse.Core.Mappers
+﻿// <copyright file="AutoResponseApiEventHttpResponseMapper.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
+
+namespace AutoResponse.Core.Mappers
 {
     using System;
 
@@ -7,22 +11,40 @@
     using AutoResponse.Core.Models;
     using AutoResponse.Core.Responses;
 
+    /// <summary>
+    /// AutoResponse API event HTTP response mapper.
+    /// </summary>
+    /// <seealso cref="AutoResponse.Core.Mappers.ApiEventHttpResponseMapperBase" />
     public class AutoResponseApiEventHttpResponseMapper : ApiEventHttpResponseMapperBase
     {
         private readonly IContextResolver contextResolver;
 
-        public AutoResponseApiEventHttpResponseMapper(IContextResolver contextResolver) 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AutoResponseApiEventHttpResponseMapper"/> class.
+        /// </summary>
+        /// <param name="contextResolver">The context resolver.</param>
+        public AutoResponseApiEventHttpResponseMapper(IContextResolver contextResolver)
             : this(contextResolver, new AutoResponseExceptionFormatter())
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AutoResponseApiEventHttpResponseMapper"/> class.
+        /// </summary>
+        /// <param name="contextResolver">The context resolver.</param>
+        /// <param name="formatter">The formatter.</param>
         public AutoResponseApiEventHttpResponseMapper(
             IContextResolver contextResolver,
-            IAutoResponseExceptionFormatter formatter) : base(formatter)
+            IAutoResponseExceptionFormatter formatter)
+                : base(formatter)
         {
             this.contextResolver = contextResolver ?? throw new ArgumentNullException(nameof(contextResolver));
         }
 
+        /// <summary>
+        /// Configures the mappings.
+        /// </summary>
+        /// <param name="configuration">The configuration.</param>
         protected override void ConfigureMappings(ExceptionHttpResponseConfiguration configuration)
         {
             configuration.AddMapping<ServiceErrorApiEvent>(
@@ -35,7 +57,7 @@
                                     c.Formatter.Message("A service error has occurred"),
                                     c.Formatter.Code(e.Code),
                                     c.Formatter.Message(e.Exception.Message),
-                                    c.Formatter.Message(e.Exception.ToString()));                            
+                                    c.Formatter.Message(e.Exception.ToString()));
                         }
 
                         return new ServiceErrorHttpResponse(
@@ -67,7 +89,7 @@
 
             configuration.AddMapping<EntityCreatePermissionApiEvent>(ToCreatePermission);
             configuration.AddMapping<EntityPermissionApiEvent>(ToPermission);
-            configuration.AddMapping<EntityCreatedApiEvent>(ToCreate);                
+            configuration.AddMapping<EntityCreatedApiEvent>(ToCreate);
         }
 
         private static IHttpResponse ToPermission(
@@ -89,9 +111,9 @@
         }
 
         private static IHttpResponse ToCreatePermission(
-            ExceptionHttpResponseContext configuration, 
+            ExceptionHttpResponseContext configuration,
             EntityCreatePermissionApiEvent apiEvent)
-        {            
+        {
             var resource = configuration.Formatter.Resource(apiEvent.EntityType);
             var resourceId = configuration.Formatter.Field(apiEvent.EntityId);
 
@@ -108,7 +130,7 @@
         }
 
         private static IHttpResponse ToCreate(
-            ExceptionHttpResponseContext configuration, 
+            ExceptionHttpResponseContext configuration,
             EntityCreatedApiEvent apiEvent)
         {
             var resource = configuration.Formatter.Resource(apiEvent.EntityType);
@@ -124,7 +146,7 @@
         }
 
         private static IHttpResponse ToNotFound(
-            ExceptionHttpResponseContext configuration, 
+            ExceptionHttpResponseContext configuration,
             EntityNotFoundApiEvent apiEvent)
         {
             var resource = configuration.Formatter.Resource(apiEvent.EntityType);

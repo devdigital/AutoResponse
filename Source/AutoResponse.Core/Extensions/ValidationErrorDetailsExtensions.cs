@@ -1,3 +1,7 @@
+// <copyright file="ValidationErrorDetailsExtensions.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
+
 namespace AutoResponse.Core.Extensions
 {
     using System;
@@ -8,8 +12,17 @@ namespace AutoResponse.Core.Extensions
 
     using Humanizer;
 
+    /// <summary>
+    /// Validation error details extensions.
+    /// </summary>
     internal static class ValidationErrorDetailsExtensions
     {
+        /// <summary>
+        /// Converts validation error details to the dto.
+        /// </summary>
+        /// <param name="validationErrorDetails">The validation error details.</param>
+        /// <param name="code">The code.</param>
+        /// <returns>The DTO.</returns>
         public static ResourceValidationApiModel ToDto(this ValidationErrorDetails validationErrorDetails, string code)
         {
             if (validationErrorDetails == null)
@@ -26,8 +39,8 @@ namespace AutoResponse.Core.Extensions
                     Message = e.Message,
                     Resource = e.Resource,
                     Field = e.Field,
-                    Code = e.Code.ToString().Kebaberize()
-                })
+                    Code = e.Code.ToString().Kebaberize(),
+                }),
             };
         }
     }

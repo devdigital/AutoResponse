@@ -1,21 +1,21 @@
-﻿// <copyright file="ResourceValidationAttribute.cs" company="Parmenion">
-// Copyright (c) Parmenion. All rights reserved.
+﻿// <copyright file="ResourceValidationAttribute.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
 // </copyright>
-
-using System;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using AutoResponse.AspNetCore.Results;
-using AutoResponse.Core.Models;
-using Microsoft.AspNetCore.Mvc.Abstractions;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 
 namespace AutoResponse.AspNetCore.Attributes
 {
+    using System;
+    using System.Linq;
+    using System.Reflection;
+    using System.Threading.Tasks;
+    using AutoResponse.AspNetCore.Results;
+    using AutoResponse.Core.Models;
+    using Microsoft.AspNetCore.Mvc.Abstractions;
+    using Microsoft.AspNetCore.Mvc.Filters;
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
+
     /// <summary>
     /// Resource validation attribute.
     /// </summary>
@@ -81,7 +81,7 @@ namespace AutoResponse.AspNetCore.Attributes
                     var actionArgument =
                         context.ActionArguments.Where(
                                 a => a.Key == actionParameterWithRequiredAttribute.Name)
-                            .Select(a => new {a.Key, a.Value})
+                            .Select(a => new { a.Key, a.Value })
                             .FirstOrDefault();
 
                     if (actionArgument == null)
@@ -142,5 +142,3 @@ namespace AutoResponse.AspNetCore.Attributes
         }
     }
 }
-
-   

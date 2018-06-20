@@ -1,18 +1,22 @@
-using AutoFixture.Xunit2;
+// <copyright file="DomainExceptionTests.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
 
 namespace AutoResponse.WebApi2.IntegrationTests.Tests
 {
     using System.Net;
     using System.Threading.Tasks;
-
+    using AutoFixture.Xunit2;
     using AutoResponse.Sample.Domain.Exceptions;
     using AutoResponse.Sample.Domain.Repositories;
     using AutoResponse.Sample.Domain.Services;
     using AutoResponse.WebApi2.IntegrationTests.Helpers;
-
     using Moq;
-
     using Xunit;
+
+    // ReSharper disable StyleCop.SA1600
+    #pragma warning disable SA1600
+    #pragma warning disable 1591
 
     public class DomainExceptionTests
     {
@@ -30,7 +34,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
                 Assert.Equal((HttpStatusCode)422, response.StatusCode);
             }
         }
-        
+
         [Theory]
         [AutoData]
         public async Task DomainValidationExceptionInWebApiShouldReturn422(

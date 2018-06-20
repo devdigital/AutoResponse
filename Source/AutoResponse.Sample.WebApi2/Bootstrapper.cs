@@ -1,4 +1,8 @@
-﻿namespace AutoResponse.Sample.WebApi2
+﻿// <copyright file="Bootstrapper.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
+
+namespace AutoResponse.Sample.WebApi2
 {
     using System;
     using System.Linq;
@@ -7,38 +11,44 @@
     using System.Web.Http;
     using System.Web.Http.Cors;
     using System.Web.Http.ExceptionHandling;
-
     using Autofac;
     using Autofac.Features.ResolveAnything;
     using Autofac.Integration.WebApi;
-
     using AutoResponse.Core.Formatters;
     using AutoResponse.Core.Logging;
     using AutoResponse.Core.Mappers;
+    using AutoResponse.Owin;
     using AutoResponse.Sample.Data.Repositories;
     using AutoResponse.Sample.Domain.Repositories;
     using AutoResponse.Sample.Domain.Services;
     using AutoResponse.Sample.WebApi2.Factories;
     using AutoResponse.WebApi2.ExceptionHandling;
-    
     using global::Owin;
-
     using Newtonsoft.Json.Serialization;
 
-    using Owin;
-
+    /// <summary>
+    /// Bootstrapper.
+    /// </summary>
     public class Bootstrapper
     {
         private readonly IAppBuilder app;
 
         private readonly Registrations registrations;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Bootstrapper"/> class.
+        /// </summary>
+        /// <param name="app">The application.</param>
+        /// <param name="registrations">The registrations.</param>
         public Bootstrapper(IAppBuilder app, Registrations registrations = null)
         {
             this.app = app ?? throw new ArgumentNullException(nameof(app));
             this.registrations = registrations;
         }
 
+        /// <summary>
+        /// Runs this instance.
+        /// </summary>
         public void Run()
         {
             var configuration = new HttpConfiguration();
@@ -50,7 +60,7 @@
             configuration.Services.Replace(typeof(IExceptionHandler), new AutoResponseExceptionHandler());
 
             var includeFullDetails = container.Resolve<ISettingsService>().GetIncludeFullDetails();
-            configuration.IncludeErrorDetailPolicy = 
+            configuration.IncludeErrorDetailPolicy =
                 includeFullDetails ? IncludeErrorDetailPolicy.Always : IncludeErrorDetailPolicy.Never;
 
             var cors = new EnableCorsAttribute("*", "*", "*");
@@ -60,8 +70,8 @@
             {
                 Logger = GetService<IAutoResponseLogger>(configuration),
                 EventHttpResponseMapper = new SampleHttpResponseMapper(
-                    new OwinContextResolver(), 
-                    GetService<IAutoResponseExceptionFormatter>(configuration))
+                    new OwinContextResolver(),
+                    GetService<IAutoResponseExceptionFormatter>(configuration)),
             });
 
             // Allow easier testing of responses via browser
@@ -80,8 +90,8 @@
             this.app.Use(
                 async (context, next) =>
                     {
-                        var exceptionService = GetService<IExceptionService>(configuration);                            
-                        exceptionService.Execute();                        
+                        var exceptionService = GetService<IExceptionService>(configuration);
+                        exceptionService.Execute();
                         await next();
                     });
 
@@ -90,7 +100,8 @@
             this.app.UseWebApi(configuration);
         }
 
-        private static TService GetService<TService>(HttpConfiguration configuration) where TService : class
+        private static TService GetService<TService>(HttpConfiguration configuration)
+            where TService : class
         {
             if (!(configuration?.DependencyResolver
                 ?.GetService(typeof(TService)) is TService service))
@@ -134,7 +145,7 @@
             builder.RegisterType<AutoResponseExceptionFormatter>().As<IAutoResponseExceptionFormatter>();
             builder.RegisterType<SampleHttpResponseMapper>().As<IApiEventHttpResponseMapper>();
             builder.RegisterType<WebApiContextResolver>().As<IContextResolver>();
-      
+
             this.AdditionalRegistrations(builder);
 
             var container = builder.Build();
