@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.11.0"></a>
+# [0.11.0](https://github.com/devdigital/AutoResponse/compare/v0.10.1...v0.11.0) (2018-06-20)
+
+
+### Features
+
+* add validation attribute for asp.net core ([2d0c5d0](https://github.com/devdigital/AutoResponse/commit/2d0c5d0))
+
+
+
 <a name="0.10.1"></a>
 ## [0.10.1](https://github.com/devdigital/AutoResponse/compare/v0.10.0...v0.10.1) (2018-03-08)
 
