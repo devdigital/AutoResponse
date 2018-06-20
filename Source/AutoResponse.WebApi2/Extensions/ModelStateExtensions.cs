@@ -1,4 +1,8 @@
-﻿namespace AutoResponse.WebApi2.Extensions
+﻿// <copyright file="ModelStateExtensions.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
+
+namespace AutoResponse.WebApi2.Extensions
 {
     using System;
     using System.Collections.Generic;
@@ -10,8 +14,18 @@
 
     using Humanizer;
 
+    /// <summary>
+    /// Model state extensions.
+    /// </summary>
     public static class ModelStateExtensions
     {
+        /// <summary>
+        /// Converts model state to validation error details.
+        /// </summary>
+        /// <param name="modelStateDictionary">The model state dictionary.</param>
+        /// <param name="message">The message.</param>
+        /// <param name="resource">The resource.</param>
+        /// <returns>The validation error details.</returns>
         public static ValidationErrorDetails ToValidationErrorDetails(
             this ModelStateDictionary modelStateDictionary,
             string message,
@@ -41,10 +55,10 @@
                 {
                     validationErrors.Add(new ValidationError(
                         resource,
-                        ToField(erroredModelState.Key), 
+                        ToField(erroredModelState.Key),
                         ToValidationErrorCode(error),
                         error.ErrorMessage));
-                }                
+                }
             }
 
             return new ValidationErrorDetails(message, validationErrors);
@@ -72,7 +86,7 @@
             if (error.ErrorMessage.Contains("required"))
             {
                 return ValidationErrorCode.MissingField;
-            }            
+            }
 
             return ValidationErrorCode.Invalid;
         }

@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <AdditionalFiles Include="..\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.0-beta008" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\AutoResponse.Core\AutoResponse.Core.csproj" />
   </ItemGroup>
 
@@ -30,5 +38,11 @@
   </ItemGroup>
   <PropertyGroup Condition=" '$(TargetFramework)' == 'net462'">
     <DefineConstants>NET462;NETFULL</DefineConstants>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard2.0\AutoResponse.Client.xml</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard2.0\AutoResponse.Client.xml</DocumentationFile>
   </PropertyGroup>
 </Project>

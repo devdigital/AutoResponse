@@ -1,4 +1,8 @@
-﻿namespace AutoResponse.Client
+﻿// <copyright file="AutoResponseHttpResponseExceptionMapperBase.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
+
+namespace AutoResponse.Client
 {
     using System;
     using System.Collections.Generic;
@@ -8,13 +12,21 @@
 
     using Newtonsoft.Json.Linq;
 
-    public abstract class AutoResponseHttpResponseExceptionMapperBase 
+    /// <summary>
+    /// AutoResponse HTTP response exception mapper base.
+    /// </summary>
+    /// <seealso cref="AutoResponse.Client.IHttpResponseExceptionMapper" />
+    public abstract class AutoResponseHttpResponseExceptionMapperBase
         : IHttpResponseExceptionMapper
     {
         private readonly IAutoResponseHttpResponseFormatter formatter;
 
         private readonly Lazy<IDictionary<ErrorRegistration, Func<ResponseContent, HttpResponseExceptionContext, Exception>>> mappers;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AutoResponseHttpResponseExceptionMapperBase"/> class.
+        /// </summary>
+        /// <param name="formatter">The formatter.</param>
         protected AutoResponseHttpResponseExceptionMapperBase(IAutoResponseHttpResponseFormatter formatter)
         {
             this.formatter = formatter ?? throw new ArgumentNullException(nameof(formatter));
@@ -28,9 +40,7 @@
             });
         }
 
-        protected abstract void ConfigureMappings(
-            HttpResponseExceptionConfiguration configuration);
-
+        /// <inheritdoc />
         public Task<bool> IsErrorResponse(HttpResponseMessage response)
         {
             if (response == null)
@@ -41,6 +51,7 @@
             return Task.FromResult(response.StatusCode >= (HttpStatusCode)400);
         }
 
+        /// <inheritdoc />
         public async Task<Exception> GetException(HttpResponseMessage response)
         {
             var statusCode = response.StatusCode;
@@ -66,9 +77,9 @@
                     var mapper = this.mappers.Value[exactRegistration];
                     if (mapper == null)
                     {
-                        var requestBody = await GetContent(response.RequestMessage?.Content);
+                        var requestBody = await this.GetContent(response.RequestMessage?.Content);
                         return await this.GetDefaultException(
-                            new RequestContent(response.RequestMessage, requestBody), 
+                            new RequestContent(response.RequestMessage, requestBody),
                             new ResponseContent(response, responseContent),
                             new HttpResponseExceptionContext(this.formatter));
                     }
@@ -79,16 +90,16 @@
                 }
             }
 
-            // If no status code, error code match, then look for status code, null error code                       
+            // If no status code, error code match, then look for status code, null error code.
             var statusCodeMatchRegistration = new ErrorRegistration(statusCode, null);
             if (this.mappers.Value.ContainsKey(statusCodeMatchRegistration))
             {
                 var mapper = this.mappers.Value[statusCodeMatchRegistration];
                 if (mapper == null)
                 {
-                    var requestBody = await GetContent(response.RequestMessage?.Content);
+                    var requestBody = await this.GetContent(response.RequestMessage?.Content);
                     return await this.GetDefaultException(
-                        new RequestContent(response.RequestMessage, requestBody), 
+                        new RequestContent(response.RequestMessage, requestBody),
                         new ResponseContent(response, responseContent),
                         new HttpResponseExceptionContext(this.formatter));
                 }
@@ -98,16 +109,30 @@
                     new HttpResponseExceptionContext(this.formatter));
             }
 
-            var body = await GetContent(response.RequestMessage?.Content);
+            var body = await this.GetContent(response.RequestMessage?.Content);
             return await this.GetDefaultException(
                 new RequestContent(response.RequestMessage, body),
                 new ResponseContent(response, responseContent),
                 new HttpResponseExceptionContext(this.formatter));
         }
 
+        /// <summary>
+        /// Configures the mappings.
+        /// </summary>
+        /// <param name="configuration">The configuration.</param>
+        protected abstract void ConfigureMappings(
+            HttpResponseExceptionConfiguration configuration);
+
+        /// <summary>
+        /// Gets the default exception.
+        /// </summary>
+        /// <param name="requestContent">Content of the request.</param>
+        /// <param name="responseContent">Content of the response.</param>
+        /// <param name="context">The context.</param>
+        /// <returns>The default exception.</returns>
         protected abstract Task<Exception> GetDefaultException(
             RequestContent requestContent,
-            ResponseContent responseContent, 
+            ResponseContent responseContent,
             HttpResponseExceptionContext context);
 
         private async Task<string> GetContent(HttpContent content)
@@ -124,7 +149,7 @@
             catch
             {
                 return null;
-            }            
+            }
         }
     }
 }

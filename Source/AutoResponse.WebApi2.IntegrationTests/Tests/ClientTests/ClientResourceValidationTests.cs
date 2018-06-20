@@ -1,22 +1,25 @@
-using AutoFixture.Xunit2;
+// <copyright file="ClientResourceValidationTests.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
 
 namespace AutoResponse.WebApi2.IntegrationTests.Tests.ClientTests
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-
+    using AutoFixture.Xunit2;
     using AutoResponse.Client;
     using AutoResponse.Core.Enums;
     using AutoResponse.Core.Exceptions;
     using AutoResponse.Core.Models;
     using AutoResponse.Sample.Domain.Services;
     using AutoResponse.WebApi2.IntegrationTests.Helpers;
-
     using FluentAssertions;
-
     using Moq;
-
     using Xunit;
+
+    // ReSharper disable StyleCop.SA1600
+    #pragma warning disable SA1600
+    #pragma warning disable 1591
 
     public class ClientResourceValidationTests
     {
@@ -83,7 +86,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests.ClientTests
             using (var server = serverFactory.With<IExceptionService>(exceptionService.Object).Create())
             {
                 var response = await server.HttpClient.GetAsync("/");
-                
+
                 try
                 {
                     await response.HandleErrors();

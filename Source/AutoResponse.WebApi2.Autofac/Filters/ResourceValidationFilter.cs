@@ -1,4 +1,8 @@
-﻿namespace AutoResponse.WebApi2.Autofac.Filters
+﻿// <copyright file="ResourceValidationFilter.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
+
+namespace AutoResponse.WebApi2.Autofac.Filters
 {
     using System;
     using System.Collections.Generic;
@@ -19,8 +23,12 @@
 
     using Newtonsoft.Json;
 
+    /// <summary>
+    /// Resource validation filter.
+    /// </summary>
     public class ResourceValidationFilter : IAutofacActionFilter
     {
+        /// <inheritdoc />
         public Task OnActionExecutedAsync(
             HttpActionExecutedContext actionExecutedContext,
             CancellationToken cancellationToken)
@@ -28,6 +36,7 @@
             return Task.FromResult(0);
         }
 
+        /// <inheritdoc />
         public async Task OnActionExecutingAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
         {
             if (actionContext == null)
@@ -39,7 +48,7 @@
 
             // Ensure all action arguments present have valid values
             if (actionContext.ModelState != null && !actionContext.ModelState.IsValid)
-            {                
+            {
                 await
                     this.SetValidationResponse(
                         actionContext,
@@ -51,7 +60,7 @@
 
             // Ensure all action arguments marked with the Required attribute are present
             if (actionContext.ActionArguments != null && actionContext.ActionArguments.Any())
-            {                
+            {
                 var actionParametersWithRequiredAttribute =
                     actionParameters.Where(p => p.GetCustomAttributes<RequiredAttribute>().Any());
 
@@ -72,7 +81,7 @@
                     if (actionArgument.Value == null)
                     {
                         // TODO: review JSON vs XML
-                        var jsonSerializerSettings = 
+                        var jsonSerializerSettings =
                             actionContext.Request?.GetConfiguration()?.Formatters?.JsonFormatter.SerializerSettings;
 
                         await
@@ -91,7 +100,7 @@
         {
             return modelState.ToValidationErrorDetails("There was a validation error.", "resource");
         }
-    
+
         private ValidationErrorDetails ToStandardRequestBodyMissingError(
             JsonSerializerSettings settings,
             HttpParameterDescriptor parameter)

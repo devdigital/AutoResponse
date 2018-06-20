@@ -1,18 +1,23 @@
-﻿using AutoFixture.Xunit2;
+﻿// <copyright file="HttpResponseExceptionMapperTests.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
 
 namespace AutoResponse.WebApi2.IntegrationTests.Tests
 {
     using System;
     using System.Net;
     using System.Threading.Tasks;
-
+    using AutoFixture.Xunit2;
     using AutoResponse.Client;
     using AutoResponse.Core.Dtos;
     using AutoResponse.Core.Exceptions;
     using AutoResponse.WebApi2.IntegrationTests.Builders;
     using AutoResponse.WebApi2.IntegrationTests.Models;
-
     using Xunit;
+
+    // ReSharper disable StyleCop.SA1600
+    #pragma warning disable SA1600
+    #pragma warning disable 1591
 
     public class HttpResponseExceptionMapperTests
     {
@@ -32,7 +37,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
                 });
 
             var mapper = new TestHttpResponseExceptionMapper(addMappings);
-  
+
             var httpResponseMessage = builder
                 .WithStatusCode(HttpStatusCode.NotFound)
                 .WithJson(apiModel)
@@ -112,7 +117,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
         {
             var addMappings = new Action<HttpResponseExceptionConfiguration>(
                 configuration =>
-                {                    
+                {
                     configuration.UpdateMapping(
                         HttpStatusCode.NotFound,
                         (r, c) => exception);

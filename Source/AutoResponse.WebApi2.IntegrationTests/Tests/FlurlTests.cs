@@ -1,14 +1,17 @@
-﻿using System.Threading.Tasks;
-using AutoFixture.Xunit2;
-using AutoResponse.Client;
-using AutoResponse.WebApi2.IntegrationTests.Helpers;
-using Flurl.Http;
-using Flurl.Http.Testing;
-using Xunit;
+﻿// <copyright file="FlurlTests.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
 
 namespace AutoResponse.WebApi2.IntegrationTests.Tests
 {
     using System;
+    using System.Threading.Tasks;
+    using AutoFixture.Xunit2;
+    using AutoResponse.Client;
+    using AutoResponse.WebApi2.IntegrationTests.Helpers;
+    using Flurl.Http;
+    using Flurl.Http.Testing;
+    using Xunit;
 
     // ReSharper disable StyleCop.SA1600
     #pragma warning disable SA1600
@@ -74,7 +77,7 @@ namespace AutoResponse.WebApi2.IntegrationTests.Tests
                         var throwException = await Assert.ThrowsAsync<Exception>(() => response.HandleErrors(throwOnUnhandledResponses: false));
                         Assert.True(throwException.Message.Contains("Request"));
                     }
-                }                
+                }
             }
         }
     }

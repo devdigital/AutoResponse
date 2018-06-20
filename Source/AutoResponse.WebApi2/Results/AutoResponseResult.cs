@@ -1,4 +1,8 @@
-﻿namespace AutoResponse.WebApi2.Results
+﻿// <copyright file="AutoResponseResult.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
+
+namespace AutoResponse.WebApi2.Results
 {
     using System;
     using System.Net.Http;
@@ -8,28 +12,27 @@
 
     using AutoResponse.Core.Mappers;
 
-    public class AutoResponseResult : IHttpActionResult 
+    /// <summary>
+    /// AutoResponse result.
+    /// </summary>
+    public class AutoResponseResult : IHttpActionResult
     {
         private readonly HttpRequestMessage request;
 
         private readonly object apiEvent;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AutoResponseResult"/> class.
+        /// </summary>
+        /// <param name="request">The request.</param>
+        /// <param name="apiEvent">The API event.</param>
         public AutoResponseResult(HttpRequestMessage request, object apiEvent)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
-            if (apiEvent == null)
-            {
-                throw new ArgumentNullException(nameof(apiEvent));
-            }
-
-            this.request = request;
-            this.apiEvent = apiEvent;
+            this.request = request ?? throw new ArgumentNullException(nameof(request));
+            this.apiEvent = apiEvent ?? throw new ArgumentNullException(nameof(apiEvent));
         }
 
+        /// <inheritdoc />
         public Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
         {
             var mapper = this.GetMapper();
@@ -59,6 +62,10 @@
             return Task.FromResult(response);
         }
 
+        /// <summary>
+        /// Gets the mapper.
+        /// </summary>
+        /// <returns>The mapper.</returns>
         protected virtual IApiEventHttpResponseMapper GetMapper()
         {
             var dependencyScope = this.request.GetDependencyScope();

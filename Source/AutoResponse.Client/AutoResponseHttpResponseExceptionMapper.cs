@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿// <copyright file="AutoResponseHttpResponseExceptionMapper.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
 
 namespace AutoResponse.Client
 {
@@ -6,27 +8,39 @@ namespace AutoResponse.Client
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
+    using System.Text;
     using System.Threading.Tasks;
-
     using AutoResponse.Core.Dtos;
     using AutoResponse.Core.Enums;
     using AutoResponse.Core.Exceptions;
     using AutoResponse.Core.Models;
 
+    /// <summary>
+    /// AutoResponse HTTP response exception mapper.
+    /// </summary>
+    /// <seealso cref="AutoResponse.Client.AutoResponseHttpResponseExceptionMapperBase" />
     public class AutoResponseHttpResponseExceptionMapper : AutoResponseHttpResponseExceptionMapperBase
     {
-        public AutoResponseHttpResponseExceptionMapper() 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AutoResponseHttpResponseExceptionMapper"/> class.
+        /// </summary>
+        public AutoResponseHttpResponseExceptionMapper()
             : base(new AutoResponseHttpResponseFormatter())
-        {            
+        {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AutoResponseHttpResponseExceptionMapper"/> class.
+        /// </summary>
+        /// <param name="formatter">The formatter.</param>
         public AutoResponseHttpResponseExceptionMapper(IAutoResponseHttpResponseFormatter formatter)
             : base(formatter)
         {
         }
 
+        /// <inheritdoc />
         protected override void ConfigureMappings(HttpResponseExceptionConfiguration configuration)
-        {            
+        {
             configuration.AddMapping(
                 HttpStatusCode.Unauthorized,
                 (r, c) => new UnauthenticatedException(
@@ -43,7 +57,7 @@ namespace AutoResponse.Client
                     entityId: c.Formatter.EntityProperty(r.Property("resourceId"))));
 
             configuration.AddMapping(
-                HttpStatusCode.Forbidden, 
+                HttpStatusCode.Forbidden,
                 "AR403C",
                 (r, c) => new EntityCreatePermissionException(
                     c.Formatter.Code(r.Property("code")),
@@ -61,7 +75,7 @@ namespace AutoResponse.Client
                             field: c.Formatter.EntityProperty(e.Field),
                             code: ToValidationErrorCode(e.Code),
                             errorMessage: c.Formatter.Message(e.Message))) ?? Enumerable.Empty<ValidationError>();
-                        
+
                         var errorDetails = new ValidationErrorDetails(c.Formatter.Message(r.Property("message")), errors);
                         return new EntityValidationException(
                             code: c.Formatter.Code(r.Property("code")),
@@ -69,20 +83,20 @@ namespace AutoResponse.Client
                     });
 
             configuration.AddMapping(
-                HttpStatusCode.NotFound, 
+                HttpStatusCode.NotFound,
                 "AR404",
                 (r, c) => new EntityNotFoundException(
                     c.Formatter.Code(r.Property("code")),
                     entityType: c.Formatter.EntityType(r.Property("resource")),
                     entityId: c.Formatter.EntityProperty(r.Property("resourceId"))));
-            
+
             configuration.AddMapping(
-                HttpStatusCode.NotFound, 
+                HttpStatusCode.NotFound,
                 "AR404Q",
                 (r, c) => new EntityNotFoundQueryException(
                     c.Formatter.Code(r.Property("code")),
                     c.Formatter.EntityType(r.Property("resource")),
-                    r.Property<IEnumerable<QueryParameterDto>>("queryParameters").Select(qp => new QueryParameter(qp.Key, qp.Value))));                        
+                    r.Property<IEnumerable<QueryParameterDto>>("queryParameters").Select(qp => new QueryParameter(qp.Key, qp.Value))));
 
             configuration.AddMapping(
                 HttpStatusCode.InternalServerError,
@@ -91,15 +105,10 @@ namespace AutoResponse.Client
                     new Exception(c.Formatter.Message(r.Property("message")))));
         }
 
-        private static ValidationErrorCode ToValidationErrorCode(string code)
-        {
-            ValidationErrorCode result;
-            return Enum.TryParse(code, ignoreCase: true, result: out result) ? result : ValidationErrorCode.None;
-        }
-
+        /// <inheritdoc />
         protected override Task<Exception> GetDefaultException(
             RequestContent requestContent,
-            ResponseContent responseContent, 
+            ResponseContent responseContent,
             HttpResponseExceptionContext context)
         {
             var stringBuilder = new StringBuilder();
@@ -108,9 +117,14 @@ namespace AutoResponse.Client
             stringBuilder.AppendLine(responseContent.ToString());
             stringBuilder.AppendLine("Request:");
             stringBuilder.AppendLine(requestContent.ToString());
-        
+
             var exceptionMessage = context.Formatter.Message(stringBuilder.ToString());
             return Task.FromResult(new Exception(exceptionMessage));
+        }
+
+        private static ValidationErrorCode ToValidationErrorCode(string code)
+        {
+            return Enum.TryParse(code, ignoreCase: true, result: out ValidationErrorCode result) ? result : ValidationErrorCode.None;
         }
     }
 }

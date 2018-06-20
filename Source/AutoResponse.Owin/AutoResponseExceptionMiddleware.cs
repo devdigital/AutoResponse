@@ -1,4 +1,8 @@
-﻿namespace AutoResponse.Owin
+﻿// <copyright file="AutoResponseExceptionMiddleware.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
+
+namespace AutoResponse.Owin
 {
     using System;
     using System.Net;
@@ -11,6 +15,10 @@
 
     using Microsoft.Owin;
 
+    /// <summary>
+    /// AutoResponse exception middleware.
+    /// </summary>
+    /// <seealso cref="Microsoft.Owin.OwinMiddleware" />
     public class AutoResponseExceptionMiddleware : OwinMiddleware
     {
         private readonly IApiEventHttpResponseMapper mapper;
@@ -19,33 +27,31 @@
 
         private readonly string domainResultPropertyName;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AutoResponseExceptionMiddleware"/> class.
+        /// </summary>
+        /// <param name="next">The next.</param>
+        /// <param name="mapper">The mapper.</param>
+        /// <param name="logger">The logger.</param>
+        /// <param name="domainResultPropertyName">Name of the domain result property.</param>
         public AutoResponseExceptionMiddleware(
-            OwinMiddleware next, 
+            OwinMiddleware next,
             IApiEventHttpResponseMapper mapper,
             IAutoResponseLogger logger,
             string domainResultPropertyName)
             : base(next)
         {
-            if (mapper == null)
-            {
-                throw new ArgumentNullException(nameof(mapper));
-            }
-
-            if (logger == null)
-            {
-                throw new ArgumentNullException(nameof(logger));
-            }
-
             if (string.IsNullOrWhiteSpace(domainResultPropertyName))
             {
                 throw new ArgumentNullException(nameof(domainResultPropertyName));
             }
 
-            this.mapper = mapper;
-            this.logger = logger;
+            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.domainResultPropertyName = domainResultPropertyName;
         }
 
+        /// <inheritdoc />
         public override async Task Invoke(IOwinContext context)
         {
             try
@@ -61,7 +67,7 @@
             {
                 await this.logger.LogException(exception);
 
-                var exceptionEvent = 
+                var exceptionEvent =
                     exception.GetType().GetProperty(this.domainResultPropertyName)?.GetValue(exception, null);
 
                 if (exceptionEvent != null)
@@ -76,7 +82,7 @@
 
         private void ConvertExceptionToHttpResponse(Exception exception, object apiEvent, IOwinContext context)
         {
-            var httpResponse = this.mapper.GetHttpResponse(context: null, apiEvent: apiEvent); 
+            var httpResponse = this.mapper.GetHttpResponse(context: null, apiEvent: apiEvent);
             if (httpResponse == null)
             {
                 throw exception;

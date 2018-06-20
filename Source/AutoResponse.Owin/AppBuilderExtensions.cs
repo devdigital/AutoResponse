@@ -1,3 +1,7 @@
+// <copyright file="AppBuilderExtensions.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
+
 namespace AutoResponse.Owin
 {
     using AutoResponse.Core.Logging;
@@ -5,13 +9,25 @@ namespace AutoResponse.Owin
 
     using global::Owin;
 
-    public static class IAppBuilderExtensions
+    /// <summary>
+    /// App builder extensions.
+    /// </summary>
+    public static class AppBuilderExtensions
     {
+        /// <summary>
+        /// Uses AutoResponse.
+        /// </summary>
+        /// <param name="appBuilder">The application builder.</param>
         public static void UseAutoResponse(this IAppBuilder appBuilder)
-        {   
-            UseAutoResponse(appBuilder, new AutoResponseOptions());            
+        {
+            UseAutoResponse(appBuilder, new AutoResponseOptions());
         }
 
+        /// <summary>
+        /// Uses AutoResponse with options.
+        /// </summary>
+        /// <param name="appBuilder">The application builder.</param>
+        /// <param name="options">The options.</param>
         public static void UseAutoResponse(this IAppBuilder appBuilder, AutoResponseOptions options)
         {
             var defaultMapper = new AutoResponseApiEventHttpResponseMapper(new OwinContextResolver());

@@ -1,10 +1,22 @@
-﻿using System;
-using System.Net;
+﻿// <copyright file="HttpStatusCodeExtensions.cs" company="DevDigital">
+// Copyright (c) DevDigital. All rights reserved.
+// </copyright>
 
 namespace AutoResponse.Core.Extensions
 {
+    using System;
+    using System.Net;
+
+    /// <summary>
+    /// HTTP status code extensions.
+    /// </summary>
     public static class HttpStatusCodeExtensions
     {
+        /// <summary>
+        /// Converts to the reason phrase.
+        /// </summary>
+        /// <param name="statusCode">The status code.</param>
+        /// <returns>The reason phrase.</returns>
         public static string ToReasonPhrase(this HttpStatusCode statusCode)
         {
             switch (statusCode)
